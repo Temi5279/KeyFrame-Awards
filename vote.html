@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote | The Keyframe Awards</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">THE KEYFRAME AWARDS</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="vote.html" class="active">Vote</a></li>
+            <li><a href="#">Live Stream</a></li>
+            <li><a href="#">Nominations</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <section class="vote-countdown-section">
+        <div class="gradient-banner">
+            <h2>Voting Starts November</h2>
+            <p>Ready to lock in the true masters of the timeline? Prepare to back your faves. The ultimate battle arena ignites this November, leading up to the grand live broadcast this December.</p>
+            <div class="status-badge">System Status: Preparing Arena</div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="copyright">&copy; 2026 The Keyframe Awards Network. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Cookie Preferences</a></li>
+                <li><a href="#">Contact Support</a></li>
+            </ul>
+            <p class="disclaimer">This platform is an independent fan-voted awards network. All community edits, fan submissions, and registered content belong to their respective creators.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
