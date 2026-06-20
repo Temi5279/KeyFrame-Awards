@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy | The Keyframe Awards</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">THE KEYFRAME AWARDS</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="vote.html">Vote</a></li>
+            <li><a href="livestream.html">Live Stream</a></li>
+            <li><a href="nominations.html">Nominations</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <div class="about-container" style="margin-top: 40px; max-width: 800px;">
+        
+        <header class="about-header">
+            <p class="about-tagline">OPERATIONAL COMPLIANCE & GOVERNANCE</p>
+            <h1 class="about-title" style="font-size: 2.8rem;">PRIVACY POLICY</h1>
+            <p class="about-description">Effective Date: June 20, 2026. This comprehensive legal framework outlines the strict data protection protocols, extraction limits, and user safety metrics enforced across The Keyframe Awards Network.</p>
+        </header>
+        
+        <section class="about-section-block">
+            <h2>1. Data Collection & Device Authentication</h2>
+            <p>To ensure a completely fair, transparent, and anti-cheat voting experience for global creator fandoms, our platform utilizes device-locked verification tokens. When you cast a ballot, we log encrypted, anonymous hardware identifiers (such as hashed IP headers and browser agent metadata) to prevent automated bot scripts, farm accounts, and spam scripts from manipulating live leaderboards. We do not harvest personal phone logs, contacts, geolocation coordinates, or local device storage data.</p>
+        </section>
+
+        <section class="about-section-block">
+            <h2>2. Nomination Link Parsing & Media Curation</h2>
+            <p>When fans or creators submit links via our Nomination Portal, we only process the public metadata provided by third-party APIs (such as public video URLs, channel names, view metrics, and creator handles from YouTube or TikTok). We do not store private user profiles, passwords, or account credentials from these external social platforms. All submitted media handles are used solely for curation evaluation and category placement.</p>
+        </section>
+
+        <section class="about-section-block">
+            <h2>3. Third-Party Embeds and Platform Services</h2>
+            <p>Our platform references and links directly to official broadcast hubs on external networks (specifically TikTok Live and YouTube Live). Please be aware that when you click out to these external applications or interact with embedded media feeds, your interaction is governed by the respective privacy policies of Google LLC and ByteDance Ltd. The Keyframe Awards Network does not control or maintain telemetry tracking operated by these external networks.</p>
+        </section>
+
+        <section class="about-section-block">
+            <h2>4. Cookies, Sessions, & Traffic Analytics</h2>
+            <p>We implement micro-cookie protocols and localized web storage tokens to preserve your structural preferences (such as remembering active UI states) and to maintain stable session connectivity during high-bitrate live streaming events. These telemetry layers monitor regional traffic spikes and server loads, allowing our engineering team to dynamically allocate bandwidth resources during heavy real-time voting waves.</p>
+        </section>
+
+        <section class="about-section-block">
+            <h2>5. Data Retention & Purge Schedules</h2>
+            <p>We believe in data minimization. All anonymous hardware tokens and verification hashes collected during the active voting window are strictly temporary. Following the official broadcast and closing ceremonies in January, all voting logs, bot mitigation data, and device history tokens are permanently scrubbed and purged from our production databases within 90 days.</p>
+        </section>
+
+        <section class="about-section-block">
+            <h2>6. International Compliance & Children's Privacy</h2>
+            <p>As a global entertainment ecosystem, we respect user safety. The Keyframe Awards Network does not knowingly collect, request, or maintain identifiable information from individuals under the age of 13. If our administrative panel discovers that any unauthorized database ingestion has occurred, the data is immediately flagged, isolated, and permanently deleted from our servers.</p>
+        </section>
+
+        <section class="about-section-block">
+            <h2>7. Security Infrastructure & Encryption Standard</h2>
+            <p>Your security is non-negotiable. All network transmissions occurring on this platform are heavily guarded via Secure Socket Layer (SSL/TLS) encryption layers. Collected data tokens sit behind secure, isolated network firewalls. We maintain a strict zero-monetization policy: your interaction history is confidential and is never sold, leased, or distributed to third-party advertising companies or marketing algorithms.</p>
+        </section>
+
+        <section class="about-section-block">
+            <h2>8. Modifications to this Policy</h2>
+            <p>The Keyframe Awards Network reserves the operational right to update or adjust this compliance framework as new features, voting protocols, or custom streaming engines are introduced. Any structural updates will be cleanly logged right here with a revised effective date.</p>
+        </section>
+
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="copyright">&copy; 2026 The Keyframe Awards Network. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="cookies.html">Cookie Preferences</a></li>
+                <li><a href="about.html">Contact Support</a></li>
+            </ul>
+            <p class="disclaimer">This platform is an independent fan-voted awards network. All community edits, fan submissions, and registered content belong to their respective creators.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
