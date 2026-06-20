@@ -610,3 +610,90 @@ header p {
         font-size: 2.2rem;
     }
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | The Keyframe Awards</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">THE KEYFRAME AWARDS</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="vote.html">Vote</a></li>
+            <li><a href="livestream.html">Live Stream</a></li>
+            <li><a href="nominations.html">Nominations</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+        </ul>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <header class="about-header">
+        <p class="about-tagline">THE ARCHITECTURE OF PRESTIGE</p>
+        <h1 class="about-title">OUR MISSION</h1>
+        <p class="about-description">The Keyframe Awards is the premier global evaluation platform built to celebrate exceptional digital artistry, high-velocity video editing, and community-driven storytelling. We bridge the gap between under-the-radar creators and massive global fandoms.</p>
+    </header>
+
+    <main class="about-container">
+        
+        <section class="about-section-block">
+            <h2>The Global Battleground</h2>
+            <p>Every single day, millions of elite creators shape internet culture through high-end mobile edits, complex color grading, and razor-sharp transition work. Yet, major traditional media award systems completely ignore them. We designed this network to validate their talent, handing the absolute power over to verified device-locked community votes.</p>
+        </section>
+
+        <h2 class="grid-section-title">The Competitive Disciplines</h2>
+        <div class="categories-grid">
+            <div class="category-item-card">
+                <h3>Football Curation</h3>
+                <p>Honoring the world's fast-paced sports editors who turn match footage, player transitions, and timing metrics into cinematic art pieces.</p>
+            </div>
+            
+            <div class="category-item-card">
+                <h3>2D Artwork & VFX</h3>
+                <p>Celebrating complex technical keyframing, tracking arrays, and character frame-by-frame asset animation styles.</p>
+            </div>
+
+            <div class="category-item-card">
+                <h3>Viral Mobile Editing</h3>
+                <p>Highlighting creators pushing the boundaries of mobile-first production software, demonstrating speed, precision, and heavy audio syncing.</p>
+            </div>
+        </div>
+
+        <div class="sponsor-contact-box">
+            <h2>Partnerships & Support</h2>
+            <p>Are you an organization looking to sponsor a category, collaborate on the live broadcast, or request technical support regarding your community entry? Connect with our administration desk.</p>
+            <a href="mailto:support@keyframe.online" class="contact-button">Contact Network Admin</a>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="copyright">&copy; 2026 The Keyframe Awards Network. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="cookies.html">Cookie Preferences</a></li>
+                <li><a href="about.html">Contact Support</a></li>
+            </ul>
+            <p class="disclaimer">This platform is an independent fan-voted awards network. All community edits, fan submissions, and registered content belong to their respective creators.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
