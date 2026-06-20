@@ -228,3 +228,58 @@ header p {
     line-height: 1.5;
     margin-top: 10px;
 }
+
+/* Premium Glowing Typography for Vote Page */
+.pre-title {
+    color: #b794f4;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px rgba(183, 148, 244, 0.4);
+}
+
+.glowing-title {
+    font-size: 4rem; /* Massive, cinematic scale */
+    font-weight: 900;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #ffffff;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    /* Soft white drop shadow for depth */
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); 
+}
+
+.neon-highlight {
+    color: #d6bcfa; /* Lighter, striking metallic purple */
+    background: linear-gradient(45deg, #b794f4, #e9d8fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* Powerful neon aura behind the word NOVEMBER */
+    filter: drop-shadow(0 0 25px rgba(159, 122, 234, 0.7)); 
+}
+
+.banner-subtext {
+    font-size: 1.15rem !important;
+    color: #f7fafc !important;
+    max-width: 650px;
+    margin: 0 auto 35px auto;
+    line-height: 1.7;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Make font look even punchier on smaller phones */
+@media (max-width: 768px) {
+    .glowing-title {
+        font-size: 2.3rem;
+        letter-spacing: 2px;
+    }
+    .pre-title {
+        font-size: 0.8rem;
+        letter-spacing: 3px;
+    }
+}
