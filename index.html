@@ -8,6 +8,24 @@
 </head>
 <body>
 
+    <nav class="navbar">
+        <div class="nav-logo">THE KEYFRAME AWARDS</div>
+        
+        <ul class="nav-links">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">Vote</a></li>
+            <li><a href="#">Live Stream</a></li>
+            <li><a href="#">Nominations</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
     <header>
         <h1>THE KEYFRAME AWARDS</h1>
         <p>This isn't just an award show. It's the ultimate battleground where the world’s most powerful editing communities, football fandoms, and creative forces collide to crown the true masters of the timeline. One device. One vote. Infinite prestige.</p>
@@ -15,20 +33,27 @@
 
     <main class="expectations-grid">
         <div class="card">
-            <h3>⚡ The Nomination Wars</h3>
+            <h3>The Nomination Wars</h3>
             <p>The power is in your hands. Submit and rally behind your favorite 2D performers, mobile editors, and viral creators to lock them into the official brackets.</p>
         </div>
 
         <div class="card">
-            <h3>📱 Live Device Voting</h3>
+            <h3>Live Device Voting</h3>
             <p>No bots. No spam. A completely fair, transparent, and explosive voting system where every single unique device vote shifts the live leaderboard instantly.</p>
         </div>
 
         <div class="card">
-            <h3>🎬 The Ultimate Broadcast</h3>
-            <p>Coming this October. An elite, pre-edited 2-hour spectacle streaming live on our custom network, featuring exclusive guest content and world-class creator showcases.</p>
+            <h3>The Ultimate Broadcast</h3>
+            <p>Coming this October. An elite live event streaming live on our custom network, featuring exclusive guest content and world-class creator showcases.</p>
         </div>
     </main>
 
+    <script>
+        // Simple logic to open/close menu on phone
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
