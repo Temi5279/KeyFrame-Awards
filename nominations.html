@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nominations | The Keyframe Awards</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">THE KEYFRAME AWARDS</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="vote.html">Vote</a></li>
+            <li><a href="livestream.html">Live Stream</a></li>
+            <li><a href="nominations.html" class="active">Nominations</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <header class="nominations-header">
+        <p class="phase-alert">PHASE 01: FANDOM SUBMISSIONS</p>
+        <h1 class="nominations-title">NOMINATIONS COMING <span class="november-glow">NOVEMBER</span></h1>
+        <p class="nominations-description">Rally your communities and prepare your entries. The nomination portal opens this November, allowing fans and creators worldwide to officially submit their best edits, transitions, and creators into the voting brackets.</p>
+    </header>
+
+    <main class="nominations-container">
+        
+        <div class="portal-card-locked">
+            <div class="lock-icon">🔒</div>
+            <h2>Submission Portal Secure</h2>
+            <p>The intake forms are currently undergoing architectural configuration. Fandoms will be able to submit direct YouTube/TikTok links to verified edits once the window opens.</p>
+            <div class="countdown-badge">Status: Standby Mode</div>
+        </div>
+
+        <h2 class="guide-heading">How To Prepare Your Entry</h2>
+        <div class="guide-grid">
+            <div class="guide-card">
+                <span class="step-num">01</span>
+                <h3>Select Your Best Work</h3>
+                <p>Ensure your edit clips or creator submissions align perfectly with the core categories (Football, 2D Animation, and Mobile VFX Artwork).</p>
+            </div>
+
+            <div class="guide-card">
+                <span class="step-num">02</span>
+                <h3>Secure Public Links</h3>
+                <p>Ensure your videos remain public or unlisted on YouTube or TikTok so our curation panel and backend verification bots can parse the data safely.</p>
+            </div>
+
+            <div class="guide-card">
+                <span class="step-num">03</span>
+                <h3>Rally Your Fandom</h3>
+                <p>The nomination counts determine who earns a spot in the final top-tier voting brackets. Pre-built community hype is your greatest weapon.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="copyright">&copy; 2026 The Keyframe Awards Network. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="cookies.html">Cookie Preferences</a></li>
+                <li><a href="about.html">Contact Support</a></li>
+            </ul>
+            <p class="disclaimer">This platform is an independent fan-voted awards network. All community edits, fan submissions, and registered content belong to their respective creators.</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
