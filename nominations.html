@@ -5,6 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nominations | The Keyframe Awards</title>
     <link rel="stylesheet" href="/KeyFrame-Awards/style.css">
+    
+    <style>
+        /* Extra custom styling just for this page's cool grid */
+        .nominations-header {
+            text-align: center;
+            margin: 40px auto 20px auto;
+            padding: 0 20px;
+        }
+
+        .nominations-header h1 {
+            font-size: 2.8rem;
+            letter-spacing: 3px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffffff, #b794f4, #805ad5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .countdown-banner {
+            display: inline-block;
+            background: linear-gradient(135deg, #e63946 0%, #b71c1c 100%);
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            padding: 10px 25px;
+            border-radius: 50px;
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.4);
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .category-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 50px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            color: #b794f4;
+            letter-spacing: 1px;
+            border-left: 4px solid #805ad5;
+            padding-left: 15px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        /* The custom card utilizing your uploaded design */
+        .nomination-card {
+            position: relative;
+            height: 200px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-image: url('nomination-card.jpg'); /* Uses your uploaded asset image */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            border: 1px solid rgba(183, 148, 244, 0.1);
+        }
+
+        .nomination-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(128, 90, 213, 0.3);
+            border-color: rgba(183, 148, 244, 0.4);
+        }
+
+        /* Subtle dark layer inside card so text reads cleanly over graphics */
+        .nomination-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(7, 3, 13, 0.95) 0%, rgba(7, 3, 13, 0.3) 100%);
+            z-index: 1;
+        }
+
+        .card-text {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .card-text h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.4;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .guide-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 60px auto 20px auto;
+            padding: 0 20px;
+        }
+    </style>
 </head>
 <body>
 
@@ -24,61 +136,117 @@
         </div>
     </nav>
 
-    <header class="nominations-header">
-        <p class="phase-alert">PHASE 01: FANDOM SUBMISSIONS</p>
-        <h1 class="nominations-title">NOMINATIONS COMING <span class="november-glow">NOVEMBER</span></h1>
-        <p class="nominations-description">Rally your communities and prepare your entries. The nomination portal opens this November, allowing fans and creators worldwide to officially submit their best edits, transitions, and creators into the voting brackets.</p>
-    </header>
-
-    <main class="nominations-container">
-        
-        <div class="portal-card-locked">
-            <div class="lock-icon">🔒</div>
-            <h2>Submission Portal Secure</h2>
-            <p>The intake forms are currently undergoing architectural configuration. Fandoms will be able to submit direct YouTube/TikTok links to verified edits once the window opens.</p>
-            <div class="countdown-badge">Status: Standby Mode</div>
+    <main>
+        <div class="nominations-header">
+            <h1>OFFICIAL AWARD CATEGORIES</h1>
+            <div class="countdown-banner">🏆 Nominations opening this November 🏆</div>
         </div>
 
-        <h2 class="guide-heading">How To Prepare Your Entry</h2>
-        <div class="guide-grid">
-            <div class="guide-card">
-                <span class="step-num">01</span>
-                <h3>Select Your Best Work</h3>
-                <p>Ensure your edit clips or creator submissions align perfectly with the core categories (Football, 2D Animation, and Mobile VFX Artwork).</p>
+        <section class="category-section">
+            <h2 class="section-title">The Year Awards (The Big Prestige Ones)</h2>
+            <div class="categories-grid">
+                <div class="nomination-card"><div class="card-text"><h3>Footballer of the Year (Content Creator)</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Gamer of the Year</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Meme Lord/Lady of the Year</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Movie Content Creator of the Year</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>TV Show Stan of the Year</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Music Artist / Group of the Year</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Overall Creator of the Year</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Rising Star of the Year</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Viral Phenomenon of the Year</h3></div></div>
             </div>
+        </section>
 
-            <div class="guide-card">
-                <span class="step-num">02</span>
-                <h3>Secure Public Links</h3>
-                <p>Ensure your videos remain public or unlisted on YouTube or TikTok so our curation panel and backend verification bots can parse the data safely.</p>
+        <section class="category-section">
+            <h2 class="section-title">Music Categories (Strong K-pop focus)</h2>
+            <div class="categories-grid">
+                <div class="nomination-card"><div class="card-text"><h3>Best K-pop Group</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Music Edit / MV Recreation</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Solo Artist (K-pop or General)</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Most Hyped Music Video Edit</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Fandom / Stan Account</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Song Cover / Dance Cover</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Viral Music Trend Creator</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Music Reaction / Breakdown</h3></div></div>
             </div>
+        </section>
 
-            <div class="guide-card">
-                <span class="step-num">03</span>
-                <h3>Rally Your Fandom</h3>
-                <p>The nomination counts determine who earns a spot in the final top-tier voting brackets. Pre-built community hype is your greatest weapon.</p>
+        <section class="category-section">
+            <h2 class="section-title">Meme & Viral Culture</h2>
+            <div class="categories-grid">
+                <div class="nomination-card"><div class="card-text"><h3>Funniest Viral Meme</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Meme Edit / Sound</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Most Relatable Meme</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Wildest Trend Jumper</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Roast Meme</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Meme of the Year</h3></div></div>
             </div>
-        </div>
-    </main>
+        </section>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <p class="copyright">&copy; 2026 The Keyframe Awards Network. All rights reserved.</p>
-            <ul class="footer-links">
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="terms.html">Terms of Service</a></li>
-                <li><a href="cookies.html">Cookie Preferences</a></li>
-                <li><a href="about.html">Contact Support</a></li>
-            </ul>
-            <p class="disclaimer">This platform is an independent fan-voted awards network. All community edits, fan submissions, and registered content belong to their respective creators.</p>
-        </div>
-    </footer>
+        <section class="category-section">
+            <h2 class="section-title">Movies & Film Content</h2>
+            <div class="categories-grid">
+                <div class="nomination-card"><div class="card-text"><h3>Best Movie Edit / Recap</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Most Hyped Movie Scene Recreation</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Movie Trailer Reaction</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Movie Meme</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Cinema Guru / Film Reviewer</h3></div></div>
+            </div>
+        </section>
 
-    <script>
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
-        }
-    </script>
-</body>
-</html>
+        <section class="category-section">
+            <h2 class="section-title">TV Shows & Series</h2>
+            <div class="categories-grid">
+                <div class="nomination-card"><div class="card-text"><h3>Best TV Show Edit</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Most Addictive Show Moments</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Series Theory / Breakdown</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Funniest Show Reaction</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Show Recap Creator</h3></div></div>
+            </div>
+        </section>
+
+        <section class="category-section">
+            <h2 class="section-title">Football / Sports Content</h2>
+            <div class="categories-grid">
+                <div class="nomination-card"><div class="card-text"><h3>Best Football Edit</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Most Hyped Goal Montage</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Football Skills King</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Match Highlight Creator</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Viral Football Meme</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Player Tribute Edit</h3></div></div>
+            </div>
+        </section>
+
+        <section class="category-section">
+            <h2 class="section-title">Gaming</h2>
+            <div class="categories-grid">
+                <div class="nomination-card"><div class="card-text"><h3>Best Gaming Edit / Montage</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Funniest Gaming Fail</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Game Clip / Highlight</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Gaming Meme Master</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Gaming Streamer / Creator</h3></div></div>
+            </div>
+        </section>
+
+        <section class="category-section">
+            <h2 class="section-title">General Content Creators & Personality</h2>
+            <div class="categories-grid">
+                <div class="nomination-card"><div class="card-text"><h3>Most Viral Content Creator</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Storytelling Creator</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Charisma King/Queen</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Most Relatable Daily Vlogger</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Duet / Collab</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Community Favorite Creator</h3></div></div>
+            </div>
+        </section>
+
+        <section class="category-section">
+            <h2 class="section-title">Editing & Creative Craft</h2>
+            <div class="categories-grid">
+                <div class="nomination-card"><div class="card-text"><h3>Best Mobile Editor</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Best Transition / Effects</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Cleanest Video Editor</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Audio Sync Wizard</h3></div></div>
+                <div class="nomination-card"><div class="card-text"><h3>Most Creative Edit Overall</h3></div></div>
+            </div>
+        </section
