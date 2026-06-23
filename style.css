@@ -53,15 +53,16 @@ body {
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 500;
-    transition: color 0.3s ease;
-    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
 }
 
 .nav-links a:hover, .nav-links a.active {
-    color: #b794f4; /* Electric purple on hover/active link */
+    color: #b794f4;
+    text-shadow: 0 0 15px rgba(183, 148, 244, 0.4);
 }
 
-/* Hidden Hamburger by Default (Laptops) */
+/* Mobile Navigation Hamburger Menu */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -73,139 +74,148 @@ body {
     width: 25px;
     height: 2px;
     background-color: #ffffff;
-    border-radius: 2px;
     transition: all 0.3s ease;
 }
 
-/* Header & Typography */
-header {
-    text-align: center;
-    max-width: 800px;
-    margin-bottom: 60px;
-    margin-top: 40px;
+/* ==========================================
+   KEYFRAME AWARDS: CINEMATIC VIDEO BACKGROUND HERO
+   ========================================== */
+
+.hero-section {
+    position: relative;
+    width: 100vw;
+    height: 75vh; /* Sets a great proportion on phone screens */
+    margin-top: -20px; /* Aligns smoothly under the nav space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #07030d;
 }
 
-header h1 {
-    font-size: 3rem;
-    letter-spacing: 6px;
+/* Forces the trophy video to stretch completely in the background layer */
+.hero-video-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover; /* Stretches to fill the space beautifully without black sidebars */
+    object-position: center 30%; /* Keeps the trophy beautifully framed on mobile views */
+    z-index: 1;
+}
+
+/* The dark tinted overlay mask that ensures text stays easy to read over the video */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(7, 3, 13, 0.3) 0%, rgba(7, 3, 13, 0.75) 100%);
+    z-index: 2;
+}
+
+/* Pushes the text forward to layer directly on top of the video background */
+.hero-overlay-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.hero-overlay-content h1 {
+    font-size: 2.2rem;
+    letter-spacing: 4px;
     font-weight: 900;
     text-transform: uppercase;
-    background: linear-gradient(45deg, #ffffff, #b794f4, #805ad5);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(128, 90, 213, 0.2);
+    color: #ffffff;
+    margin-bottom: 15px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7); /* Makes text contrast perfectly over the gold metal */
 }
 
-header p {
-    font-size: 1.1rem;
-    color: #a0aec0;
-    margin-top: 15px;
+.hero-overlay-content p {
+    font-size: 0.95rem;
+    color: #e2e8f0;
     line-height: 1.6;
-    letter-spacing: 0.5px;
+    max-width: 500px;
+    margin: 0 auto;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
 }
 
-/* Content Grid */
-.expectations-grid {
-    display: flex;
-    gap: 20px;
-    max-width: 1000px;
+/* Features Grid Layout */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
     width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
+    max-width: 1100px;
+    margin-top: 60px;
+    padding: 0 20px;
 }
 
 .card {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(21, 11, 36, 0.4);
     border: 1px solid rgba(128, 90, 213, 0.1);
-    padding: 30px;
-    border-radius: 12px;
-    flex: 1;
-    min-width: 280px;
-    max-width: 320px;
-    transition: all 0.3s ease;
+    border-radius: 16px;
+    padding: 35px;
+    text-align: left;
+    backdrop-filter: blur(8px);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .card:hover {
     transform: translateY(-5px);
-    border-color: #9f7aea;
-    box-shadow: 0 10px 20px rgba(128, 90, 213, 0.1);
+    border-color: rgba(183, 148, 244, 0.3);
+    box-shadow: 0 15px 30px rgba(128, 90, 213, 0.1);
 }
 
 .card h3 {
-    color: #b794f4;
-    margin-bottom: 12px;
     font-size: 1.3rem;
-    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #b794f4;
+    letter-spacing: 0.5px;
 }
 
 .card p {
-    color: #cbd5e0;
+    color: #a0aec0;
     font-size: 0.95rem;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
-/* Mobile Rules (Responsive Breakpoint) */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 20px;
-    }
-
-    .hamburger {
-        display: flex; /* Shows hamburger on phone */
-    }
-
-    .nav-links {
-        display: none; /* Hides standard horizontal list on phone */
-        flex-direction: column;
-        position: absolute;
-        top: 65px;
-        left: 0;
-        width: 100%;
-        background: #07030d;
-        border-bottom: 1px solid rgba(128, 90, 213, 0.15);
-        padding: 20px;
-        gap: 20px;
-        text-align: center;
-    }
-
-    .nav-links.active {
-        display: flex; /* Drops down the menu when hamburger is clicked */
-    }
-
-    header h1 {
-        font-size: 2.2rem;
-    }
-}
-
-/* Professional Legal Footer Styling */
+/* Universal Footer Presentation */
 .footer {
     width: 100%;
-    margin-top: 80px;
-    padding: 40px 20px;
     border-top: 1px solid rgba(128, 90, 213, 0.1);
-    background: rgba(7, 3, 13, 0.4);
-    text-align: center;
+    background: #05020a;
+    padding: 60px 20px;
+    margin-top: 100px;
 }
 
 .footer-content {
-    max-width: 1000px;
+    max-width: 1100px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 25px;
+    text-align: center;
 }
 
 .copyright {
     font-size: 0.9rem;
-    color: #666e75;
-    letter-spacing: 0.5px;
+    color: #718096;
 }
 
 .footer-links {
     display: flex;
-    list-style: none;
     gap: 25px;
+    list-style: none;
     flex-wrap: wrap;
     justify-content: center;
 }
@@ -224,489 +234,60 @@ header p {
 .disclaimer {
     font-size: 0.75rem;
     color: #4a5568;
-    max-width: 700px;
     line-height: 1.5;
-    margin-top: 10px;
-}
-
-/* Premium Glowing Typography for Vote Page */
-.pre-title {
-    color: #b794f4;
-    font-size: 0.9rem;
-    font-weight: 700;
-    letter-spacing: 5px;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    text-shadow: 0 0 10px rgba(183, 148, 244, 0.4);
-}
-
-.glowing-title {
-    font-size: 4rem; /* Massive, cinematic scale */
-    font-weight: 900;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: #ffffff;
-    line-height: 1.1;
-    margin-bottom: 25px;
-    /* Soft white drop shadow for depth */
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); 
-}
-
-.neon-highlight {
-    color: #d6bcfa; /* Lighter, striking metallic purple */
-    background: linear-gradient(45deg, #b794f4, #e9d8fd);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    /* Powerful neon aura behind the word NOVEMBER */
-    filter: drop-shadow(0 0 25px rgba(159, 122, 234, 0.7)); 
-}
-
-.banner-subtext {
-    font-size: 1.15rem !important;
-    color: #f7fafc !important;
-    max-width: 650px;
-    margin: 0 auto 35px auto;
-    line-height: 1.7;
-    letter-spacing: 0.5px;
-    font-weight: 400;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-}
-
-/* Make font look even punchier on smaller phones */
-@media (max-width: 768px) {
-    .glowing-title {
-        font-size: 2.3rem;
-        letter-spacing: 2px;
-    }
-    .pre-title {
-        font-size: 0.8rem;
-        letter-spacing: 3px;
-    }
-}
-
-/* Live Stream Page Premium Styles */
-.stream-header {
-    text-align: center;
     max-width: 800px;
-    margin-bottom: 50px;
-    margin-top: 40px;
 }
 
-.broadcast-alert {
-    color: #cbd5e0;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 6px;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-}
+/* ==========================================
+   RESPONSIVE LAYOUT ADJUSTMENTS
+   ========================================== */
 
-.stream-title {
-    font-size: 3.8rem;
-    font-weight: 900;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: #ffffff;
-    margin-bottom: 20px;
-}
-
-.january-glow {
-    background: linear-gradient(45deg, #fbb6ce, #b794f4, #63b3ed); /* Ice-cyan to purple shift */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 20px rgba(183, 148, 244, 0.5));
-}
-
-.stream-description {
-    font-size: 1.1rem;
-    color: #a0aec0;
-    line-height: 1.7;
-    max-width: 680px;
-    margin: 0 auto;
-}
-
-/* Platforms Section Layout */
-.platforms-container {
-    width: 100%;
-    max-width: 900px;
-    margin: 20px auto;
-}
-
-.section-subtitle {
-    text-align: center;
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: #b794f4;
-    margin-bottom: 30px;
-    font-weight: 700;
-}
-
-.platform-grid {
-    display: flex;
-    gap: 25px;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
-}
-
-.platform-card {
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 16px;
-    padding: 40px 30px;
-    flex: 1;
-    min-width: 280px;
-    max-width: 420px;
-    text-align: center;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Custom Styled YouTube Brand Aura */
-.youtube-card {
-    border: 1px solid rgba(239, 68, 68, 0.15);
-}
-
-.youtube-card:hover {
-    transform: translateY(-5px);
-    border-color: #ef4444;
-    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.15);
-}
-
-.yt-icon {
-    background: #ef4444;
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
-}
-
-/* Custom Styled TikTok Brand Aura */
-.tiktok-card {
-    border: 1px solid rgba(6, 182, 212, 0.15);
-}
-
-.tiktok-card:hover {
-    transform: translateY(-5px);
-    border-color: #06b6d4;
-    box-shadow: 0 10px 25px rgba(6, 182, 212, 0.15);
-}
-
-.tt-icon {
-    background: #000000;
-    border: 2px solid #06b6d4;
-    color: #ffffff;
-    text-shadow: 2px 2px #ff0050, -2px -2px #00f2fe; /* Classic TikTok glitch texture effect */
-    box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
-}
-
-/* Universal Inner Card Architecture */
-.brand-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    font-size: 1.3rem;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-}
-
-.platform-card h3 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-    color: #ffffff;
-}
-
-.platform-card p {
-    color: #cbd5e0;
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-bottom: 25px;
-}
-
-.platform-status {
-    margin-top: auto;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #a0aec0;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 6px 16px;
-    border-radius: 50px;
-    font-weight: 600;
-}
-
-.network-notice {
-    text-align: center;
-    margin-top: 40px;
-    color: #4a5568;
-    font-size: 0.85rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.5;
-}
-
-/* Responsive Scaling for smaller laptop views/phones */
+/* Tablet & Mobile Screens */
 @media (max-width: 768px) {
-    .stream-title {
-        font-size: 2.4rem;
+    body {
+        padding: 80px 0px 40px 0px; /* Removes sidebar constraints on mobile screens */
+    }
+
+    .navbar {
+        padding: 15px 25px;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-links {
+        display: none; /* Handled gracefully by toggle script */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #07030d;
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        text-align: center;
+        border-bottom: 1px solid rgba(128, 90, 213, 0.15);
+    }
+
+    .nav-links.active {
+        display: flex;
     }
 }
 
-/* Nominations Page Styles */
-.nominations-header {
-    text-align: center;
-    max-width: 800px;
-    margin-bottom: 50px;
-    margin-top: 40px;
-}
-
-.phase-alert {
-    color: #cbd5e0;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 5px;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-}
-
-.nominations-title {
-    font-size: 3.5rem;
-    font-weight: 900;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: #ffffff;
-    margin-bottom: 20px;
-}
-
-.november-glow {
-    background: linear-gradient(45deg, #b794f4, #f687b3, #b794f4); /* Heavy dynamic sunset purple split */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 20px rgba(246, 135, 179, 0.4));
-}
-
-.nominations-description {
-    font-size: 1.1rem;
-    color: #a0aec0;
-    line-height: 1.7;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-/* Locked Portal UI Layout */
-.nominations-container {
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.portal-card-locked {
-    background: linear-gradient(135deg, rgba(21, 11, 36, 0.6) 0%, rgba(7, 3, 13, 0.9) 100%);
-    border: 1px dashed rgba(183, 148, 244, 0.3); /* Dashed industrial border style */
-    border-radius: 20px;
-    padding: 60px 40px;
-    text-align: center;
-    max-width: 750px;
-    margin: 20px auto 60px auto;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-}
-
-.lock-icon {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    filter: drop-shadow(0 0 10px rgba(183, 148, 244, 0.3));
-}
-
-.portal-card-locked h2 {
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
-}
-
-.portal-card-locked p {
-    font-size: 1rem;
-    color: #cbd5e0;
-    max-width: 550px;
-    margin: 0 auto 25px auto;
-    line-height: 1.6;
-}
-
-.countdown-badge {
-    display: inline-block;
-    background: rgba(183, 148, 244, 0.1);
-    border: 1px solid rgba(183, 148, 244, 0.2);
-    color: #d6bcfa;
-    padding: 8px 24px;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
-
-/* Preparation Steps Design */
-.guide-heading {
-    text-align: center;
-    font-size: 1.4rem;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    color: #ffffff;
-    margin-bottom: 40px;
-    font-weight: 800;
-}
-
-.guide-grid {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 40px;
-}
-
-.guide-card {
-    background: rgba(255, 255, 255, 0.01);
-    border: 1px solid rgba(255, 255, 255, 0.04);
-    border-radius: 12px;
-    padding: 30px;
-    flex: 1;
-    min-width: 280px;
-    max-width: 310px;
-    position: relative;
-}
-
-.step-num {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: rgba(183, 148, 244, 0.08); /* Massive transparent backdrop text */
-    position: absolute;
-    top: 15px;
-    right: 20px;
-}
-
-.guide-card h3 {
-    font-size: 1.15rem;
-    color: #b794f4;
-    margin-bottom: 12px;
-    font-weight: 700;
-}
-
-.guide-card p {
-    color: #a0aec0;
-    font-size: 0.9rem;
-    line-height: 1.6;
-}
-
-@media (max-width: 768px) {
-    .nominations-title {
-        font-size: 2.2rem;
+/* Laptop Optimization Rule (Automatically activates on wider screens) */
+@media (min-width: 1024px) {
+    .hero-section {
+        height: 85vh; /* Expands to full cinematic layout on desktop screens */
     }
-}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About | The Keyframe Awards</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    .hero-overlay-content h1 {
+        font-size: 4.5rem;
+        letter-spacing: 6px;
+    }
 
-    <nav class="navbar">
-        <div class="nav-logo">THE KEYFRAME AWARDS</div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="vote.html">Vote</a></li>
-            <li><a href="livestream.html">Live Stream</a></li>
-            <li><a href="nominations.html">Nominations</a></li>
-            <li><a href="about.html" class="active">About</a></li>
-        </ul>
-        <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </nav>
-
-    <header class="about-header">
-        <p class="about-tagline">THE ARCHITECTURE OF PRESTIGE</p>
-        <h1 class="about-title">OUR MISSION</h1>
-        <p class="about-description">The Keyframe Awards is the premier global evaluation platform built to celebrate exceptional digital artistry, high-velocity video editing, and community-driven storytelling. We bridge the gap between under-the-radar creators and massive global fandoms.</p>
-    </header>
-
-    <main class="about-container">
-        
-        <section class="about-section-block">
-            <h2>The Global Battleground</h2>
-            <p>Every single day, millions of elite creators shape internet culture through high-end mobile edits, complex color grading, and razor-sharp transition work. Yet, major traditional media award systems completely ignore them. We designed this network to validate their talent, handing the absolute power over to verified device-locked community votes.</p>
-        </section>
-
-        <h2 class="grid-section-title">The Competitive Disciplines</h2>
-        <div class="categories-grid">
-            <div class="category-item-card">
-                <h3>Football Curation</h3>
-                <p>Honoring the world's fast-paced sports editors who turn match footage, player transitions, and timing metrics into cinematic art pieces.</p>
-            </div>
-            
-            <div class="category-item-card">
-                <h3>2D Artwork & VFX</h3>
-                <p>Celebrating complex technical keyframing, tracking arrays, and character frame-by-frame asset animation styles.</p>
-            </div>
-
-            <div class="category-item-card">
-                <h3>Viral Mobile Editing</h3>
-                <p>Highlighting creators pushing the boundaries of mobile-first production software, demonstrating speed, precision, and heavy audio syncing.</p>
-            </div>
-        </div>
-
-        <div class="sponsor-contact-box">
-            <h2>Partnerships & Support</h2>
-            <p>Are you an organization looking to sponsor a category, collaborate on the live broadcast, or request technical support regarding your community entry? Connect with our administration desk.</p>
-            <a href="mailto:support@keyframe.online" class="contact-button">Contact Network Admin</a>
-        </div>
-
-    </main>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <p class="copyright">&copy; 2026 The Keyframe Awards Network. All rights reserved.</p>
-            <ul class="footer-links">
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="terms.html">Terms of Service</a></li>
-                <li><a href="cookies.html">Cookie Preferences</a></li>
-                <li><a href="about.html">Contact Support</a></li>
-            </ul>
-            <p class="disclaimer">This platform is an independent fan-voted awards network. All community edits, fan submissions, and registered content belong to their respective creators.</p>
-        </div>
-    </footer>
-
-    <script>
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
-        }
-    </script>
-</body>
-</html>
-
-                /* Forces the video to stay perfectly centered without cutting off weirdly */
-.video-bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-  height: 100%;
-  transform: translate(-50%, -50%);
-  object-fit: contain; /* Keeps the entire video frame beautifully visible */
-  background-color: #1a0b2e; /* Blends the edges seamlessly into your background */
-  z-index: 1;
-                }
+    .hero-overlay-content p {
+        font-size: 1.25rem;
+        max-width: 650px;
+    }
+    }
