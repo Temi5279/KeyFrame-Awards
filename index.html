@@ -5,6 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Keyframe Awards</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Premium Countdown Section Styles */
+        .countdown-board {
+            background: rgba(17, 19, 28, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 25px;
+            max-width: 450px;
+            width: 90%;
+            margin: -30px auto 40px auto; /* Pulls it up slightly over the hero bottom */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            position: relative;
+            z-index: 10; /* Ensures it stays cleanly above backgrounds */
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .timer-stage h3 {
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            color: #a0aec0;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        .stage-badge {
+            background: #ff007f;
+            color: #fff;
+            font-size: 0.65rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 10px;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.4);
+        }
+
+        .clock-display {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00f0ff;
+            text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+            margin-top: 5px;
+        }
+
+        .timeline-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            margin: 20px 0;
+        }
+
+        .sub-clock-display {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #e2e8f0;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
 
@@ -34,24 +98,38 @@
 
       <div class="hero-overlay-content">
         <h1>THE KEYFRAME AWARDS</h1>
-        <p>This isn't just an award show. It's the ultimate battleground where the world's most powerful editing communities clash.</p>
+        <p>This isn't just an award show. It's the ultimate battleground where the world's most powerful communities clash.</p>
       </div>
     </section>
 
+    <div class="countdown-board">
+        <div class="timer-stage active-stage">
+            <span class="stage-badge">UP NEXT</span>
+            <h3 id="stage-title">VOTING LIVE OPENS IN</h3>
+            <div id="main-clock" class="clock-display">00d : 00h : 00m : 00s</div>
+        </div>
+
+        <div class="timeline-divider"></div>
+
+        <div class="timer-stage future-stage">
+            <h3>VIRTUAL EVENT LIVE IN</h3>
+            <div id="event-clock" class="sub-clock-display">00d : 00h : 00m : 00s</div>
+        </div>
+    </div>
     <main class="features-grid">
         <div class="card">
             <h3>The Nomination Wars</h3>
-            <p>The power is in your hands. Submit and rally behind your favorite 2D performers, mobile editors, and viral creators to lock them into the official brackets.</p>
+            <p>The power is in your hands. Submit and rally behind your favorite creators, editors, and shows to lock them into the official brackets.</p>
         </div>
 
         <div class="card">
-            <h3>Live Device Voting</h3>
+            <h3>Live Voting</h3>
             <p>No bots. No spam. A completely fair, transparent, and explosive voting system where every single unique device vote shifts the live leaderboard instantly.</p>
         </div>
 
         <div class="card">
             <h3>The Ultimate Broadcast</h3>
-            <p>Coming this October. An elite live event streaming live on our custom network, featuring exclusive guest content and world-class creator showcases.</p>
+            <p>Coming this January. An elite live event streaming live on our custom network, featuring exclusive guest content and world-class creator showcases.</p>
         </div>
     </main>
 
@@ -74,6 +152,48 @@
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
         }
+
+        // ========================================================
+        // NEW: JAVASCRIPT COUNTDOWN ENGINE FOR YOUR EXACT DATES
+        // ========================================================
+        // Locked-In Target Dates: Voting (Nov 7, 2026) | Virtual Show (Jan 9, 2027)
+        const votingDate = new Date("November 7, 2026 00:00:00").getTime();
+        const eventDate = new Date("January 9, 2027 18:00:00").getTime(); // Change 18:00 to your preferred broadcast time!
+
+        const runClocks = setInterval(function() {
+            const now = new Date().getTime();
+
+            // Calculate the time differences
+            const distToVoting = votingDate - now;
+            const distToEvent = eventDate - now;
+
+            // Helper function to keep numbers double-digit (adds zero if single digit)
+            function formatTime(distance) {
+                const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((distance % (1000 * 60)) / 1000);
+                return `${d < 10 ? '0':''}${d}d : ${h < 10 ? '0':''}${h}h : ${m < 10 ? '0':''}${m}m : ${s < 10 ? '0':''}${s}s`;
+            }
+
+            // Update Main Voting Clock
+            if (distToVoting > 0) {
+                document.getElementById("main-clock").innerHTML = formatTime(distToVoting);
+            } else {
+                document.getElementById("stage-title").innerHTML = "VOTING IS NOW LIVE!";
+                document.getElementById("main-clock").style.color = "#ff007f"; // Changes text to pink when live!
+                document.getElementById("main-clock").innerHTML = "VOTE NOW";
+            }
+
+            // Update Secondary Event Clock
+            if (distToEvent > 0) {
+                document.getElementById("event-clock").innerHTML = formatTime(distToEvent);
+            } else {
+                document.getElementById("event-clock").innerHTML = "EVENT LIVE STREAMS NOW!";
+            }
+
+        }, 1000);
+        // ========================================================
     </script>
 </body>
-                                                                                                                                                                               </html>
+                </html>
