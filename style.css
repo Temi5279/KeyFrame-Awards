@@ -1,199 +1,441 @@
-/* ========================================== */
-/* GLOBAL STYLES (Applies to all pages)       */
-/* ========================================== */
+/* ==========================================
+   THE KEYFRAME AWARDS - MASTER STYLESHEET
+   ========================================== */
+
+/* Premium Dark Purple Theme Base Setup */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: #0b0c10; /* Deep premium black */
+    background: radial-gradient(circle at center, #150b24 0%, #07030d 100%);
     color: #ffffff;
-    overflow-x: hidden;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding: 100px 20px 40px 20px; /* Space for the fixed nav */
 }
 
-/* Navigation Bar */
+/* --- Fixed Navigation Bar --- */
 .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(7, 3, 13, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(128, 90, 213, 0.15);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 5%;
-    background: rgba(11, 12, 16, 0.95);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 100;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 20px 40px;
+    z-index: 1000;
 }
 
 .nav-logo {
-    font-weight: bold;
+    font-weight: 800;
     letter-spacing: 2px;
-    color: #ffffff;
+    font-size: 1.1rem;
+    background: linear-gradient(45deg, #ffffff, #b794f4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .nav-links {
     display: flex;
     list-style: none;
-}
-
-.nav-links li {
-    padding: 0 20px;
+    gap: 30px;
 }
 
 .nav-links a {
     color: #a0aec0;
     text-decoration: none;
     font-size: 0.95rem;
-    transition: color 0.3s;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
 }
 
 .nav-links a:hover, .nav-links a.active {
-    color: #00f0ff; /* Neon Cyan */
+    color: #b794f4;
+    text-shadow: 0 0 15px rgba(183, 148, 244, 0.4);
 }
 
-/* Mobile Hamburger Menu */
 .hamburger {
     display: none;
+    flex-direction: column;
+    gap: 5px;
     cursor: pointer;
 }
 
 .hamburger span {
-    display: block;
     width: 25px;
-    height: 3px;
-    background: #ffffff;
-    margin: 5px 0;
-    transition: 0.3s;
+    height: 2px;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
 }
 
-@media screen and (max-width: 768px) {
-    .nav-links {
-        position: fixed;
-        right: -100%;
-        top: 70px;
-        flex-direction: column;
-        background: #11131c;
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-    }
-
-    .nav-links.active {
-        right: 0;
-    }
-
-    .nav-links li {
-        margin: 25px 0;
-    }
-
-    .hamburger {
-        display: block;
-    }
-}
-
-/* ========================================== */
-/* COUNTDOWN BOARD DESIGN                     */
-/* ========================================== */
-.countdown-board {
-    background: rgba(17, 19, 28, 0.85);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 25px;
-    max-width: 450px;
-    width: 90%;
-    margin: -30px auto 40px auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-    text-align: center;
+/* ==========================================
+   HOME PAGE: CINEMATIC VIDEO BACKGROUND HERO
+   ========================================== */
+.hero-section {
     position: relative;
-    z-index: 10;
-}
-
-.timer-stage h3 {
-    font-size: 0.8rem;
-    letter-spacing: 3px;
-    color: #a0aec0;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    margin-top: 5px;
-}
-
-.stage-badge {
-    background: #ff007f;
-    color: #fff;
-    font-size: 0.65rem;
-    font-weight: bold;
-    padding: 4px 10px;
-    border-radius: 4px;
-    letter-spacing: 1px;
-    display: inline-block;
-    margin-bottom: 10px;
-    box-shadow: 0 0 10px rgba(255, 0, 127, 0.4);
-}
-
-.clock-display {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 2rem;
-    font-weight: bold;
-    color: #00f0ff;
-    text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
-    margin-top: 5px;
-}
-
-.timeline-divider {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-    margin: 20px 0;
-}
-
-.sub-clock-display {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #e2e8f0;
-    margin-top: 5px;
-}
-
-/* ========================================== */
-/* SUB-PAGE LOCKED VIEW CARD DESIGN           */
-/* ========================================== */
-.locked-container {
+    width: 100vw;
+    height: 75vh;
+    margin-top: -20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
-    padding: 100px 20px 40px 20px;
+    overflow: hidden;
+    background-color: #07030d;
 }
 
-.locked-card {
-    background: #11131c;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 40px 30px;
-    max-width: 500px;
+.hero-video-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     width: 100%;
-    border-radius: 16px;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    object-position: center 30%;
+    z-index: 1;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(7, 3, 13, 0.3) 0%, rgba(7, 3, 13, 0.75) 100%);
+    z-index: 2;
+}
+
+.hero-overlay-content {
+    position: relative;
+    z-index: 3;
     text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    width: 100%;
+    max-width: 800px;
+    padding: 0 20px;
 }
 
-.locked-icon {
-    font-size: 3rem;
-    margin-bottom: 15px;
-}
-
-.locked-card h2 {
-    font-size: 1.8rem;
-    letter-spacing: 1px;
-    margin-bottom: 10px;
+.hero-overlay-content h1 {
+    font-size: 2.2rem;
+    letter-spacing: 4px;
+    font-weight: 900;
+    text-transform: uppercase;
     color: #ffffff;
+    margin-bottom: 15px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
 }
 
-.locked-card p {
+.hero-overlay-content p {
+    font-size: 0.95rem;
+    color: #e2e8f0;
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* --- Features Layout Grid --- */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 1100px;
+    margin-top: 60px;
+    padding: 0 20px;
+}
+
+.card {
+    background: rgba(21, 11, 36, 0.4);
+    border: 1px solid rgba(128, 90, 213, 0.1);
+    border-radius: 16px;
+    padding: 35px;
+    text-align: left;
+    backdrop-filter: blur(8px);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(183, 148, 244, 0.3);
+    box-shadow: 0 15px 30px rgba(128, 90, 213, 0.1);
+}
+
+.card h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #b794f4;
+    letter-spacing: 0.5px;
+}
+
+.card p {
+    color: #a0aec0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ==========================================
+   RESTORED: LIVE STREAM & BRAND PAGE DESIGNS
+   ========================================== */
+
+/* --- Main Layout Container for Inner Pages --- */
+.main-container {
+    width: 100%;
+    max-width: 1000px;
+    text-align: center;
+    margin-top: 20px;
+    padding: 0 10px;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    background: linear-gradient(45deg, #ffffff, #b794f4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.page-subtitle {
     color: #a0aec0;
     font-size: 1rem;
+    margin-bottom: 40px;
+}
+
+/* --- Stream Grid & Brand Card Layouts --- */
+.stream-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.stream-card {
+    background: rgba(20, 10, 35, 0.6);
+    border-radius: 20px;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* --- RESTORED BRAND COLOURED BORDERS --- */
+.stream-card.youtube {
+    border: 1px solid rgba(255, 0, 0, 0.3);
+    box-shadow: 0 10px 30px rgba(255, 0, 0, 0.05);
+}
+
+.stream-card.youtube:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(255, 0, 0, 0.2);
+    border-color: rgba(255, 0, 0, 0.6);
+}
+
+.stream-card.tiktok {
+    border: 1px solid rgba(0, 242, 234, 0.2);
+    box-shadow: 0 10px 30px rgba(255, 0, 80, 0.05);
+}
+
+.stream-card.tiktok:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 242, 234, 0.25);
+    border-color: rgba(0, 242, 234, 0.6);
+}
+
+/* --- Brand Graphics/SVG Icons Restored --- */
+.platform-icon svg {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s ease;
+}
+
+.stream-card:hover .platform-icon svg {
+    transform: scale(1.1);
+}
+
+.stream-card h2 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.stream-card p {
+    color: #a0aec0;
+    font-size: 0.95rem;
     line-height: 1.6;
-   }
+}
+
+/* --- Premium Status Standby Badges --- */
+.status-badge {
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.08);
+    color: #cbd5e0;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.youtube .status-badge {
+    background: rgba(255, 0, 0, 0.1);
+    color: #ff4d4d;
+    border: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.tiktok .status-badge {
+    background: rgba(0, 242, 234, 0.1);
+    color: #00f2ea;
+    border: 1px solid rgba(0, 242, 234, 0.3);
+}
+
+/* --- Styled Admin/Contact Buttons --- */
+.contact-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #805ad5 0%, #b794f4 100%);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 14px 30px;
+    border-radius: 50px;
+    margin-top: 15px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 10px 25px rgba(128, 90, 213, 0.3);
+    transition: all 0.3s ease;
+}
+
+.contact-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(183, 148, 244, 0.5);
+}
+
+/* ==========================================
+   UNIVERSAL FOOTER PRESENTATION
+   ========================================== */
+.footer {
+    width: 100%;
+    border-top: 1px solid rgba(128, 90, 213, 0.1);
+    background: #05020a;
+    padding: 60px 20px;
+    margin-top: auto; /* Pushes footer neatly to bottom of short pages */
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    text-align: center;
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: #718096;
+}
+
+.footer-links {
+    display: flex;
+    gap: 25px;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer-links a {
+    color: #a0aec0;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #b794f4;
+}
+
+.disclaimer {
+    font-size: 0.75rem;
+    color: #4a5568;
+    line-height: 1.5;
+    max-width: 800px;
+}
+
+/* ==========================================
+   RESPONSIVE LAYOUT ADJUSTMENTS
+   ========================================== */
+
+/* Tablet & Mobile Layout Shifts */
+@media (max-width: 768px) {
+    body {
+        padding: 80px 0px 40px 0px;
+    }
+
+    .navbar {
+        padding: 15px 25px;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #07030d;
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        text-align: center;
+        border-bottom: 1px solid rgba(128, 90, 213, 0.15);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .page-title {
+        font-size: 2rem;
+    }
+}
+
+/* Laptop Optimization Rule */
+@media (min-width: 1024px) {
+    .hero-section {
+        height: 85vh;
+    }
+
+    .hero-overlay-content h1 {
+        font-size: 4.5rem;
+        letter-spacing: 6px;
+    }
+
+    .hero-overlay-content p {
+        font-size: 1.25rem;
+        max-width: 650px;
+    }
+    }
