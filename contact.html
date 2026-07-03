@@ -5,9 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Support | The Keyframe Awards</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .auth-buttons { display: flex; gap: 10px; align-items: center; margin-left: 20px; }
+        .btn-login { background: transparent; color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.4); padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .btn-login:hover { border-color: #ffffff; background: rgba(255, 255, 255, 0.1); }
+        .btn-signup { background: #ff007f; color: #ffffff; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; box-shadow: 0 0 10px rgba(255, 0, 127, 0.3); transition: all 0.2s; }
+        .btn-signup:hover { background: #e60072; }
+        .user-status-btn { background: transparent; color: #00f0ff; border: none; font-weight: bold; font-size: 0.9rem; cursor: pointer; text-decoration: underline; padding: 0; }
+        .auth-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+        .auth-modal.open { opacity: 1; pointer-events: auto; }
+        .modal-content { background: #11131c; border: 1px solid rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 12px; width: 90%; max-width: 400px; box-shadow: 0 20px 45px rgba(0,0,0,0.8); position: relative; color: #ffffff; font-family: sans-serif; }
+        .close-modal { position: absolute; top: 15px; right: 15px; background: transparent; border: none; color: #a0aec0; font-size: 1.5rem; cursor: pointer; }
+        .auth-form { display: flex; flex-direction: column; gap: 15px; }
+        .auth-form input { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 12px; border-radius: 6px; color: #ffffff; }
+        .btn-submit { background: #00f0ff; color: #11131c; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .btn-google { background: #ffffff; color: #333333; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; }
+        .danger-zone { border: 1px solid #ff4d4d; padding: 15px; border-radius: 8px; background: rgba(255, 77, 77, 0.05); margin-top: 20px; }
+        .btn-delete-account { background: #ff4d4d; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+        .profile-info { text-align: center; margin-bottom: 15px; background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: 6px; }
+    </style>
 </head>
 <body>
-
     <nav class="navbar">
         <div class="nav-logo">THE KEYFRAME AWARDS</div>
         <ul class="nav-links">
@@ -17,6 +35,10 @@
             <li><a href="nominations.html">Nominations</a></li>
             <li><a href="about.html">About</a></li>
         </ul>
+        <div class="auth-buttons" id="auth-controls">
+            <button class="btn-login" id="open-login">Log In</button>
+            <button class="btn-signup" id="open-signup">Sign Up</button>
+        </div>
         <div class="hamburger" onclick="toggleMenu()">
             <span></span>
             <span></span>
@@ -25,29 +47,54 @@
     </nav>
 
     <div class="about-container" style="margin-top: 40px; max-width: 800px;">
-        
         <header class="about-header">
             <p class="about-tagline">NETWORK HELPDESK</p>
             <h1 class="about-title" style="font-size: 2.8rem;">CONTACT SUPPORT</h1>
             <p class="about-description">Have a question regarding submission links, voting verification tokens, or brand sponsorships? Our administration desk is on standby to assist you.</p>
         </header>
-        
         <section class="about-section-block">
             <h2>General & Technical Support</h2>
             <p>If you are experiencing issues casting your device-locked vote, loading the live stream relays, or parsing a nomination link, please contact our technical helpdesk directly via email. Be sure to include your browser details or device type so our team can debug it rapidly.</p>
         </section>
-
         <section class="about-section-block">
             <h2>Creator & Fandom Inquiries</h2>
             <p>Are you a community leader or creator wanting to update a submitted video thumbnail, correct a category listing, or coordinate a fandom voting rally? Reach out with your official channel or account handle verified.</p>
         </section>
-
         <div class="sponsor-contact-box" style="margin-top: 40px;">
             <h2>Reach Out To Administration</h2>
-            <p>Click below to open a direct transmission line with our network operations panel. Response times typically range within 24–48 operational hours.</p>
+            <p>Click below to open a direct transmission line with our network operations panel. Response times typically range within 24-48 operational hours.</p>
             <a href="mailto:support@keyframe.online" class="contact-button">Open Support Ticket</a>
         </div>
+    </div>
 
+    <!-- Integration Core Modals -->
+    <div class="auth-modal" id="auth-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <h2 id="modal-title">Create Account</h2>
+            <form class="auth-form" id="auth-form">
+                <input type="email" id="auth-email" placeholder="Email Address" required>
+                <input type="password" id="auth-password" placeholder="Password" required>
+                <button type="submit" class="btn-submit" id="submit-auth-btn">Sign Up</button>
+            </form>
+            <div style="text-align:center; color:#a0aec0; margin:15px 0; font-size:0.85rem;">OR</div>
+            <button class="btn-google" id="google-auth-btn">Continue with Google</button>
+        </div>
+    </div>
+
+    <div class="auth-modal" id="settings-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-settings-modal">&times;</button>
+            <h2>Voter Settings</h2>
+            <div class="profile-info">
+                <div style="font-size:0.85rem; color:#a0aec0;">Registered Email</div>
+                <div id="settings-email-display" style="font-weight:bold; color:#00f0ff;">voter@domain.com</div>
+            </div>
+            <div class="danger-zone">
+                <h3 style="color:#ff4d4d; margin:0 0 5px 0;">Danger Zone</h3>
+                <button class="btn-delete-account" id="delete-profile-btn">Delete Account Permanently</button>
+            </div>
+        </div>
     </div>
 
     <footer class="footer">
@@ -59,15 +106,64 @@
                 <li><a href="cookies.html">Cookie Preferences</a></li>
                 <li><a href="contact.html">Contact Support</a></li>
             </ul>
-            <p class="disclaimer">This platform is an independent fan-voted awards network. All community edits, fan submissions, and registered content belong to their respective creators.</p>
         </div>
     </footer>
 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, setPersistence, browserLocalPersistence, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        
+        const firebaseConfig = { apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg", authDomain: "keyframe-awards.firebaseapp.com", projectId: "keyframe-awards", storageBucket: "keyframe-awards.firebasestorage.app", messagingSenderId: "882083630221", appId: "1:882083630221:web:629df7642fdf822018a6c4" };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+        setPersistence(auth, browserLocalPersistence).catch(console.error);
+
+        const authModal = document.getElementById('auth-modal');
+        const settingsModal = document.getElementById('settings-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const authForm = document.getElementById('auth-form');
+        const submitAuthBtn = document.getElementById('submit-auth-btn');
+        const authControls = document.getElementById('auth-controls');
+        let currentMode = 'signup';
+
+        document.getElementById('open-signup').addEventListener('click', () => { currentMode = 'signup'; modalTitle.innerText = 'Create Account'; submitAuthBtn.innerText = 'Sign Up'; authModal.classList.add('open'); });
+        document.getElementById('open-login').addEventListener('click', () => { currentMode = 'login'; modalTitle.innerText = 'Welcome Back'; submitAuthBtn.innerText = 'Log In'; authModal.classList.add('open'); });
+        document.getElementById('close-modal').addEventListener('click', () => { authModal.classList.remove('open'); authForm.reset(); });
+        document.getElementById('close-settings-modal').addEventListener('click', () => { settingsModal.classList.remove('open'); });
+
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-password').value;
+            if (currentMode === 'signup') { createUserWithEmailAndPassword(auth, email, password).then(() => authModal.classList.remove('open')).catch(err => alert(err.message)); }
+            else { signInWithEmailAndPassword(auth, email, password).then(() => authModal.classList.remove('open')).catch(err => alert(err.message)); }
+        });
+
+        document.getElementById('google-auth-btn').addEventListener('click', () => { signInWithPopup(auth, googleProvider).then(() => authModal.classList.remove('open')).catch(err => alert(err.message)); });
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const displayName = user.displayName || user.email.split('@')[0];
+                authControls.innerHTML = `<button class="user-status-btn" id="open-settings-btn">Hi, ${displayName}</button><button class="btn-login" id="logout-btn" style="margin-left:10px;">Log Out</button>`;
+                document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
+                document.getElementById('open-settings-btn').addEventListener('click', () => { document.getElementById('settings-email-display').innerText = user.email; settingsModal.classList.add('open'); });
+            } else {
+                authControls.innerHTML = `<button class="btn-login" id="open-login-rebuilt">Log In</button><button class="btn-signup" id="open-signup-rebuilt" style="margin-left:10px;">Sign Up</button>`;
+                document.getElementById('open-signup-rebuilt').addEventListener('click', () => { currentMode = 'signup'; modalTitle.innerText = 'Create Account'; submitAuthBtn.innerText = 'Sign Up'; authModal.classList.add('open'); });
+                document.getElementById('open-login-rebuilt').addEventListener('click', () => { currentMode = 'login'; modalTitle.innerText = 'Welcome Back'; submitAuthBtn.innerText = 'Log In'; authModal.classList.add('open'); });
+            }
+        });
+
+        document.getElementById('delete-profile-btn').addEventListener('click', () => {
+            if (confirm("Permanently delete registration?")) {
+                const u = auth.currentUser;
+                if (u) deleteUser(u).then(() => { alert("Account Purged."); settingsModal.classList.remove('open'); }).catch(() => alert("Please re-authenticate to execute this action."));
+            }
+        });
+    </script>
     <script>
-        function toggleMenu() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
-        }
+        function toggleMenu() { document.querySelector('.nav-links').classList.toggle('active'); }
     </script>
 </body>
-</html>
+    </html>
