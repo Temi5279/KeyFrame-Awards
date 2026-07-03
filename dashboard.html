@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voter Dashboard - The Keyframe Awards</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Dashboard Layout Structure */
+        .dashboard-container {
+            display: flex;
+            min-height: 80vh;
+            margin-top: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            color: #ffffff;
+            background: rgba(17, 19, 28, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            width: 95%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        /* Sidebar Navigation styling */
+        .dash-sidebar {
+            width: 250px;
+            background: rgba(10, 12, 18, 0.9);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .voter-profile-summary {
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .voter-name {
+            color: #00f0ff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            word-break: break-all;
+        }
+
+        .dash-tab-btn {
+            background: transparent;
+            color: #a0aec0;
+            border: none;
+            padding: 12px 15px;
+            text-align: left;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .dash-tab-btn:hover, .dash-tab-btn.active {
+            color: #ffffff;
+            background: rgba(255, 0, 127, 0.2);
+            border-left: 4px solid #ff007f;
+        }
+
+        .btn-dash-logout {
+            margin-top: auto;
+            background: rgba(255, 255, 255, 0.05);
+            color: #ff4d4d;
+            border: 1px solid rgba(255, 77, 77, 0.3);
+        }
+        .btn-dash-logout:hover {
+            background: rgba(255, 77, 77, 0.15);
+        }
+
+        /* Main Content Panel Display */
+        .dash-content {
+            flex: 1;
+            padding: 30px;
+            background: rgba(17, 19, 28, 0.4);
+            overflow-y: auto;
+        }
+
+        .dash-panel {
+            display: none;
+        }
+
+        .dash-panel.active {
+            display: block;
+        }
+
+        .dash-panel h2 {
+            color: #ffffff;
+            border-bottom: 2px solid rgba(255, 0, 127, 0.3);
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* Sample placeholder design elements inside panels */
+        .placeholder-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            color: #a0aec0;
+        }
+
+        .danger-zone {
+            border: 1px solid #ff4d4d;
+            padding: 20px;
+            border-radius: 8px;
+            background: rgba(255, 77, 77, 0.05);
+            margin-top: 30px;
+        }
+
+        .btn-delete-account {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.2s;
+        }
+        .btn-delete-account:hover {
+            background: #e60000;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">THE KEYFRAME AWARDS</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <div class="dashboard-container">
+        <!-- Sidebar Menu Navigation -->
+        <aside class="dash-sidebar">
+            <div class="voter-profile-summary">
+                <div class="voter-name" id="voter-display-name">Loading...</div>
+                <small style="color: #a0aec0;">Verified Voter</small>
+            </div>
+            
+            <button class="dash-tab-btn active" onclick="switchTab('vote-panel')">🗳️ Live Voting</button>
+            <button class="dash-tab-btn" onclick="switchTab('nominations-panel')">🏆 Nominations</button>
+            <button class="dash-tab-btn" onclick="switchTab('livestream-panel')">📺 Live Stream</button>
+            <button class="dash-tab-btn" onclick="switchTab('settings-panel')">⚙️ Account Settings</button>
+            
+            <button class="dash-tab-btn btn-dash-logout" id="dash-logout-btn">Log Out</button>
+        </aside>
+
+        <!-- Main Content View Area -->
+        <main class="dash-content">
+            
+            <!-- PANEL 1: VOTING LOBBY -->
+            <section class="dash-panel active" id="vote-panel">
+                <h2>Live Voting Brackets</h2>
+                <div class="placeholder-card">
+                    <p>Voting categories are locking in soon. Your unique voter token is authenticated and ready for launch day!</p>
+                </div>
+            </section>
+
+            <!-- PANEL 2: NOMINATIONS -->
+            <section class="dash-panel" id="nominations-panel">
+                <h2>The Nomination Wars</h2>
+                <div class="placeholder-card">
+                    <p>Submit and track your favorite creators or editors here. Brackets updates reflect live.</p>
+                </div>
+            </section>
+
+            <!-- PANEL 3: LIVE STREAM -->
+            <section class="dash-panel" id="livestream-panel">
+                <h2>Custom Network Broadcast</h2>
+                <div class="placeholder-card">
+                    <p>The exclusive stream engine will initialize right here on event night.</p>
+                </div>
+            </section>
+
+            <!-- PANEL 4: ACCOUNT SETTINGS / DANGER ZONE -->
+            <section class="dash-panel" id="settings-panel">
+                <h2>Account Management</h2>
+                <p>Manage your registered voter profile options below.</p>
+                
+                <div class="danger-zone">
+                    <h3 style="color: #ff4d4d; margin-top:0;">Danger Zone</h3>
+                    <p style="color: #a0aec0; font-size: 0.9rem;">Deleting your profile clears your voting history instantly and removes your registration record entirely from the Keyframe Awards database.</p>
+                    <button class="btn-delete-account" id="delete-profile-btn">Delete Account Permanently</button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Firebase System Management Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { 
+            getAuth, 
+            onAuthStateChanged, 
+            signOut,
+            deleteUser 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+          authDomain: "keyframe-awards.firebaseapp.com",
+          projectId: "keyframe-awards",
+          storageBucket: "keyframe-awards.firebasestorage.app",
+          messagingSenderId: "882083630221",
+          appId: "1:882083630221:web:629df7642fdf822018a6c4",
+          measurementId: "G-Z8HX6L8WEG"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Security Guard: Watch login states
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is logged in, show their name!
+                const name = user.displayName || user.email.split('@')[0];
+                document.getElementById('voter-display-name').innerText = name;
+            } else {
+                // SECURITY ENFORCEMENT: If not logged in, boot them out back to home page!
+                window.location.href = "index.html";
+            }
+        });
+
+        // Log Out Event Listener
+        document.getElementById('dash-logout-btn').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                window.location.href = "index.html";
+            });
+        });
+
+        // Delete Account Feature Event Listener
+        document.getElementById('delete-profile-btn').addEventListener('click', () => {
+            const confirmation = confirm("Are you absolutely sure you want to delete your Keyframe Awards account? This action cannot be undone.");
+            if (confirmation) {
+                const user = auth.currentUser;
+                if (user) {
+                    deleteUser(user)
+                        .then(() => {
+                            alert("Your account has been successfully wiped from our network.");
+                            window.location.href = "index.html";
+                        })
+                        .catch((error) => {
+                            alert("Security Error: For security reasons, sensitive actions like account deletion require you to log out and log back in right before requesting it.");
+                        });
+                }
+            }
+        });
+    </script>
+
+    <script>
+        // Simple Tab Switcher Mechanism
+        window.switchTab = function(panelId) {
+            // Hide all panels
+            const panels = document.querySelectorAll('.dash-panel');
+            panels.forEach(p => p.classList.remove('active'));
+            
+            // Remove active states from buttons
+            const buttons = document.querySelectorAll('.dash-tab-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            
+            // Activate target panel and clicked button
+            document.getElementById(panelId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+  </html>
