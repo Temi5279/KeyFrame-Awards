@@ -15,11 +15,11 @@
             padding: 25px;
             max-width: 450px;
             width: 90%;
-            margin: -30px auto 40px auto; /* Pulls it up slightly over the hero bottom */
+            margin: -30px auto 40px auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             text-align: center;
             position: relative;
-            z-index: 10; /* Ensures it stays cleanly above backgrounds */
+            z-index: 10;
             color: #ffffff;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -69,7 +69,7 @@
             margin-top: 5px;
         }
 
-        /* --- AUTH BUTTONS & MODAL STYLES --- */
+        /* AUTH BUTTONS & MODAL STYLES */
         .auth-buttons {
             display: flex;
             gap: 10px;
@@ -111,7 +111,6 @@
             font-size: 0.9rem;
         }
         
-        /* Modal Window Overlay */
         .auth-modal {
             position: fixed;
             top: 0;
@@ -197,7 +196,6 @@
             color: #a0aec0;
             margin: 15px 0;
             font-size: 0.85rem;
-            position: relative;
         }
         .btn-google {
             background: #ffffff;
@@ -226,13 +224,9 @@
         
         <ul class="nav-links">
             <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="vote.html">Vote</a></li>
-            <li><a href="livestream.html">Live Stream</a></li>
-            <li><a href="nominations.html">Nominations</a></li>
-            <li><a href="about.html">About</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
         </ul>
 
-        <!-- Dynamic Auth Buttons Container -->
         <div class="auth-buttons" id="auth-controls">
             <button class="btn-login" id="open-login">Log In</button>
             <button class="btn-signup" id="open-signup">Sign Up</button>
@@ -271,6 +265,7 @@
             <div id="event-clock" class="sub-clock-display">00d : 00h : 00m : 00s</div>
         </div>
     </div>
+
     <main class="features-grid">
         <div class="card">
             <h3>The Nomination Wars</h3>
@@ -288,7 +283,6 @@
         </div>
     </main>
 
-    <!-- Authentication Pop-up Modal -->
     <div class="auth-modal" id="auth-modal">
         <div class="modal-content">
             <button class="close-modal" id="close-modal">&times;</button>
@@ -318,14 +312,11 @@
                 <li><a href="cookies.html">Cookie Preferences</a></li>
                 <li><a href="about.html">Contact Support</a></li>
             </ul>
-            <p class="disclaimer">This platform is an independent fan-voted awards network. All community edits, fan submissions, and registered content belong to their respective creators.</p>
         </div>
     </footer>
 
-    <!-- Firebase SDK Modular Scripts Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
         import { 
             getAuth, 
             createUserWithEmailAndPassword, 
@@ -336,7 +327,6 @@
             signOut 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        // Embedded Web Configuration Object
         const firebaseConfig = {
           apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
           authDomain: "keyframe-awards.firebaseapp.com",
@@ -347,13 +337,10 @@
           measurementId: "G-Z8HX6L8WEG"
         };
 
-        // Initialize App & Services
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const auth = getAuth(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // UI Element Selectors
         const authModal = document.getElementById('auth-modal');
         const modalTitle = document.getElementById('modal-title');
         const authForm = document.getElementById('auth-form');
@@ -362,9 +349,8 @@
         const submitAuthBtn = document.getElementById('submit-auth-btn');
         const authControls = document.getElementById('auth-controls');
         
-        let currentMode = 'signup'; // Can toggle between 'signup' or 'login'
+        let currentMode = 'signup';
 
-        // Modal Presentation Management
         document.getElementById('open-signup').addEventListener('click', () => {
             currentMode = 'signup';
             modalTitle.innerText = 'Create Account';
@@ -384,7 +370,6 @@
             authForm.reset();
         });
 
-        // Form Submission Logic (Email + Password)
         authForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const email = authEmail.value;
@@ -392,40 +377,32 @@
 
             if (currentMode === 'signup') {
                 createUserWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
+                    .then(() => {
                         authModal.classList.remove('open');
-                        authForm.reset();
+                        window.location.href = "dashboard.html"; 
                     })
-                    .catch((error) => {
-                        alert("Sign Up Error: " + error.message);
-                    });
+                    .catch((error) => alert(error.message));
             } else {
                 signInWithEmailAndPassword(auth, email, password)
-                    .then((userCredential) => {
+                    .then(() => {
                         authModal.classList.remove('open');
-                        authForm.reset();
+                        window.location.href = "dashboard.html"; 
                     })
-                    .catch((error) => {
-                        alert("Login Error: " + error.message);
-                    });
+                    .catch((error) => alert(error.message));
             }
         });
 
-        // Google Authentication Logic
         document.getElementById('google-auth-btn').addEventListener('click', () => {
             signInWithPopup(auth, googleProvider)
-                .then((result) => {
+                .then(() => {
                     authModal.classList.remove('open');
+                    window.location.href = "dashboard.html"; 
                 })
-                .catch((error) => {
-                    alert("Google Auth Error: " + error.message);
-                });
+                .catch((error) => alert(error.message));
         });
 
-        // Live Authentication State Listener
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is authenticated
                 const displayName = user.displayName || user.email.split('@')[0];
                 authControls.innerHTML = `
                     <span class="user-status">Hi, ${displayName}</span>
@@ -435,13 +412,10 @@
                     signOut(auth);
                 });
             } else {
-                // User is signed out, restore clean standard navigation buttons
                 authControls.innerHTML = `
                     <button class="btn-login" id="open-login-rebuilt">Log In</button>
                     <button class="btn-signup" id="open-signup-rebuilt">Sign Up</button>
                 `;
-                
-                // Re-bind listeners to dynamically recreated buttons
                 document.getElementById('open-signup-rebuilt').addEventListener('click', () => {
                     currentMode = 'signup';
                     modalTitle.innerText = 'Create Account';
@@ -459,21 +433,16 @@
     </script>
 
     <script>
-        // Smooth toggle logic for mobile hamburger view
         function toggleMenu() {
             const navLinks = document.querySelector('.nav-links');
             navLinks.classList.toggle('active');
         }
 
-        // ========================================================
-        // JAVASCRIPT COUNTDOWN ENGINE FOR YOUR EXACT DATES
-        // ========================================================
         const votingDate = new Date("November 7, 2026 00:00:00").getTime();
         const eventDate = new Date("January 9, 2027 18:00:00").getTime();
 
-        const runClocks = setInterval(function() {
+        setInterval(function() {
             const now = new Date().getTime();
-
             const distToVoting = votingDate - now;
             const distToEvent = eventDate - now;
 
@@ -498,8 +467,7 @@
             } else {
                 document.getElementById("event-clock").innerHTML = "EVENT LIVE STREAMS NOW!";
             }
-
         }, 1000);
     </script>
 </body>
-                </html>
+    </html>
