@@ -68,6 +68,155 @@
             color: #e2e8f0;
             margin-top: 5px;
         }
+
+        /* --- AUTH BUTTONS & MODAL STYLES --- */
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .btn-login {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .btn-login:hover {
+            border-color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .btn-signup {
+            background: #ff007f;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
+            transition: all 0.2s ease;
+        }
+        .btn-signup:hover {
+            background: #e60072;
+            transform: translateY(-1px);
+        }
+        .user-status {
+            color: #00f0ff;
+            font-weight: bold;
+            font-family: sans-serif;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal Window Overlay */
+        .auth-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .auth-modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background: #11131c;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8);
+            position: relative;
+            color: #ffffff;
+            font-family: sans-serif;
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: #a0aec0;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .modal-content h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .auth-form input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 1rem;
+        }
+        .auth-form input:focus {
+            outline: none;
+            border-color: #00f0ff;
+        }
+        .btn-submit {
+            background: #00f0ff;
+            color: #11131c;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-submit:hover {
+            background: #00d8e6;
+        }
+        .divider-text {
+            text-align: center;
+            color: #a0aec0;
+            margin: 15px 0;
+            font-size: 0.85rem;
+            position: relative;
+        }
+        .btn-google {
+            background: #ffffff;
+            color: #333333;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s;
+        }
+        .btn-google:hover {
+            background: #e6e6e6;
+        }
     </style>
 </head>
 <body>
@@ -82,6 +231,12 @@
             <li><a href="nominations.html">Nominations</a></li>
             <li><a href="about.html">About</a></li>
         </ul>
+
+        <!-- Dynamic Auth Buttons Container -->
+        <div class="auth-buttons" id="auth-controls">
+            <button class="btn-login" id="open-login">Log In</button>
+            <button class="btn-signup" id="open-signup">Sign Up</button>
+        </div>
 
         <div class="hamburger" onclick="toggleMenu()">
             <span></span>
@@ -133,6 +288,27 @@
         </div>
     </main>
 
+    <!-- Authentication Pop-up Modal -->
+    <div class="auth-modal" id="auth-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <h2 id="modal-title">Create Account</h2>
+            
+            <form class="auth-form" id="auth-form">
+                <input type="email" id="auth-email" placeholder="Email Address" required>
+                <input type="password" id="auth-password" placeholder="Password" required>
+                <button type="submit" class="btn-submit" id="submit-auth-btn">Sign Up</button>
+            </form>
+
+            <div class="divider-text">OR</div>
+
+            <button class="btn-google" id="google-auth-btn">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" width="18" height="18">
+                Continue with Google
+            </button>
+        </div>
+    </div>
+
     <footer class="footer">
         <div class="footer-content">
             <p class="copyright">&copy; 2026 The Keyframe Awards Network. All rights reserved.</p>
@@ -146,6 +322,142 @@
         </div>
     </footer>
 
+    <!-- Firebase SDK Modular Scripts Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword, 
+            GoogleAuthProvider, 
+            signInWithPopup,
+            onAuthStateChanged,
+            signOut 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        // Embedded Web Configuration Object
+        const firebaseConfig = {
+          apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+          authDomain: "keyframe-awards.firebaseapp.com",
+          projectId: "keyframe-awards",
+          storageBucket: "keyframe-awards.firebasestorage.app",
+          messagingSenderId: "882083630221",
+          appId: "1:882083630221:web:629df7642fdf822018a6c4",
+          measurementId: "G-Z8HX6L8WEG"
+        };
+
+        // Initialize App & Services
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        // UI Element Selectors
+        const authModal = document.getElementById('auth-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const authForm = document.getElementById('auth-form');
+        const authEmail = document.getElementById('auth-email');
+        const authPassword = document.getElementById('auth-password');
+        const submitAuthBtn = document.getElementById('submit-auth-btn');
+        const authControls = document.getElementById('auth-controls');
+        
+        let currentMode = 'signup'; // Can toggle between 'signup' or 'login'
+
+        // Modal Presentation Management
+        document.getElementById('open-signup').addEventListener('click', () => {
+            currentMode = 'signup';
+            modalTitle.innerText = 'Create Account';
+            submitAuthBtn.innerText = 'Sign Up';
+            authModal.classList.add('open');
+        });
+
+        document.getElementById('open-login').addEventListener('click', () => {
+            currentMode = 'login';
+            modalTitle.innerText = 'Welcome Back';
+            submitAuthBtn.innerText = 'Log In';
+            authModal.classList.add('open');
+        });
+
+        document.getElementById('close-modal').addEventListener('click', () => {
+            authModal.classList.remove('open');
+            authForm.reset();
+        });
+
+        // Form Submission Logic (Email + Password)
+        authForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = authEmail.value;
+            const password = authPassword.value;
+
+            if (currentMode === 'signup') {
+                createUserWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        authModal.classList.remove('open');
+                        authForm.reset();
+                    })
+                    .catch((error) => {
+                        alert("Sign Up Error: " + error.message);
+                    });
+            } else {
+                signInWithEmailAndPassword(auth, email, password)
+                    .then((userCredential) => {
+                        authModal.classList.remove('open');
+                        authForm.reset();
+                    })
+                    .catch((error) => {
+                        alert("Login Error: " + error.message);
+                    });
+            }
+        });
+
+        // Google Authentication Logic
+        document.getElementById('google-auth-btn').addEventListener('click', () => {
+            signInWithPopup(auth, googleProvider)
+                .then((result) => {
+                    authModal.classList.remove('open');
+                })
+                .catch((error) => {
+                    alert("Google Auth Error: " + error.message);
+                });
+        });
+
+        // Live Authentication State Listener
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is authenticated
+                const displayName = user.displayName || user.email.split('@')[0];
+                authControls.innerHTML = `
+                    <span class="user-status">Hi, ${displayName}</span>
+                    <button class="btn-login" id="logout-btn">Log Out</button>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', () => {
+                    signOut(auth);
+                });
+            } else {
+                // User is signed out, restore clean standard navigation buttons
+                authControls.innerHTML = `
+                    <button class="btn-login" id="open-login-rebuilt">Log In</button>
+                    <button class="btn-signup" id="open-signup-rebuilt">Sign Up</button>
+                `;
+                
+                // Re-bind listeners to dynamically recreated buttons
+                document.getElementById('open-signup-rebuilt').addEventListener('click', () => {
+                    currentMode = 'signup';
+                    modalTitle.innerText = 'Create Account';
+                    submitAuthBtn.innerText = 'Sign Up';
+                    authModal.classList.add('open');
+                });
+                document.getElementById('open-login-rebuilt').addEventListener('click', () => {
+                    currentMode = 'login';
+                    modalTitle.innerText = 'Welcome Back';
+                    submitAuthBtn.innerText = 'Log In';
+                    authModal.classList.add('open');
+                });
+            }
+        });
+    </script>
+
     <script>
         // Smooth toggle logic for mobile hamburger view
         function toggleMenu() {
@@ -154,20 +466,17 @@
         }
 
         // ========================================================
-        // NEW: JAVASCRIPT COUNTDOWN ENGINE FOR YOUR EXACT DATES
+        // JAVASCRIPT COUNTDOWN ENGINE FOR YOUR EXACT DATES
         // ========================================================
-        // Locked-In Target Dates: Voting (Nov 7, 2026) | Virtual Show (Jan 9, 2027)
         const votingDate = new Date("November 7, 2026 00:00:00").getTime();
-        const eventDate = new Date("January 9, 2027 18:00:00").getTime(); // Change 18:00 to your preferred broadcast time!
+        const eventDate = new Date("January 9, 2027 18:00:00").getTime();
 
         const runClocks = setInterval(function() {
             const now = new Date().getTime();
 
-            // Calculate the time differences
             const distToVoting = votingDate - now;
             const distToEvent = eventDate - now;
 
-            // Helper function to keep numbers double-digit (adds zero if single digit)
             function formatTime(distance) {
                 const d = Math.floor(distance / (1000 * 60 * 60 * 24));
                 const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -176,16 +485,14 @@
                 return `${d < 10 ? '0':''}${d}d : ${h < 10 ? '0':''}${h}h : ${m < 10 ? '0':''}${m}m : ${s < 10 ? '0':''}${s}s`;
             }
 
-            // Update Main Voting Clock
             if (distToVoting > 0) {
                 document.getElementById("main-clock").innerHTML = formatTime(distToVoting);
             } else {
                 document.getElementById("stage-title").innerHTML = "VOTING IS NOW LIVE!";
-                document.getElementById("main-clock").style.color = "#ff007f"; // Changes text to pink when live!
+                document.getElementById("main-clock").style.color = "#ff007f";
                 document.getElementById("main-clock").innerHTML = "VOTE NOW";
             }
 
-            // Update Secondary Event Clock
             if (distToEvent > 0) {
                 document.getElementById("event-clock").innerHTML = formatTime(distToEvent);
             } else {
@@ -193,7 +500,6 @@
             }
 
         }, 1000);
-        // ========================================================
     </script>
 </body>
-    </html>
+                </html>
