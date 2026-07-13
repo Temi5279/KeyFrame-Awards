@@ -1,172 +1,47 @@
-/* --- POPUP MODAL ENGINE --- */
-.modal-overlay {
-    position: fixed;
-    top: 0;
+/* GOOGLE SIGN IN BUTTON AND DIVIDER styling */
+.divider {
+    text-align: center;
+    position: relative;
+    margin: 20px 0;
+}
+.divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
     left: 0;
     width: 100%;
-    height: 100%;
-    background: rgba(5, 0, 10, 0.85);
-    backdrop-filter: blur(8px);
-    z-index: 2000;
+    height: 1px;
+    background: rgba(157, 0, 255, 0.2);
+    z-index: 1;
+}
+.divider span {
+    background: var(--royal-purple);
+    padding: 0 10px;
+    position: relative;
+    z-index: 2;
+    color: #666;
+    font-size: 0.8rem;
+}
+.btn-google {
+    width: 100%;
+    background: #ffffff;
+    color: #333333;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.modal-overlay.open {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.modal-box {
-    background: var(--royal-purple);
-    border: 2px solid var(--neon-purple);
-    box-shadow: 0 0 25px rgba(157, 0, 255, 0.5);
-    border-radius: 12px;
-    width: 90%;
-    max-width: 420px;
-    padding: 35px 25px;
-    position: relative;
-    transform: scale(0.9);
-    transition: transform 0.3s ease-in-out;
-}
-
-.modal-overlay.open .modal-box {
-    transform: scale(1);
-}
-
-.close-modal {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: #888;
-    font-size: 2rem;
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.close-modal:hover {
-    color: var(--neon-pink);
-}
-
-/* FORM ELEMENTS */
-.form-container h2 {
-    font-size: 1.8rem;
-    color: var(--text-white);
-    margin-bottom: 5px;
-    text-shadow: 0 0 8px var(--neon-purple);
-}
-
-.form-subtitle {
-    font-size: 0.9rem;
-    color: #aaa;
-    margin-bottom: 25px;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    margin-bottom: 18px;
-    text-align: left;
-}
-
-.input-group label {
-    font-size: 0.85rem;
-    color: var(--neon-cyan);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.input-group input {
-    background: rgba(13, 0, 26, 0.6);
-    border: 1px solid rgba(157, 0, 255, 0.4);
-    padding: 12px;
-    border-radius: 6px;
-    color: white;
-    font-size: 1rem;
-    outline: none;
-    transition: border 0.3s, box-shadow 0.3s;
-}
-
-.input-group input:focus {
-    border-color: var(--neon-cyan);
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-}
-
-/* Date input theme fix for black/purple designs */
-input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-    cursor: pointer;
-}
-
-.btn-submit {
-    width: 100%;
-    background: linear-gradient(45deg, var(--neon-purple), var(--neon-pink));
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-    box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 0, 127, 0.5);
-}
-
-.form-footer {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
     gap: 10px;
-    font-size: 0.85rem;
+    transition: background 0.2s;
 }
-
-.form-footer a {
-    color: var(--neon-cyan);
-    text-decoration: none;
-    transition: text-shadow 0.2s;
+.btn-google:hover {
+    background: #eeeeee;
 }
-
-.form-footer a:hover {
-    text-shadow: 0 0 5px var(--neon-cyan);
-}
-
-.form-footer p {
-    color: #888;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.user-welcome {
-    font-size: 0.9rem;
-    color: var(--neon-cyan);
-    font-weight: bold;
-    border: 1px solid rgba(0, 240, 255, 0.3);
-    padding: 6px 12px;
-    border-radius: 20px;
-    background: rgba(0, 240, 255, 0.05);
-}
-
-/* Header button conversions to handle clicks smoothly */
-.auth-buttons button {
-    background: none;
-    color: white;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
+.btn-google i {
+    color: #4285F4;
+    font-size: 1.1rem;
 }
