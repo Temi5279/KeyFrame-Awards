@@ -4,406 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Keyframe Awards</title>
+    <!-- Link to Stylesheet -->
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Premium Countdown Section Styles */
-        .countdown-board {
-            background: rgba(17, 19, 28, 0.85);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 25px;
-            max-width: 450px;
-            width: 90%;
-            margin: -30px auto 40px auto;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            text-align: center;
-            position: relative;
-            z-index: 10;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .timer-stage h3 {
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            color: #a0aec0;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            margin-top: 5px;
-        }
-
-        .stage-badge {
-            background: #ff007f;
-            color: #fff;
-            font-size: 0.65rem;
-            font-weight: bold;
-            padding: 4px 10px;
-            border-radius: 4px;
-            letter-spacing: 1px;
-            display: inline-block;
-            margin-bottom: 10px;
-            box-shadow: 0 0 10px rgba(255, 0, 127, 0.4);
-        }
-
-        .clock-display {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #00f0ff;
-            text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
-            margin-top: 5px;
-        }
-
-        .timeline-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-            margin: 20px 0;
-        }
-
-        .sub-clock-display {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #e2e8f0;
-            margin-top: 5px;
-        }
-
-        /* --- AUTH BUTTONS & MODAL STYLES --- */
-        .auth-buttons {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            margin-left: 20px;
-        }
-        .btn-login {
-            background: transparent;
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-        .btn-login:hover {
-            border-color: #ffffff;
-            background: rgba(255, 255, 255, 0.1);
-        }
-        .btn-signup {
-            background: #ff007f;
-            color: #ffffff;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);
-            transition: all 0.2s ease;
-        }
-        .btn-signup:hover {
-            background: #e60072;
-            transform: translateY(-1px);
-        }
-        
-        /* Interactive clickable username styling */
-        .user-status-btn {
-            background: transparent;
-            color: #00f0ff;
-            border: none;
-            font-weight: bold;
-            font-family: sans-serif;
-            font-size: 0.9rem;
-            cursor: pointer;
-            text-decoration: underline;
-            transition: color 0.2s;
-            padding: 0;
-        }
-        .user-status-btn:hover {
-            color: #00d8e6;
-        }
-        
-        /* Modal Window Overlay Configurations */
-        .auth-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .auth-modal.open {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .modal-content {
-            background: #11131c;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8);
-            position: relative;
-            color: #ffffff;
-            font-family: sans-serif;
-        }
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: transparent;
-            border: none;
-            color: #a0aec0;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        .modal-content h2 {
-            margin-top: 0;
-            margin-bottom: 20px;
-            color: #ffffff;
-            text-align: center;
-            letter-spacing: 1px;
-        }
-        .auth-form {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .auth-form input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px;
-            border-radius: 6px;
-            color: #ffffff;
-            font-size: 1rem;
-        }
-        .auth-form input:focus {
-            outline: none;
-            border-color: #00f0ff;
-        }
-        .btn-submit {
-            background: #00f0ff;
-            color: #11131c;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .btn-submit:hover {
-            background: #00d8e6;
-        }
-        .divider-text {
-            text-align: center;
-            color: #a0aec0;
-            margin: 15px 0;
-            font-size: 0.85rem;
-        }
-        .btn-google {
-            background: #ffffff;
-            color: #333333;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            transition: background 0.2s;
-        }
-        .btn-google:hover {
-            background: #e6e6e6;
-        }
-
-        /* Danger/Account Settings Modal Elements */
-        .danger-zone {
-            border: 1px solid #ff4d4d;
-            padding: 15px;
-            border-radius: 8px;
-            background: rgba(255, 77, 77, 0.05);
-            margin-top: 20px;
-            text-align: left;
-        }
-        .btn-delete-account {
-            background: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-            width: 100%;
-            transition: background 0.2s;
-        }
-        .btn-delete-account:hover {
-            background: #e60000;
-        }
-        .profile-info {
-            text-align: center;
-            margin-bottom: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-    </style>
+    <!-- FontAwesome for Social Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <nav class="navbar">
-        <div class="nav-logo">THE KEYFRAME AWARDS</div>
+    <!-- HEADER / NAVIGATION -->
+    <header class="navbar">
+        <div class="logo">Keyframe Awards</div>
         
-        <!-- RESTORED: All your classic navigation links are here -->
-        <ul class="nav-links">
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="vote.html">Vote</a></li>
-            <li><a href="livestream.html">Live Stream</a></li>
-            <li><a href="nominations.html">Nominations</a></li>
-            <li><a href="about.html">About</a></li>
-        </ul>
-
-        <!-- Authentication Control Block -->
-        <div class="auth-buttons" id="auth-controls">
-            <button class="btn-login" id="open-login">Log In</button>
-            <button class="btn-signup" id="open-signup">Sign Up</button>
+        <!-- Hamburger Menu Icon for Mobile -->
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </div>
 
-        <div class="hamburger" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+        <!-- Navigation Links -->
+        <nav class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="nominations.html">Nominations</a>
+            <a href="vote.html">Vote</a>
+            <a href="live.html">Live Stream</a>
+            <a href="about.html">About</a>
+            <div class="auth-buttons">
+                <a href="#" class="btn-login">Login</a>
+                <a href="#" class="btn-signup">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION WITH VIDEO BACKGROUND -->
+    <section class="hero">
+        <video autoplay loop muted playsinline class="video-bg">
+            <source src="keyframe award video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+        
+        <div class="hero-content">
+            <h1 class="animated-gradient-text">The Keyframe Awards</h1>
+            <p class="hero-subtitle">Celebrating Excellence in Motion & Creativity</p>
+            
+            <!-- COUNTDOWN TIMER -->
+            <div class="countdown-container">
+                <h3>Nominations Open In</h3>
+                <div id="countdown">
+                    <div class="time-box"><span id="days">00</span><p>Days</p></div>
+                    <div class="time-box"><span id="hours">00</span><p>Hours</p></div>
+                    <div class="time-box"><span id="minutes">00</span><p>Minutes</p></div>
+                    <div class="time-box"><span id="seconds">00</span><p>Seconds</p></div>
+                </div>
+            </div>
         </div>
-    </nav>
-
-    <section class="hero-section">
-      <video autoplay loop muted playsinline class="hero-video-bg">
-        <source src="watermark-removed-Trophy_spinning_on_purple_backgr…_202606211308.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-
-      <div class="hero-overlay-content">
-        <h1>THE KEYFRAME AWARDS</h1>
-        <p>This isn't just an award show. It's the ultimate battleground where the world's most powerful communities clash.</p>
-      </div>
     </section>
 
-    <div class="countdown-board">
-        <div class="timer-stage active-stage">
-            <span class="stage-badge">UP NEXT</span>
-            <h3 id="stage-title">VOTING LIVE OPENS IN</h3>
-            <div id="main-clock" class="clock-display">00d : 00h : 00m : 00s</div>
+    <!-- INFO SECTION SCROLLING DOWN -->
+    <section class="info-section">
+        <h2>About The Event</h2>
+        <p>Welcome to the ultimate stage where visual creators, motion designers, and editors get their flowers. The Keyframe Awards honors the best of the best pushing the boundaries of frame-by-frame masterpieces.</p>
+    </section>
+
+    <!-- FOOTER LAYER -->
+    <footer>
+        <!-- Row 1: Legal & Support Links -->
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Cookie Preferences</a>
+            <a href="#">Contact Support</a>
         </div>
 
-        <div class="timeline-divider"></div>
-
-        <div class="timer-stage future-stage">
-            <h3>VIRTUAL EVENT LIVE IN</h3>
-            <div id="event-clock" class="sub-clock-display">00d : 00h : 00m : 00s</div>
-        </div>
-    </div>
-
-    <main class="features-grid">
-        <div class="card">
-            <h3>The Nomination Wars</h3>
-            <p>The power is in your hands. Submit and rally behind your favorite creators, editors, and shows to lock them into the official brackets.</p>
+        <!-- Row 2: Social Media Icons -->
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://twitter.com" target="_blank"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://threads.net" target="_blank"><i class="fab fa-threads"></i></a>
+            <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
 
-        <div class="card">
-            <h3>Live Voting</h3>
-            <p>No bots. No spam. A completely fair, transparent, and explosive voting system where every single unique device vote shifts the live leaderboard instantly.</p>
-        </div>
-
-        <div class="card">
-            <h3>The Ultimate Broadcast</h3>
-            <p>Coming this January. An elite live event streaming live on our custom network, featuring exclusive guest content and world-class creator showcases.</p>
-        </div>
-    </main>
-
-    <!-- Modal 1: Log In & Sign Up Modal Window -->
-    <div class="auth-modal" id="auth-modal">
-        <div class="modal-content">
-            <button class="close-modal" id="close-modal">&times;</button>
-            <h2 id="modal-title">Create Account</h2>
-            
-            <form class="auth-form" id="auth-form">
-                <input type="email" id="auth-email" placeholder="Email Address" required>
-                <input type="password" id="auth-password" placeholder="Password" required>
-                <button type="submit" class="btn-submit" id="submit-auth-btn">Sign Up</button>
-            </form>
-
-            <div class="divider-text">OR</div>
-
-            <button class="btn-google" id="google-auth-btn">
-                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" width="18" height="18">
-                Continue with Google
-            </button>
-        </div>
-    </div>
-
-    <!-- NEW Modal 2: Floating Account Settings Overlay Popup -->
-    <div class="auth-modal" id="settings-modal">
-        <div class="modal-content">
-            <button class="close-modal" id="close-settings-modal">&times;</button>
-            <h2>Voter Settings</h2>
-            
-            <div class="profile-info">
-                <div style="font-size: 0.85rem; color: #a0aec0; margin-bottom: 4px;">Registered Email</div>
-                <div id="settings-email-display" style="font-weight: bold; color: #00f0ff; word-break: break-all;">voter@domain.com</div>
-                <div style="margin-top: 10px; font-size: 0.75rem; color: #ff007f; letter-spacing: 1px; font-weight: bold;">✓ VERIFIED VOTER RECORD</div>
-            </div>
-
-            <div class="danger-zone">
-                <h3 style="color: #ff4d4d; margin-top:0; margin-bottom: 5px; font-size: 1rem;">Danger Zone</h3>
-                <p style="color: #a0aec0; font-size: 0.8rem; margin: 0; line-height: 1.4;">Deleting your profile clears your voter registration and deletes your record permanently from our authentication logs.</p>
-                <button class="btn-delete-account" id="delete-profile-btn">Delete Account Permanently</button>
-            </div>
-        </div>
-    </div>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <p class="copyright">&copy; 2026 The Keyframe Awards Network. All rights reserved.</p>
-            <ul class="footer-links">
-                <li><a href="privacy.html">Privacy Policy</a></li>
-                <li><a href="terms.html">Terms of Service</a></li>
-                <li><a href="cookies.html">Cookie Preferences</a></li>
-                <li><a href="about.html">Contact Support</a></li>
-            </ul>
-            <p class="disclaimer">This platform is an independent fan-voted awards network. All community edits, fan submissions, and registered content belong to their respective creators.</p>
+        <!-- Row 3: Copyright -->
+        <div class="copyright">
+            <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Firebase System Management Layer -->
+    <!-- Firebase Scripts Config Block -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
-        import { 
-            getAuth, 
-            setPersistence,
-            browserLocalPersistence,
-            createUserWithEmailAndPassword, 
-            signInWithEmailAndPassword, 
-            GoogleAuthProvider, 
-            signInWithPopup,
-            onAuthStateChanged,
-            signOut,
-            deleteUser
-        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
           apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
@@ -415,121 +108,44 @@
           measurementId: "G-Z8HX6L8WEG"
         };
 
-        // Initialize App Ecosystem
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
-        const auth = getAuth(app);
-        const googleProvider = new GoogleAuthProvider();
+    </script>
 
-        // Enforce Local Persistence (Remember me configuration)
-        setPersistence(auth, browserLocalPersistence)
-          .catch((error) => console.error("Persistence fail:", error));
+    <!-- JavaScript Navigation & Countdown Code -->
+    <script>
+        // Hamburger Menu Toggle
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
 
-        // UI Framework Selectors
-        const authModal = document.getElementById('auth-modal');
-        const settingsModal = document.getElementById('settings-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const authForm = document.getElementById('auth-form');
-        const authEmail = document.getElementById('auth-email');
-        const authPassword = document.getElementById('auth-password');
-        const submitAuthBtn = document.getElementById('submit-auth-btn');
-        const authControls = document.getElementById('auth-controls');
-        
-        let currentMode = 'signup';
-
-        // Listeners for standard Auth modal
-        document.getElementById('open-signup').addEventListener('click', () => {
-            currentMode = 'signup';
-            modalTitle.innerText = 'Create Account';
-            submitAuthBtn.innerText = 'Sign Up';
-            authModal.classList.add('open');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('is-active');
         });
 
-        document.getElementById('open-login').addEventListener('click', () => {
-            currentMode = 'login';
-            modalTitle.innerText = 'Welcome Back';
-            submitAuthBtn.innerText = 'Log In';
-            authModal.classList.add('open');
-        });
+        // Live Countdown Timer to Nov 4, 2026
+        function updateCountdown() {
+            const targetDate = new Date("November 4, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const difference = targetDate - now;
 
-        document.getElementById('close-modal').addEventListener('click', () => {
-            authModal.classList.remove('open');
-            authForm.reset();
-        });
-
-        // Listeners for Settings popup modal
-        document.getElementById('close-settings-modal').addEventListener('click', () => {
-            settingsModal.classList.remove('open');
-        });
-
-        // Email Submission Processes
-        authForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = authEmail.value;
-            const password = authPassword.value;
-
-            if (currentMode === 'signup') {
-                createUserWithEmailAndPassword(auth, email, password)
-                    .then(() => authModal.classList.remove('open'))
-                    .catch((error) => alert("Sign Up Error: " + error.message));
-            } else {
-                signInWithEmailAndPassword(auth, email, password)
-                    .then(() => authModal.classList.remove('open'))
-                    .catch((error) => alert("Login Error: " + error.message));
+            if (difference <= 0) {
+                document.getElementById('countdown').innerHTML = "<h4>Nominations are Open!</h4>";
+                return;
             }
-        });
 
-        // Google Engine Sign-In Process
-        document.getElementById('google-auth-btn').addEventListener('click', () => {
-            signInWithPopup(auth, googleProvider)
-                .then(() => authModal.classList.remove('open'))
-                .catch((error) => alert("Google Auth Error: " + error.message));
-        });
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
-        // Core Session Watcher Engine
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const displayName = user.displayName || user.email.split('@')[0];
-                
-                // Displays clickable name inside the top navbar control zone
-                authControls.innerHTML = `
-                    <button class="user-status-btn" id="open-settings-btn">Hi, ${displayName}</button>
-                    <button class="btn-login" id="logout-btn">Log Out</button>
-                `;
-                
-                // Mount events on dynamically painted buttons
-                document.getElementById('logout-btn').addEventListener('click', () => {
-                    signOut(auth);
-                });
-
-                document.getElementById('open-settings-btn').addEventListener('click', () => {
-                    document.getElementById('settings-email-display').innerText = user.email;
-                    settingsModal.classList.add('open');
-                });
-
-            } else {
-                // If logged out completely, revert navbar back to standard options
-                authControls.innerHTML = `
-                    <button class="btn-login" id="open-login-rebuilt">Log In</button>
-                    <button class="btn-signup" id="open-signup-rebuilt">Sign Up</button>
-                `;
-                
-                document.getElementById('open-signup-rebuilt').addEventListener('click', () => {
-                    currentMode = 'signup';
-                    modalTitle.innerText = 'Create Account';
-                    submitAuthBtn.innerText = 'Sign Up';
-                    authModal.classList.add('open');
-                });
-                document.getElementById('open-login-rebuilt').addEventListener('click', () => {
-                    currentMode = 'login';
-                    modalTitle.innerText = 'Welcome Back';
-                    submitAuthBtn.innerText = 'Log In';
-                    authModal.classList.add('open');
-                });
-            }
-        });
-
-        // Destructive Profile Wipe Actions (Wipes from user logs)
-        document.getElementById('delete-profile-btn').addEventListener('click', () => {
-            const confirmation = confirm("Are you completely sure you want to delete your Keyframe Awards registration? This action is permanent and cannot be undone.");
-          
+            document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+            document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+            document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+        }
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
