@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voting Test System | Keyframe Awards</title>
+    <title>Voting Portal | Keyframe Awards</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .test-container {
@@ -15,6 +15,32 @@
             border-radius: 16px;
             text-align: center;
             box-shadow: 0 0 20px rgba(157, 0, 255, 0.1);
+        }
+
+        /* Hub / Group Buttons */
+        .hub-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .hub-card {
+            background: rgba(157, 0, 255, 0.1);
+            border: 2px solid rgba(157, 0, 255, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .hub-card:hover {
+            border-color: var(--neon-cyan);
+            background: rgba(0, 240, 255, 0.1);
+            transform: translateY(-2px);
         }
         
         .nominee-box {
@@ -30,7 +56,13 @@
             cursor: pointer;
         }
 
-        .nominee-box:hover {
+        .nominee-box.already-voted {
+            opacity: 0.6;
+            pointer-events: none;
+            border-color: gray;
+        }
+
+        .nominee-box:not(.already-voted):hover {
             border-color: var(--neon-cyan);
             transform: scale(1.02);
         }
@@ -64,10 +96,9 @@
             padding: 10px 20px;
             font-weight: bold;
             border-radius: 20px;
-            pointer-events: none; /* Clicking anywhere on the box votes */
+            pointer-events: none;
         }
 
-        /* Progress tracker bar */
         .progress-container {
             width: 100%;
             background-color: rgba(255, 255, 255, 0.1);
@@ -83,56 +114,80 @@
             background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan));
             transition: width 0.4s ease;
         }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ccc;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+        .back-btn:hover {
+            color: #fff;
+            border-color: #fff;
+        }
     </style>
 </head>
 <body>
 
     <header class="navbar">
-        <div class="logo">Keyframe Test</div>
+        <div class="logo">Keyframe Awards</div>
         <nav class="nav-links">
             <a href="index.html">Back Home</a>
         </nav>
     </header>
 
     <main class="test-container">
-        <h2 class="animated-gradient-text" style="font-size: 2rem; margin-bottom: 10px;">Voting Test Portal</h2>
-        
         <!-- Live Auth Status Block -->
-        <div id="auth-status" style="margin: 20px 0; padding: 10px; border-radius: 8px; background: rgba(255, 0, 127, 0.1); border: 1px solid var(--neon-pink);">
+        <div id="auth-status" style="margin-bottom: 20px; padding: 10px; border-radius: 8px; background: rgba(255, 0, 127, 0.1); border: 1px solid var(--neon-pink);">
             Checking account status...
         </div>
 
-        <!-- Progress Tracker -->
-        <div id="progress-wrapper" style="display: none;">
+        <!-- SCREEN 1: HUB SELECTION -->
+        <div id="hub-selection-screen" style="display: none;">
+            <h2 class="animated-gradient-text" style="font-size: 1.8rem; margin-bottom: 10px;">Select a Voting Zone</h2>
+            <p style="color: #ccc; font-size: 0.95rem; margin-bottom: 25px;">Pick a category group to vote in. You can vote in as many zones as you like!</p>
+            <div class="hub-grid">
+                <div class="hub-card" onclick="startVotingHub('music')">🎵 Music Zone</div>
+                <div class="hub-card" onclick="startVotingHub('gaming')">🎮 Gaming & Streaming Zone</div>
+                <div class="hub-card" onclick="startVotingHub('editing')">🎬 Creative & Editing Zone</div>
+            </div>
+        </div>
+
+        <!-- SCREEN 2: VOTING BOOTH -->
+        <div id="voting-booth-screen" style="display: none;">
+            <button class="back-btn" onclick="showHubSelection()">← Switch Zones</button>
+            
             <div class="progress-container">
                 <div id="progress-indicator" class="progress-bar"></div>
             </div>
-            <div id="category-step" style="font-size: 0.9rem; color: #aaa; text-transform: uppercase; letter-spacing: 1px;">Category 1 of 3</div>
-        </div>
+            <div id="category-step" style="font-size: 0.9rem; color: #aaa; text-transform: uppercase; margin-bottom: 15px;">Category 1 of 3</div>
 
-        <div id="voting-booth" style="display: none;">
-            <h3 id="current-category-title" style="color: var(--text-white); text-align: left; margin-top: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">
-                Category: Loading...
+            <h3 id="current-category-title" style="color: var(--text-white); text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">
+                Category Name
             </h3>
             
             <div id="nominee-list">
-                <!-- Javascript will instantly draw nominees here -->
+                <!-- Nominees get injected here -->
             </div>
         </div>
 
+        <!-- SCREEN 3: HUB COMPLETION SCREEN -->
         <div id="completion-screen" style="display: none; padding: 40px 20px;">
-            <i class="fa-solid fa-circle-check" style="font-size: 4rem; color: #00ff66; text-shadow: 0 0 15px rgba(0, 255, 102, 0.4); margin-bottom: 20px;"></i>
-            <h3 style="color: #fff; font-size: 1.8rem; margin-bottom: 10px;">All Votes Submitted!</h3>
-            <p style="color: #ccc; margin-bottom: 30px;">Your votes were securely updated in your Cloud Firestore database in the background.</p>
-            <button class="vote-btn" style="pointer-events: auto;" onclick="window.location.reload()">Vote Again</button>
+            <h3 style="color: #00ff66; font-size: 1.8rem; margin-bottom: 10px;">Zone Completed! 🎉</h3>
+            <p style="color: #ccc; margin-bottom: 30px;">Your votes for this zone have been registered in our database.</p>
+            <button class="vote-btn" style="pointer-events: auto; background: var(--neon-pink); color: #fff;" onclick="showHubSelection()">Vote in Another Zone</button>
         </div>
     </main>
 
-    <!-- FIREBASE AND TRANSITION SCRIPT -->
+    <!-- FIREBASE CONSOLE CONNECTION -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, increment, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, increment, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = { 
             apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg", 
@@ -148,117 +203,176 @@
         const db = getFirestore(app);
 
         let currentUser = null;
+        let activeHubCategories = [];
         let currentCategoryIndex = 0;
+        let userVotedCategories = []; // Track already voted items securely from Firestore
 
-        // Our test categories database structure
-        const votingCategories = [
-            {
-                id: "best_editing_craft",
-                title: "Best Editing Craft",
-                nominees: [
-                    { name: "Creator Alpha", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" },
-                    { name: "Creator Beta", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" }
-                ]
-            },
-            {
-                id: "music_category",
-                title: "Music Category",
-                nominees: [
-                    { name: "Sync Wizard", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=150&q=80" },
-                    { name: "Lyric Master", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=150&q=80" }
-                ]
-            },
-            {
-                id: "meme_and_viral",
-                title: "Meme & Viral Culture",
-                nominees: [
-                    { name: "Shitpost King", img: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=150&q=80" },
-                    { name: "Trend Jumper", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" }
-                ]
-            }
-        ];
+        // Categories grouped by "Zones" (Hubs)
+        const hubsData = {
+            music: [
+                {
+                    id: "music_category",
+                    title: "Best Music Sync",
+                    nominees: [
+                        { name: "Sync Wizard", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=150&q=80" },
+                        { name: "Lyric Master", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=150&q=80" }
+                    ]
+                }
+            ],
+            gaming: [
+                {
+                    id: "meme_and_viral",
+                    title: "Meme & Viral Gaming Culture",
+                    nominees: [
+                        { name: "Shitpost King", img: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=150&q=80" },
+                        { name: "Trend Jumper", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" }
+                    ]
+                }
+            ],
+            editing: [
+                {
+                    id: "best_editing_craft",
+                    title: "Best Editing Craft",
+                    nominees: [
+                        { name: "Creator Alpha", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" },
+                        { name: "Creator Beta", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" }
+                    ]
+                }
+            ]
+        };
 
-        // Track user status
-        onAuthStateChanged(auth, (user) => {
+        // Track Login Status
+        onAuthStateChanged(auth, async (user) => {
             const authStatus = document.getElementById('auth-status');
-            const votingBooth = document.getElementById('voting-booth');
-            const progressWrapper = document.getElementById('progress-wrapper');
-
+            
             if (user) {
                 currentUser = user;
                 authStatus.style.borderColor = "var(--neon-cyan)";
                 authStatus.style.background = "rgba(0, 240, 255, 0.1)";
                 authStatus.innerHTML = `<span style="color: var(--neon-cyan)">✔ Logged in as: ${user.email}</span>`;
-                votingBooth.style.display = "block";
-                progressWrapper.style.display = "block";
-                renderCategory(); // Show first category!
+                
+                // Fetch user's existing history from Firestore to enforce strict block rules
+                await fetchUserVoteHistory();
+
+                showHubSelection();
             } else {
                 currentUser = null;
                 authStatus.style.borderColor = "var(--neon-pink)";
                 authStatus.style.background = "rgba(255, 0, 127, 0.1)";
-                authStatus.innerHTML = `<span style="color: var(--neon-pink)">❌ You must be logged in to cast a test vote. Please log in on the home page first!</span>`;
-                votingBooth.style.display = "none";
-                progressWrapper.style.display = "none";
+                authStatus.innerHTML = `<span style="color: var(--neon-pink)">❌ Log in on the homepage first to access the portal!</span>`;
+                document.getElementById('hub-selection-screen').style.display = "none";
+                document.getElementById('voting-booth-screen').style.display = "none";
+                document.getElementById('completion-screen').style.display = "none";
             }
         });
 
-        // Draws the current category on screen
+        // 1. Fetch user vote history directly from Firestore
+        async function fetchUserVoteHistory() {
+            if (!currentUser) return;
+            try {
+                const userDoc = await getDoc(doc(db, "user_votes", currentUser.uid));
+                if (userDoc.exists() && userDoc.data().votes) {
+                    // Extract list of all category IDs they have already voted in
+                    userVotedCategories = userDoc.data().votes.map(v => v.category);
+                } else {
+                    userVotedCategories = [];
+                }
+            } catch (err) {
+                console.error("Error loading vote history: ", err);
+            }
+        }
+
+        // 2. Go back to Hub Home
+        window.showHubSelection = function() {
+            document.getElementById('voting-booth-screen').style.display = "none";
+            document.getElementById('completion-screen').style.display = "none";
+            document.getElementById('hub-selection-screen').style.display = "block";
+        }
+
+        // 3. Start a Hub
+        window.startVotingHub = function(hubKey) {
+            activeHubCategories = hubsData[hubKey] || [];
+            currentCategoryIndex = 0;
+
+            if (activeHubCategories.length === 0) return;
+
+            document.getElementById('hub-selection-screen').style.display = "none";
+            document.getElementById('voting-booth-screen').style.display = "block";
+            renderCategory();
+        }
+
+        // 4. Render Current Active Category 
         function renderCategory() {
-            if (currentCategoryIndex >= votingCategories.length) {
-                // Done with all categories! Show final screen
-                document.getElementById('voting-booth').style.display = "none";
-                document.getElementById('progress-wrapper').style.display = "none";
+            if (currentCategoryIndex >= activeHubCategories.length) {
+                // Done with this hub!
+                document.getElementById('voting-booth-screen').style.display = "none";
                 document.getElementById('completion-screen').style.display = "block";
                 return;
             }
 
-            const currentCat = votingCategories[currentCategoryIndex];
+            const currentCat = activeHubCategories[currentCategoryIndex];
             
+            // Check if user has already voted in this category from Firestore history
+            const hasAlreadyVoted = userVotedCategories.includes(currentCat.id);
+
             // Update progress bar
-            const percent = ((currentCategoryIndex) / votingCategories.length) * 100;
+            const percent = (currentCategoryIndex / activeHubCategories.length) * 100;
             document.getElementById('progress-indicator').style.width = `${percent}%`;
-            document.getElementById('category-step').innerText = `Category ${currentCategoryIndex + 1} of ${votingCategories.length}`;
+            document.getElementById('category-step').innerText = `Category ${currentCategoryIndex + 1} of ${activeHubCategories.length}`;
 
             // Update title
-            document.getElementById('current-category-title').innerText = `Category: ${currentCat.title}`;
+            document.getElementById('current-category-title').innerText = currentCat.title;
 
-            // Redraw nominees list dynamically
+            // Render Nominees list
             const listContainer = document.getElementById('nominee-list');
             listContainer.innerHTML = "";
 
             currentCat.nominees.forEach(nom => {
                 const box = document.createElement('div');
-                box.className = "nominee-box";
+                box.className = `nominee-box ${hasAlreadyVoted ? 'already-voted' : ''}`;
                 box.innerHTML = `
                     <div class="nominee-info">
                         <img class="nominee-avatar" src="${nom.img}" alt="${nom.name}">
                         <span class="nominee-name">${nom.name}</span>
                     </div>
-                    <button class="vote-btn">Vote</button>
+                    <button class="vote-btn">${hasAlreadyVoted ? 'Voted' : 'Vote'}</button>
                 `;
                 
-                // Clicking the container votes and goes directly to the next screen!
-                box.onclick = () => {
-                    submitVoteInBackground(currentCat.id, nom.name);
-                };
+                // Only let them click if they haven't voted in this category yet
+                if (!hasAlreadyVoted) {
+                    box.onclick = () => {
+                        submitVote(currentCat.id, nom.name);
+                    };
+                }
 
                 listContainer.appendChild(box);
             });
+
+            // If they already voted, auto-skip to the next after 1.5 seconds so they don't get stuck!
+            if (hasAlreadyVoted) {
+                setTimeout(() => {
+                    currentCategoryIndex++;
+                    renderCategory();
+                }, 1500);
+            }
         }
 
-        // Silent Background submission
-        async function submitVoteInBackground(categoryId, nomineeName) {
+        // 5. Submit vote & slide to next
+        async function submitVote(categoryId, nomineeName) {
             if (!currentUser) return;
 
-            // 1. Instantly transition UI so user experiences zero lag
+            // Push category into our local history block array instantly so they can't double-click
+            userVotedCategories.push(categoryId);
+
+            // Instantly load next category visually
             currentCategoryIndex++;
             renderCategory();
 
-            // 2. Write to Firebase silently in the background
+            // Silently record to Firebase background
             try {
-                // Log vote history for this user
+                // Record secure transaction in history list
                 const userVoteRef = doc(db, "user_votes", currentUser.uid);
-                setDoc(userVoteRef, {
+                await setDoc(userVoteRef, {
                     votes: arrayUnion({
                         category: categoryId,
                         nominee: nomineeName,
@@ -266,14 +380,14 @@
                     })
                 }, { merge: true });
 
-                // Increment vote total tally
+                // Increment vote total
                 const tallyRef = doc(db, "tally", categoryId);
-                setDoc(tallyRef, {
+                await setDoc(tallyRef, {
                     [nomineeName]: increment(1)
                 }, { merge: true });
 
             } catch (error) {
-                console.error("Silent background write failed: ", error);
+                console.error("Database Save Error: ", error);
             }
         }
     </script>
