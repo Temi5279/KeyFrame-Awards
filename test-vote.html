@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Test System | Keyframe Awards</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .test-container {
+            max-width: 600px;
+            margin: 120px auto 60px auto;
+            padding: 30px;
+            background: rgba(26, 0, 51, 0.5);
+            border: 1px solid rgba(157, 0, 255, 0.2);
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(157, 0, 255, 0.1);
+        }
+        .nominee-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        .vote-btn {
+            background: var(--neon-cyan);
+            border: none;
+            color: #000;
+            padding: 8px 16px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .vote-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+        .status-message {
+            margin-top: 20px;
+            font-size: 0.95rem;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">Keyframe Test</div>
+        <nav class="nav-links">
+            <a href="index.html">Back Home</a>
+        </nav>
+    </header>
+
+    <main class="test-container">
+        <h2 class="animated-gradient-text" style="font-size: 2rem; margin-bottom: 10px;">Voting Test Portal</h2>
+        <p style="color: #ccc; font-size: 0.95rem;">Log in to test-submit real database votes. You have a max of 10 test votes total.</p>
+        
+        <!-- Live Auth Status Block -->
+        <div id="auth-status" style="margin: 20px 0; padding: 10px; border-radius: 8px; background: rgba(255, 0, 127, 0.1); border: 1px solid var(--neon-pink);">
+            Checking account status...
+        </div>
+
+        <div id="voting-booth" style="display: none;">
+            <h3 style="color: var(--text-white); text-align: left; margin-top: 30px;">Category: Best Editing Craft</h3>
+            
+            <div class="nominee-box">
+                <span>Creator Alpha</span>
+                <button class="vote-btn" onclick="submitTestVote('Creator Alpha')">Vote</button>
+            </div>
+            <div class="nominee-box">
+                <span>Creator Beta</span>
+                <button class="vote-btn" onclick="submitTestVote('Creator Beta')">Vote</button>
+            </div>
+
+            <div class="status-message" id="vote-tracker">Votes cast in this session: 0 / 10</div>
+        </div>
+
+        <div id="db-feedback" style="margin-top: 20px; color: #00ff66; font-weight: bold;"></div>
+    </main>
+
+    <!-- FIREBASE AND SCRIPT CONFIGURATION -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, updateDoc, increment, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Your exact app configuration
+        const firebaseConfig = { 
+            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg", 
+            authDomain: "keyframe-awards.firebaseapp.com", 
+            projectId: "keyframe-awards", 
+            storageBucket: "keyframe-awards.firebasestorage.app", 
+            messagingSenderId: "882083630221", 
+            appId: "1:882083630221:web:629df7642fdf822018a6c4" 
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUser = null;
+        let votesCasted = 0;
+
+        // Monitor Auth state
+        onAuthStateChanged(auth, (user) => {
+            const authStatus = document.getElementById('auth-status');
+            const votingBooth = document.getElementById('voting-booth');
+
+            if (user) {
+                currentUser = user;
+                authStatus.style.borderColor = "var(--neon-cyan)";
+                authStatus.style.background = "rgba(0, 240, 255, 0.1)";
+                authStatus.innerHTML = `<span style="color: var(--neon-cyan)">✔ Logged in as: ${user.email}</span>`;
+                votingBooth.style.display = "block";
+            } else {
+                currentUser = null;
+                authStatus.style.borderColor = "var(--neon-pink)";
+                authStatus.style.background = "rgba(255, 0, 127, 0.1)";
+                authStatus.innerHTML = `<span style="color: var(--neon-pink)">❌ You must be logged in to cast a test vote. Please log in on the home page first!</span>`;
+                votingBooth.style.display = "none";
+            }
+        });
+
+        // Expose vote function to the window
+        window.submitTestVote = async function(nomineeName) {
+            if (!currentUser) {
+                alert("Sign-in required to vote!");
+                return;
+            }
+
+            if (votesCasted >= 10) {
+                alert("Test limit reached! You can only cast 10 test votes.");
+                return;
+            }
+
+            const dbFeedback = document.getElementById('db-feedback');
+            dbFeedback.innerText = "Sending vote to Firebase Cloud Firestore...";
+
+            try {
+                // 1. Log the user's vote history to prevent duplicate cheating
+                const userVoteRef = doc(db, "user_votes", currentUser.uid);
+                await setDoc(userVoteRef, {
+                    votes: arrayUnion({
+                        nominee: nomineeName,
+                        timestamp: new Date().toISOString()
+                    })
+                }, { merge: true });
+
+                // 2. Increment the actual public total tally for the nominee
+                const tallyRef = doc(db, "tally", "best_editing_craft");
+                await setDoc(tallyRef, {
+                    [nomineeName]: increment(1)
+                }, { merge: true });
+
+                votesCasted++;
+                document.getElementById('vote-tracker').innerText = `Votes cast in this session: ${votesCasted} / 10`;
+                dbFeedback.innerText = `✔ Success! 1 vote registered in Cloud Firestore for ${nomineeName}!`;
+                
+                setTimeout(() => { dbFeedback.innerText = ""; }, 4000);
+
+            } catch (error) {
+                console.error("Firebase Error: ", error);
+                dbFeedback.style.color = "var(--neon-pink)";
+                dbFeedback.innerText = `Error sending vote: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+  </html>
