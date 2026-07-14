@@ -3,140 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nominations | The Keyframe Awards</title>
+    <title>Official Nominations Categories | The Keyframe Awards</title>
     <link rel="stylesheet" href="style.css">
-    <!-- FontAwesome for Social Icons & Navigation Bars -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Specific Styles for the Nominations Page Layout */
-        .nominations-header {
+        .page-header {
             padding: 140px 5% 40px 5%;
             text-align: center;
             background: linear-gradient(to bottom, rgba(26, 0, 51, 0.5), var(--deep-bg));
         }
-
-        .nominations-header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            color: var(--text-white);
-            text-shadow: 0 0 15px var(--neon-purple);
-        }
-
-        .nominations-header p {
-            color: #bbb;
-            font-size: 1.1rem;
-        }
-
-        /* GRID SYSTEM FOR CARDS */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 20px 5% 80px 5%;
+        .page-container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 20px 5% 80px 5%;
+        }
+        
+        /* Grid Layout for Category Cards */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
         }
 
-        /* NOMINATION CARD STYLE */
-        .nomination-card {
-            background: rgba(26, 0, 51, 0.6);
-            border: 1px solid rgba(157, 0, 255, 0.3);
-            border-radius: 12px;
-            overflow: hidden;
+        /* Neon Card Design */
+        .category-card {
+            background: rgba(26, 0, 51, 0.4);
+            border: 1px solid rgba(157, 0, 255, 0.2);
+            border-radius: 16px;
+            padding: 30px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            display: flex;
-            flex-direction: column;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
-
-        .nomination-card:hover {
+        
+        .category-card:hover {
             transform: translateY(-5px);
             border-color: var(--neon-cyan);
-            box-shadow: 0 8px 25px rgba(0, 240, 255, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 240, 255, 0.15);
         }
 
-        .card-img-container {
-            width: 100%;
-            height: 200px;
-            overflow: hidden;
-            position: relative;
+        /* Prestige Cards (The Year Awards) get a special pink glow */
+        .category-card.prestige {
+            border-color: rgba(255, 0, 127, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 0, 127, 0.05);
+        }
+        .category-card.prestige:hover {
+            border-color: var(--neon-pink);
+            box-shadow: 0 8px 25px rgba(255, 0, 127, 0.2);
         }
 
-        .card-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .nomination-card:hover .card-img-container img {
-            transform: scale(1.05);
-        }
-
-        /* Card Overlay badge */
-        .status-badge {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            background: rgba(255, 0, 127, 0.85);
-            color: white;
-            padding: 6px 12px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            box-shadow: 0 0 10px var(--neon-pink);
-        }
-
-        .card-info {
-            padding: 25px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .card-info h3 {
-            font-size: 1.4rem;
-            color: var(--neon-cyan);
-            margin-bottom: 10px;
-        }
-
-        .card-info p {
-            color: #ccc;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .card-date-info {
-            font-size: 0.85rem;
-            color: #aaa;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding-top: 15px;
+        .category-header {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 15px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
         }
 
-        .card-date-info i {
-            color: var(--neon-pink);
+        .category-header i {
+            font-size: 1.8rem;
+        }
+        
+        .category-card.prestige .category-header i { color: var(--neon-pink); text-shadow: 0 0 10px var(--neon-pink); }
+        .category-card.music .category-header i { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan); }
+        .category-card.meme .category-header i { color: #ffe600; text-shadow: 0 0 10px #ffe600; }
+        .category-card.movies .category-header i { color: #ff5500; text-shadow: 0 0 10px #ff5500; }
+        .category-card.tv .category-header i { color: #00ff66; text-shadow: 0 0 10px #00ff66; }
+        .category-card.sports .category-header i { color: #00a2ff; text-shadow: 0 0 10px #00a2ff; }
+        .category-card.gaming .category-header i { color: #bd00ff; text-shadow: 0 0 10px #bd00ff; }
+        .category-card.live .category-header i { color: #ff003c; text-shadow: 0 0 10px #ff003c; }
+        .category-card.general .category-header i { color: #00ffff; text-shadow: 0 0 10px #00ffff; }
+        .category-card.editing .category-header i { color: #ff00aa; text-shadow: 0 0 10px #ff00aa; }
+
+        .category-header h3 {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--text-white);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subcategories-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .subcategories-list li {
+            color: #ddd;
+            font-size: 1.02rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subcategories-list li i {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
         }
     </style>
 </head>
 <body>
-
-    <!-- SHARED HEADER NAVIGATION -->
     <header class="navbar">
         <div class="logo">Keyframe Awards</div>
-        
         <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
         </div>
-
         <nav class="nav-links">
             <a href="index.html">Home</a>
             <a href="nominations.html" class="active">Nominations</a>
@@ -144,202 +118,208 @@
             <a href="live.html">Live Stream</a>
             <a href="about.html">About</a>
             <div class="auth-buttons" id="auth-header-actions">
-                <!-- Populated dynamically by Firebase session management -->
                 <span class="user-welcome">Checking Session...</span>
             </div>
         </nav>
     </header>
 
-    <!-- MAIN PAGE CONTAINER -->
-    <main class="nominations-page">
-        <section class="nominations-header">
+    <main>
+        <section class="page-header">
             <h1 class="animated-gradient-text">Award Categories</h1>
-            <p>Explore the formal submission tiers celebrating outstanding frame-by-frame masterpieces.</p>
+            <p>Explore all the official spaces where visual architects compete this year.</p>
         </section>
 
-        <!-- CARDS CONTAINER GRID -->
-        <section class="cards-grid">
-            
-            <!-- CARD 1 -->
-            <div class="nomination-card">
-                <div class="card-img-container">
-                    <img src="keyframe award image.jpg" alt="Keyframe Trophy">
-                    <div class="status-badge">Locked</div>
-                </div>
-                <div class="card-info">
-                    <div>
-                        <h3>Best Music Lyric Video</h3>
-                        <p>Honoring creators who elevate audio tracks into stunning audio-visual experiences with sync speed, artistic text elements, and smooth typography movement.</p>
-                    </div>
-                    <div class="card-date-info">
-                        <i class="fa-regular fa-calendar-days"></i> Nominations Open November 4
-                    </div>
-                </div>
-            </div>
+        <div class="page-container">
+            <div class="categories-grid">
 
-            <!-- CARD 2 -->
-            <div class="nomination-card">
-                <div class="card-img-container">
-                    <img src="keyframe award image.jpg" alt="Keyframe Trophy">
-                    <div class="status-badge">Locked</div>
-                </div>
-                <div class="card-info">
-                    <div>
-                        <h3>Best Motion Graphics</h3>
-                        <p>Celebrating excellence in kinetic layout composition, advanced keyframing techniques, character animations, and vector graphic transformations.</p>
+                <!-- 1. THE YEAR AWARDS -->
+                <div class="category-card prestige">
+                    <div class="category-header">
+                        <i class="fa-solid fa-crown"></i>
+                        <h3>The Year Awards</h3>
                     </div>
-                    <div class="card-date-info">
-                        <i class="fa-regular fa-calendar-days"></i> Nominations Open November 4
-                    </div>
+                    <ul class="subcategories-list">
+                        <li><i class="fa-solid fa-star"></i> Footballer of the Year [Content Creator]</li>
+                        <li><i class="fa-solid fa-star"></i> Gamer of the Year</li>
+                        <li><i class="fa-solid fa-star"></i> Meme Lord/Lady of the Year</li>
+                        <li><i class="fa-solid fa-star"></i> Movie Content Creator of the Year</li>
+                        <li><i class="fa-solid fa-star"></i> TV Show Stan of the Year</li>
+                        <li><i class="fa-solid fa-star"></i> Music Artist / Group of the Year</li>
+                        <li><i class="fa-solid fa-star"></i> Overall Creator of the Year</li>
+                        <li><i class="fa-solid fa-star"></i> Rising Star of the Year</li>
+                        <li><i class="fa-solid fa-star"></i> Viral Phenomenon of the Year</li>
+                    </ul>
                 </div>
-            </div>
 
-            <!-- CARD 3 -->
-            <div class="nomination-card">
-                <div class="card-img-container">
-                    <img src="keyframe award image.jpg" alt="Keyframe Trophy">
-                    <div class="status-badge">Locked</div>
-                </div>
-                <div class="card-info">
-                    <div>
-                        <h3>Best Visual Effects (VFX)</h3>
-                        <p>Recognizing seamless software manipulation, professional green screen integration, complex match-moving, and composited digital elements.</p>
+                <!-- 2. MUSIC CATEGORY -->
+                <div class="category-card music">
+                    <div class="category-header">
+                        <i class="fa-solid fa-microphone"></i>
+                        <h3>Music Category</h3>
                     </div>
-                    <div class="card-date-info">
-                        <i class="fa-regular fa-calendar-days"></i> Nominations Open November 4
-                    </div>
+                    <ul class="subcategories-list">
+                        <li><i class="fa-solid fa-music"></i> Best K-pop Group</li>
+                        <li><i class="fa-solid fa-music"></i> Best Music Edit / MV Recreation</li>
+                        <li><i class="fa-solid fa-music"></i> Best Solo Artist (K-pop or General)</li>
+                        <li><i class="fa-solid fa-music"></i> Most Hyped Music Video Edit</li>
+                        <li><i class="fa-solid fa-music"></i> Best Fandom / Stan Account</li>
+                        <li><i class="fa-solid fa-music"></i> Best Song Cover / Dance Cover</li>
+                        <li><i class="fa-solid fa-music"></i> Viral Music Trend Creator</li>
+                        <li><i class="fa-solid fa-music"></i> Best Music Reaction / Breakdown</li>
+                    </ul>
                 </div>
-            </div>
 
-            <!-- CARD 4 -->
-            <div class="nomination-card">
-                <div class="card-img-container">
-                    <img src="keyframe award image.jpg" alt="Keyframe Trophy">
-                    <div class="status-badge">Locked</div>
-                </div>
-                <div class="card-info">
-                    <div>
-                        <h3>Best Video Editing & Flow</h3>
-                        <p>Awarded for high-level pacing, match-cuts, rhythm coordination, sound-design stitching, and structural continuity that establishes the ultimate vibe.</p>
+                <!-- 3. MEME AND VIRAL CULTURE -->
+                <div class="category-card meme">
+                    <div class="category-header">
+                        <i class="fa-solid fa-face-laugh-squint"></i>
+                        <h3>Meme & Viral Culture</h3>
                     </div>
-                    <div class="card-date-info">
-                        <i class="fa-regular fa-calendar-days"></i> Nominations Open November 4
-                    </div>
+                    <ul class="subcategories-list">
+                        <li><i class="fa-solid fa-bolt"></i> Funniest Viral Meme</li>
+                        <li><i class="fa-solid fa-bolt"></i> Best Meme Edit / Sound</li>
+                        <li><i class="fa-solid fa-bolt"></i> Most Relatable Meme</li>
+                        <li><i class="fa-solid fa-bolt"></i> Wildest Trend Jumper</li>
+                        <li><i class="fa-solid fa-bolt"></i> Best Roast Meme</li>
+                        <li><i class="fa-solid fa-bolt"></i> Meme of the Year</li>
+                    </ul>
                 </div>
-            </div>
 
-            <!-- CARD 5 -->
-            <div class="nomination-card">
-                <div class="card-img-container">
-                    <img src="keyframe award image.jpg" alt="Keyframe Trophy">
-                    <div class="status-badge">Locked</div>
-                </div>
-                <div class="card-info">
-                    <div>
-                        <h3>Best DIY Rigs & Cinematography</h3>
-                        <p>Spotlighting innovative filming production setups, specialized custom-built movement rigs (DIY skycams, glambots), and clever point-of-view camera perspective captures.</p>
+                <!-- 4. MOVIES AND FILM CONTENT -->
+                <div class="category-card movies">
+                    <div class="category-header">
+                        <i class="fa-solid fa-film"></i>
+                        <h3>Movies & Film</h3>
                     </div>
-                    <div class="card-date-info">
-                        <i class="fa-regular fa-calendar-days"></i> Nominations Open November 4
-                    </div>
+                    <ul class="subcategories-list">
+                        <li><i class="fa-solid fa-clapperboard"></i> Best Movie Edit / Recap</li>
+                        <li><i class="fa-solid fa-clapperboard"></i> Most Hyped Movie Scene Recreation</li>
+                        <li><i class="fa-solid fa-clapperboard"></i> Best Movie Trailer Reaction</li>
+                        <li><i class="fa-solid fa-clapperboard"></i> Best Movie Meme</li>
+                        <li><i class="fa-solid fa-clapperboard"></i> Cinema Guru / Film Reviewer</li>
+                    </ul>
                 </div>
-            </div>
 
-            <!-- CARD 6 -->
-            <div class="nomination-card">
-                <div class="card-img-container">
-                    <img src="keyframe award image.jpg" alt="Keyframe Trophy">
-                    <div class="status-badge">Locked</div>
-                </div>
-                <div class="card-info">
-                    <div>
-                        <h3>Creator of the Year</h3>
-                        <p>The ultimate crown for the visual creator who pushed content engagement forward, consistently shared artistic knowledge, and inspired the platform community.</p>
+                <!-- 5. TV SHOWS AND SERIES -->
+                <div class="category-card tv">
+                    <div class="category-header">
+                        <i class="fa-solid fa-tv"></i>
+                        <h3>TV Shows & Series</h3>
                     </div>
-                    <div class="card-date-info">
-                        <i class="fa-regular fa-calendar-days"></i> Nominations Open November 4
-                    </div>
+                    <ul class="subcategories-list">
+                        <li><i class="fa-solid fa-circle-play"></i> Best TV Show Edit</li>
+                        <li><i class="fa-solid fa-circle-play"></i> Most Addictive Show Moments</li>
+                        <li><i class="fa-solid fa-circle-play"></i> Best Series Theory / Breakdown</li>
+                        <li><i class="fa-solid fa-circle-play"></i> Funniest Show Reaction</li>
+                        <li><i class="fa-solid fa-circle-play"></i> Best Show Recap Creator</li>
+                    </ul>
                 </div>
-            </div>
 
-        </section>
+                <!-- 6. FOOTBALL / SPORTS CONTENT -->
+                <div class="category-card sports">
+                    <div class="category-header">
+                        <i class="fa-solid fa-football"></i>
+                        <h3>Football & Sports</h3>
+                    </div>
+                    <ul class="subcategories-list">
+                        <li><i class="fa-solid fa-circle"></i> Best Football Edit</li>
+                        <li><i class="fa-solid fa-circle"></i> Most Hyped Goal Montage</li>
+                        <li><i class="fa-solid fa-circle"></i> Football Skills King</li>
+                        <li><i class="fa-solid fa-circle"></i> Best Match Highlight Creator</li>
+                        <li><i class="fa-solid fa-circle"></i> Viral Football Meme</li>
+                        <li><i class="fa-solid fa-circle"></i> Best Player Tribute Edit</li>
+                    </ul>
+                </div>
+
+                <!-- 7. GAMING -->
+                <div class="category-card gaming">
+                    <div class="category-header">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <h3>Gaming</h3>
+                    </div>
+                    <ul class="subcategories-list">
+                        <li><i class="fa-solid fa-headset"></i> Best Gaming Edit / Montage</li>
+                        <li><i class="fa-solid fa-headset"></i> Funniest Gaming Fail</li>
+                        <li><i class="fa-solid fa-headset"></i> Best Game Clip / Highlight</li>
+                        <li><i class="fa-solid fa-headset"></i> Gaming Meme Master</li>
+                        <li><i class="fa-solid fa-headset"></i> Best Gaming Streamer / Creator</li>
+                    </ul>
+                </div>
+
+                <!-- 8. LIVE STREAMING (NEW) -->
+                <div class="category-card live">
+                    <div class="category-header">
+                        <i class="fa-solid fa-globe"></i>
+                        <h3>Live Streaming</h3>
+                    </div>
+                    <ul class="subcategories-list">
+                        <li><i class="fa-solid fa-tower-broadcast"></i> Best Streamer of the Year</li>
+                        <li><i class="fa-solid fa-tower-broadcast"></i> Most Chaotic Stream Moment</li>
+                        <li><i class="fa-solid fa-tower-broadcast"></i> Best Streamer Duo / Squad</li>
+                        <li><i class="fa-solid fa-tower-broadcast"></i> Chat Choice Award [Most Active]</li>
+                        <li><i class="fa-solid fa-tower-broadcast"></i> Breakout / Rising Streamer</li>
+                    </ul>
+                </div>
+
+                <!-- 9. GENERAL CREATORS & PERSONALITY -->
+                <div class="category-card general">
+                    <div class="category-header">
+                        <i class="fa-solid fa-user"></i>
+                        <h3>General Creators</h3>
+                    </div>
+                    <ul class="subcategories-list">
+                        <li><i class="fa-solid fa-hashtag"></i> Most Viral Content Creator</li>
+                        <li><i class="fa-solid fa-hashtag"></i> Best Storytelling Creator</li>
+                        <li><i class="fa-solid fa-hashtag"></i> Charisma King / Queen</li>
+                        <li><i class="fa-solid fa-hashtag"></i> Most Relatable Daily Vlogger</li>
+                        <li><i class="fa-solid fa-hashtag"></i> Best Duet / Collab</li>
+                        <li><i class="fa-solid fa-hashtag"></i> Community Favorite Creator</li>
+                    </ul>
+                </div>
+
+                <!-- 10. EDITING & CREATIVE CRAFT -->
+                <div class="category-card editing">
+                    <div class="category-header">
+                        <i class="fa-solid fa-scissors"></i>
+                        <h3>Editing & Craft</h3>
+                    </div>
+                    <ul class="subcategories-list">
+                        <li><i class="fa-solid fa-wand-magic-sparkles"></i> Best Mobile Editor</li>
+                        <li><i class="fa-solid fa-wand-magic-sparkles"></i> Best Transition / Effects</li>
+                        <li><i class="fa-solid fa-wand-magic-sparkles"></i> Cleanest Video Editor</li>
+                        <li><i class="fa-solid fa-wand-magic-sparkles"></i> Audio Sync Wizard</li>
+                        <li><i class="fa-solid fa-wand-magic-sparkles"></i> Most Creative Edit Overall</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
     </main>
 
-    <!-- SHARED FOOTER LAYER -->
     <footer>
         <div class="footer-links">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Service</a>
-            <a href="cookies.html">Cookie Preferences</a>
-            <a href="contact.html">Contact Support</a>
+            <a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="cookies.html">Cookie Preferences</a><a href="contact.html">Contact Support</a>
         </div>
-
         <div class="social-icons">
-            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
-            <a href="https://twitter.com" target="_blank"><i class="fab fa-x-twitter"></i></a>
-            <a href="https://threads.net" target="_blank"><i class="fab fa-threads"></i></a>
-            <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-facebook"></i></a><a href="#" target="_blank"><i class="fab fa-instagram"></i></a><a href="#" target="_blank"><i class="fab fa-tiktok"></i></a><a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a><a href="#" target="_blank"><i class="fab fa-threads"></i></a><a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
-
-        <div class="copyright">
-            <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
-        </div>
+        <div class="copyright"><p>&copy; 2026 The Keyframe Awards. All rights reserved.</p></div>
     </footer>
 
-    <!-- Firebase Global Session Check Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        // Same exact configuration so it checks the local database state
-        const firebaseConfig = {
-          apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
-          authDomain: "keyframe-awards.firebaseapp.com",
-          projectId: "keyframe-awards",
-          storageBucket: "keyframe-awards.firebasestorage.app",
-          messagingSenderId: "882083630221",
-          appId: "1:882083630221:web:629df7642fdf822018a6c4",
-          measurementId: "G-Z8HX6L8WEG"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
+        const firebaseConfig = { apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg", authDomain: "keyframe-awards.firebaseapp.com", projectId: "keyframe-awards", storageBucket: "keyframe-awards.firebasestorage.app", messagingSenderId: "882083630221", appId: "1:882083630221:web:629df7642fdf822018a6c4" };
+        const app = initializeApp(firebaseConfig); const auth = getAuth(app);
         const authActions = document.getElementById('auth-header-actions');
-
-        // Check user session status across pages instantly
+        
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                authActions.innerHTML = `
-                    <span class="user-welcome">Active Account</span>
-                    <button class="btn-login" id="logout-btn">Log Out</button>
-                `;
-                document.getElementById('logout-btn').addEventListener('click', () => {
-                    signOut(auth).then(() => {
-                        alert("Logged out successfully!");
-                        window.location.reload();
-                    });
-                });
-            } else {
-                // If they aren't logged in, redirecting back to home keeps everything safe or lets them hit login modals
-                authActions.innerHTML = `
-                    <button class="btn-login" onclick="window.location.href='index.html'">Login</button>
-                `;
-            }
+                authActions.innerHTML = `<span class="user-welcome">Active Account</span> <button class="btn-login" id="logout-btn">Log Out</button>`;
+                document.getElementById('logout-btn').addEventListener('click', () => { signOut(auth).then(() => window.location.reload()); });
+            } else { authActions.innerHTML = `<button class="btn-login" onclick="window.location.href='index.html'">Login</button>`; }
         });
-    </script>
-
-    <!-- Mobile Navigation Panel controls -->
-    <script>
-        const menuToggle = document.getElementById('mobile-menu');
-        const navLinks = document.querySelector('.nav-links');
-
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            menuToggle.classList.toggle('is-active');
-        });
+        document.getElementById('mobile-menu').addEventListener('click', () => { document.querySelector('.nav-links').classList.toggle('active'); document.getElementById('mobile-menu').classList.toggle('is-active'); });
     </script>
 </body>
 </html>
