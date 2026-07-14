@@ -5,115 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About | The Keyframe Awards</title>
     <link rel="stylesheet" href="style.css">
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Specific Styles for the About Page Layout */
         .about-header {
-            padding: 140px 5% 40px 5%;
+            padding: 140px 5% 60px 5%;
             text-align: center;
             background: linear-gradient(to bottom, rgba(26, 0, 51, 0.5), var(--deep-bg));
         }
-
-        .about-header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            color: var(--text-white);
-            text-shadow: 0 0 15px var(--neon-purple);
-        }
-
         .about-container {
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px 5% 80px 5%;
+            padding: 20px 5% 100px 5%;
         }
-
         .about-section {
-            background: rgba(26, 0, 51, 0.4);
-            border: 1px solid rgba(157, 0, 255, 0.2);
-            border-radius: 12px;
-            padding: 40px;
-            margin-bottom: 40px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 60px;
         }
-
         .about-section h2 {
             font-size: 2rem;
             color: var(--neon-cyan);
             margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
         }
-
-        .about-section h2 i {
-            color: var(--neon-pink);
-        }
-
         .about-section p {
-            color: #ddd;
             font-size: 1.1rem;
             line-height: 1.8;
-            margin-bottom: 15px;
+            color: #ccc;
+            margin-bottom: 20px;
         }
-
-        /* Mission Highlights Grid */
-        .highlights-grid {
+        .mission-box {
+            background: rgba(26, 0, 51, 0.5);
+            border-left: 4px solid var(--neon-pink);
+            padding: 30px;
+            border-radius: 0 12px 12px 0;
+            margin: 40px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .mission-box h3 {
+            color: var(--neon-pink);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        .grid-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            margin-top: 30px;
+            margin: 40px 0;
         }
-
-        .highlight-box {
-            background: rgba(13, 0, 26, 0.6);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 8px;
+        .stat-card {
+            background: rgba(26, 0, 51, 0.3);
+            border: 1px solid rgba(157, 0, 255, 0.2);
             padding: 25px;
+            border-radius: 12px;
             text-align: center;
         }
-
-        .highlight-box i {
+        .stat-card h4 {
             font-size: 2.5rem;
-            color: var(--neon-pink);
-            margin-bottom: 15px;
+            color: var(--neon-cyan);
+            margin-bottom: 5px;
+            text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
         }
-
-        .highlight-box h3 {
-            font-size: 1.3rem;
-            color: var(--text-white);
-            margin-bottom: 10px;
-        }
-
-        .highlight-box p {
-            font-size: 0.95rem;
+        .stat-card p {
+            font-size: 0.9rem;
             color: #aaa;
-            line-height: 1.5;
-            margin-bottom: 0;
-        }
-
-        @media (max-width: 768px) {
-            .about-section {
-                padding: 25px;
-            }
-            .about-section h2 {
-                font-size: 1.6rem;
-            }
+            margin: 0;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
-
-    <!-- SHARED HEADER NAVIGATION -->
     <header class="navbar">
         <div class="logo">Keyframe Awards</div>
-        
         <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
         </div>
-
         <nav class="nav-links">
             <a href="index.html">Home</a>
             <a href="nominations.html">Nominations</a>
@@ -126,129 +90,72 @@
         </nav>
     </header>
 
-    <!-- MAIN CONTENT -->
-    <main class="about-page">
+    <main>
         <section class="about-header">
-            <h1 class="animated-gradient-text">Behind The Frame</h1>
-            <p>The story, the passion, and the mission driving the Keyframe community.</p>
+            <h1 class="animated-gradient-text">What is Keyframe?</h1>
+            <p>Redefining how we honor the architects of digital visual art.</p>
         </section>
 
         <div class="about-container">
-            
-            <!-- SECTION 1: THE VISION -->
-            <div class="about-section">
-                <h2><i class="fa-solid fa-eye"></i> Our Vision</h2>
-                <p>In the digital age, video content moves the world—yet the mastermind editors, motion graphic designers, and typography artists behind the scenes rarely get the mainstream credit they deserve. <strong>The Keyframe Awards</strong> was built to change that story.</p>
-                <p>We are establishing the ultimate online platform dedicated entirely to honoring creators who turn ordinary timelines into masterfully synced, frame-by-frame works of art. From complex kinetic typography lyric videos to custom-built hardware production shots, we provide the stage for creators to earn their digital flowers.</p>
-            </div>
+            <section class="about-section">
+                <h2>Our Origin</h2>
+                <p>In the digital landscape, the most engaging moments are driven entirely by post-production artistry. Whether it's a seamless football skills montage, a beautifully timed K-pop edit, a chaotic live stream replay, or a viral meme that captures global attention, the technical and creative work behind these assets is often overlooked.</p>
+                <p>The Keyframe Awards was built to change that narrative. We created a platform to give visual creators, sync coordinators, animators, and independent content editors their long-overdue industry validation.</p>
 
-            <!-- SECTION 2: HOW IT WORKS -->
-            <div class="about-section">
-                <h2><i class="fa-solid fa-gears"></i> The Roadmap</h2>
-                <p>The event is designed to celebrate the community transparently through a structural multi-phase approach:</p>
+                <div class="mission-box">
+                    <h3>The Mission</h3>
+                    <p style="margin:0; font-style: italic; color: #fff;">"To decentralize award culture by providing a transparent, interactive, and community-driven space where the technical skill and creative execution of digital creators take center stage."</p>
+                </div>
+            </section>
+
+            <section class="about-section">
+                <h2>The 10 Battlegrounds</h2>
+                <p>We’ve organized this year's awards into ten comprehensive fields. Every submission represents the peak of creative editing and entertainment:</p>
                 
-                <div class="highlights-grid">
-                    <div class="highlight-box">
-                        <i class="fa-solid fa-file-signature"></i>
-                        <h3>1. Submissions</h3>
-                        <p>Nominations officially launch on November 4. Users and creators submit their top video links across our main award categories.</p>
+                <div class="grid-stats">
+                    <div class="stat-card">
+                        <h4>10</h4>
+                        <p>Epic Categories</p>
                     </div>
-                    <div class="highlight-box">
-                        <i class="fa-solid fa-check-to-slot"></i>
-                        <h3>2. Community Vote</h3>
-                        <p>Once categories are finalized, authenticated users unlock live dashboard ballots to lock in votes for their favorite creators.</p>
+                    <div class="stat-card">
+                        <h4>60+</h4>
+                        <p>Unique Trophies</p>
                     </div>
-                    <div class="highlight-box">
-                        <i class="fa-solid fa-trophy"></i>
-                        <h3>3. The Ceremony</h3>
-                        <p>We conclude with a high-energy live-stream celebration broadcast, announcing the official winners and showcasing top project files.</p>
+                    <div class="stat-card">
+                        <h4>100%</h4>
+                        <p>Community Driven</p>
                     </div>
                 </div>
-            </div>
 
-            <!-- SECTION 3: COMMUNITY RULES -->
-            <div class="about-section">
-                <h2><i class="fa-solid fa-bullhorn"></i> Join the Movement</h2>
-                <p>Whether you are a professional motion editor pushing software boundaries, a DIY content creator filming with unique mobile hardware setups, or a dedicated viewer who loves high-vibe visuals—there is a place for you here.</p>
-                <p>Create an account today using email registration or Google Authentication to secure your voting credentials and stay updated as we countdown to opening day!</p>
-            </div>
-
+                <p>From the high prestige of <strong>The Year Awards</strong> to specialized categories in <strong>Music, Gaming, Football/Sports, Meme Culture, and Live Streaming</strong>, we celebrate everything that makes the internet vibrant. We even have dedicated blocks for pure technical talent, including <strong>Best Mobile Editor</strong> and the <strong>Audio Sync Wizard</strong> awards.</p>
+            </section>
         </div>
     </main>
 
-    <!-- SHARED FOOTER LAYER -->
     <footer>
         <div class="footer-links">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Service</a>
-            <a href="cookies.html">Cookie Preferences</a>
-            <a href="contact.html">Contact Support</a>
+            <a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="cookies.html">Cookie Preferences</a><a href="contact.html">Contact Support</a>
         </div>
-
         <div class="social-icons">
-            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
-            <a href="https://twitter.com" target="_blank"><i class="fab fa-x-twitter"></i></a>
-            <a href="https://threads.net" target="_blank"><i class="fab fa-threads"></i></a>
-            <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-facebook"></i></a><a href="#" target="_blank"><i class="fab fa-instagram"></i></a><a href="#" target="_blank"><i class="fab fa-tiktok"></i></a><a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a><a href="#" target="_blank"><i class="fab fa-threads"></i></a><a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
-
-        <div class="copyright">
-            <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
-        </div>
+        <div class="copyright"><p>&copy; 2026 The Keyframe Awards. All rights reserved.</p></div>
     </footer>
 
-    <!-- Firebase Global Session Check Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        const firebaseConfig = {
-          apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
-          authDomain: "keyframe-awards.firebaseapp.com",
-          projectId: "keyframe-awards",
-          storageBucket: "keyframe-awards.firebasestorage.app",
-          messagingSenderId: "882083630221",
-          appId: "1:882083630221:web:629df7642fdf822018a6c4",
-          measurementId: "G-Z8HX6L8WEG"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
+        const firebaseConfig = { apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg", authDomain: "keyframe-awards.firebaseapp.com", projectId: "keyframe-awards", storageBucket: "keyframe-awards.firebasestorage.app", messagingSenderId: "882083630221", appId: "1:882083630221:web:629df7642fdf822018a6c4" };
+        const app = initializeApp(firebaseConfig); const auth = getAuth(app);
         const authActions = document.getElementById('auth-header-actions');
-
-        // Check user session status across pages instantly
+        
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                authActions.innerHTML = `
-                    <span class="user-welcome">Active Account</span>
-                    <button class="btn-login" id="logout-btn">Log Out</button>
-                `;
-                document.getElementById('logout-btn').addEventListener('click', () => {
-                    signOut(auth).then(() => {
-                        alert("Logged out successfully!");
-                        window.location.reload();
-                    });
-                });
-            } else {
-                authActions.innerHTML = `
-                    <button class="btn-login" onclick="window.location.href='index.html'">Login</button>
-                `;
-            }
+                authActions.innerHTML = `<span class="user-welcome">Active Account</span> <button class="btn-login" id="logout-btn">Log Out</button>`;
+                document.getElementById('logout-btn').addEventListener('click', () => { signOut(auth).then(() => window.location.reload()); });
+            } else { authActions.innerHTML = `<button class="btn-login" onclick="window.location.href='index.html'">Login</button>`; }
         });
-    </script>
-
-    <!-- Mobile Navigation Panel controls -->
-    <script>
-        const menuToggle = document.getElementById('mobile-menu');
-        const navLinks = document.querySelector('.nav-links');
-
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            menuToggle.classList.toggle('is-active');
-        });
+        document.getElementById('mobile-menu').addEventListener('click', () => { document.querySelector('.nav-links').classList.toggle('active'); document.getElementById('mobile-menu').classList.toggle('is-active'); });
     </script>
 </body>
 </html>
