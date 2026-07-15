@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nominations | Keyframe Awards</title>
-    <!-- Link to your existing external stylesheet -->
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* ==================== MOBILE HAMBURGER NAVIGATION ==================== */
+        /* ==================== MOBILE NAVIGATION (MATCHING SCREENSHOT) ==================== */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -16,9 +15,9 @@
             padding: 20px;
             position: relative;
             z-index: 1000;
+            background: #0f021c;
         }
 
-        /* Hamburger Icon Styling */
         .hamburger {
             display: none;
             flex-direction: column;
@@ -37,7 +36,7 @@
             transition: all 0.3s ease;
         }
 
-        /* Active Hamburger Animations */
+        /* Active Hamburger to X transition */
         .hamburger.active span:nth-child(1) {
             transform: translateY(8px) rotate(45deg);
             background: var(--neon-pink, #ff007f);
@@ -50,7 +49,6 @@
             background: var(--neon-cyan, #00f0ff);
         }
 
-        /* Responsive Styles for Navbar */
         @media (max-width: 768px) {
             .hamburger {
                 display: flex;
@@ -59,23 +57,37 @@
             .nav-links {
                 display: none;
                 flex-direction: column;
-                position: absolute;
-                top: 100%;
+                position: fixed;
+                top: 0;
                 left: 0;
                 width: 100%;
-                background: rgba(15, 2, 28, 0.95);
-                border-bottom: 2px solid rgba(157, 0, 255, 0.2);
-                padding: 20px 0;
+                height: 100vh;
+                background: rgba(15, 2, 28, 0.98);
+                padding: 100px 0 40px 0;
                 text-align: center;
-                gap: 15px;
+                gap: 25px;
+                box-sizing: border-box;
             }
 
             .nav-links.active {
                 display: flex;
             }
+
+            .nav-links a {
+                font-size: 1.5rem;
+                display: block;
+                color: #ccc;
+                text-decoration: none;
+            }
+
+            .nav-links a.active {
+                color: var(--neon-cyan, #00f0ff);
+                font-weight: bold;
+                text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+            }
         }
 
-        /* ==================== GLOWING CUSTOM TOAST NOTIFICATIONS ==================== */
+        /* ==================== GLOWING TOAST NOTIFICATIONS ==================== */
         #toast-container {
             position: fixed;
             top: 20px;
@@ -91,12 +103,11 @@
             min-width: 300px;
             max-width: 400px;
             padding: 16px 20px;
-            background: rgba(15, 2, 28, 0.9);
+            background: rgba(15, 2, 28, 0.95);
             border-radius: 12px;
             box-shadow: 0 0 20px rgba(157, 0, 255, 0.2);
             color: #fff;
             font-family: sans-serif;
-            font-weight: 500;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -108,7 +119,6 @@
             overflow: hidden;
         }
 
-        /* Beautiful glowing gradient bar at the bottom of the toast */
         .toast::after {
             content: '';
             position: absolute;
@@ -124,15 +134,8 @@
             opacity: 1;
         }
 
-        .toast.success {
-            border: 1px solid rgba(0, 240, 255, 0.4);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
-        }
-
-        .toast.error {
-            border: 1px solid rgba(255, 0, 127, 0.4);
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.15);
-        }
+        .toast.success { border: 1px solid rgba(0, 240, 255, 0.4); }
+        .toast.error { border: 1px solid rgba(255, 0, 127, 0.4); }
 
         .toast-close {
             background: transparent;
@@ -140,36 +143,29 @@
             color: #aaa;
             font-size: 1.2rem;
             cursor: pointer;
-            padding-left: 10px;
         }
 
-        .toast-close:hover {
-            color: #fff;
-        }
-
-        /* ==================== NOMINATIONS DESIGN WRAPPER ==================== */
+        /* ==================== NOMINATIONS INTERFACE ==================== */
         .nominations-container {
-            max-width: 800px;
+            max-width: 700px;
             margin: 120px auto 60px auto;
-            padding: 30px;
+            padding: 35px;
             background: rgba(26, 0, 51, 0.5);
             border: 1px solid rgba(157, 0, 255, 0.2);
             border-radius: 16px;
             text-align: center;
-            box-shadow: 0 0 20px rgba(157, 0, 255, 0.1);
+            box-shadow: 0 0 25px rgba(157, 0, 255, 0.15);
         }
     </style>
 </head>
 <body>
 
-    <!-- Floating Custom Toast Notifications Container -->
     <div id="toast-container"></div>
 
-    <!-- Navigation Header -->
+    <!-- Header Navigation -->
     <header class="navbar">
-        <div class="logo">Keyframe Awards</div>
+        <div class="logo">KEYFRAME AWARDS</div>
         
-        <!-- Mobile Hamburger Button -->
         <button class="hamburger" id="hamburger-menu" aria-label="Toggle menu">
             <span></span>
             <span></span>
@@ -179,37 +175,69 @@
         <nav class="nav-links" id="nav-links-menu">
             <a href="index.html">Home</a>
             <a href="nominations.html" class="active">Nominations</a>
-            <a href="blog.html">Blog</a>
+            <a href="vote.html">Vote</a>
+            <a href="live.html">Live Stream</a>
+            <a href="about.html">About</a>
+            
+            <!-- Mobile Account buttons -->
+            <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 15px; width: 80%; margin-left: auto; margin-right: auto;">
+                <button style="background: transparent; border: 2px solid #00f0ff; color: #00f0ff; padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer; text-shadow: 0 0 5px rgba(0,240,255,0.3);">Active Account</button>
+                <button style="background: transparent; border: 2px solid #ff007f; color: #ff007f; padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer; text-shadow: 0 0 5px rgba(255,0,127,0.3);" onclick="handleSignOut()">Log Out</button>
+            </div>
         </nav>
     </header>
 
     <main class="nominations-container">
-        <h1 class="animated-gradient-text" style="font-size: 2.5rem; margin-bottom: 15px;">Submit Nominations</h1>
-        <p style="color: #ccc; font-size: 1rem; margin-bottom: 30px;">Who ruled the creative spaces this year? Let us know below!</p>
+        <!-- Live Countdown Timer to Nov 4 -->
+        <div style="margin-bottom: 30px;">
+            <h3 style="color: var(--neon-pink, #ff007f); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 5px;">Voting Opens November 4</h3>
+            <div id="countdown-timer" style="font-size: 2.2rem; font-weight: bold; font-family: monospace; color: #fff; text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);">
+                00d : 00h : 00m : 00s
+            </div>
+        </div>
 
-        <!-- Dummy form for layout testing -->
+        <h1 class="animated-gradient-text" style="font-size: 2.3rem; margin-bottom: 10px; font-weight: 800;">SUBMIT NOMINATIONS</h1>
+        <p style="color: #ccc; font-size: 0.95rem; margin-bottom: 35px;">Who ruled the creative spaces this year? Let us know below!</p>
+
         <form id="nomination-form" onsubmit="handleNominationSubmit(event)">
+            <!-- Category Group Dynamic Selection -->
             <div style="margin-bottom: 20px; text-align: left;">
-                <label style="color: #fff; display: block; margin-bottom: 8px;">Category Group</label>
-                <select style="width: 100%; padding: 12px; border-radius: 8px; background: #22003c; border: 1px solid rgba(157, 0, 255, 0.4); color: #fff;">
-                    <option>🎬 Creative & Editing Zone</option>
-                    <option>🎵 Music Zone</option>
-                    <option>🎮 Gaming & Streaming Zone</option>
+                <label style="color: #fff; display: block; margin-bottom: 8px; font-weight: 600;">Category Group</label>
+                <select id="category-group-select" onchange="populateSpecificCategories()" style="width: 100%; padding: 12px; border-radius: 8px; background: #22003c; border: 1px solid rgba(157, 0, 255, 0.4); color: #fff; font-size: 1rem;">
+                    <option value="THE_YEAR_AWARDS">🏆 The Year Awards (Big Prestige)</option>
+                    <option value="MUSIC_CATEGORY">🎤 Music Category</option>
+                    <option value="MEME_AND_VIRAL_CULTURE">🤡 Meme & Viral Culture</option>
+                    <option value="MOVIES_AND_FILM_CONTENT">🎬 Movies & Film Content</option>
+                    <option value="TV_SHOWS_AND_SERIES">📺 TV Shows & Series</option>
+                    <option value="FOOTBALL_SPORTS_CONTENT">⚽ Football / Sports Content</option>
+                    <option value="GAMING">🎮 Gaming</option>
+                    <option value="LIVE_STREAMING">🌐 Live Streaming</option>
+                    <option value="GENERAL_CONTENT_CREATORS">👤 General Content Creators & Personality</option>
+                    <option value="EDITING_AND_CREATIVE_CRAFT">✂️ Editing & Creative Craft</option>
                 </select>
             </div>
-            <div style="margin-bottom: 25px; text-align: left;">
-                <label style="color: #fff; display: block; margin-bottom: 8px;">Your Nominee (Channel Name or @handle)</label>
-                <input type="text" placeholder="e.g., @skew_1" required style="width: 100%; padding: 12px; border-radius: 8px; background: #22003c; border: 1px solid rgba(157, 0, 255, 0.4); color: #fff; box-sizing: border-box;">
+
+            <!-- Specific Category -->
+            <div style="margin-bottom: 20px; text-align: left;">
+                <label style="color: #fff; display: block; margin-bottom: 8px; font-weight: 600;">Specific Category</label>
+                <select id="specific-category-select" style="width: 100%; padding: 12px; border-radius: 8px; background: #22003c; border: 1px solid rgba(157, 0, 255, 0.4); color: #fff; font-size: 1rem;">
+                    <!-- Injected via Javascript -->
+                </select>
             </div>
-            <button type="submit" class="cta-btn" style="background: linear-gradient(90deg, var(--neon-pink, #ff007f), var(--neon-cyan, #00f0ff)); color: #fff; border: none; padding: 12px 30px; font-weight: bold; border-radius: 25px; cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.5);">
+
+            <div style="margin-bottom: 30px; text-align: left;">
+                <label style="color: #fff; display: block; margin-bottom: 8px; font-weight: 600;">Your Nominee (Channel Name, Username or @handle)</label>
+                <input type="text" placeholder="e.g., @skew_1" required style="width: 100%; padding: 12px; border-radius: 8px; background: #22003c; border: 1px solid rgba(157, 0, 255, 0.4); color: #fff; box-sizing: border-box; font-size: 1rem;">
+            </div>
+
+            <button type="submit" class="cta-btn" style="background: linear-gradient(90deg, var(--neon-pink, #ff007f), var(--neon-cyan, #00f0ff)); color: #fff; border: none; padding: 12px 35px; font-weight: bold; border-radius: 25px; cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.5); font-size: 1rem; width: 100%;">
                 Submit Nomination
             </button>
         </form>
     </main>
 
-    <!-- UI Interaction Scripts -->
     <script>
-        // 1. MOBILE HAMBURGER MENU INTERACTION
+        // Hamburger Mobile Menu
         const hamburger = document.getElementById('hamburger-menu');
         const navLinks = document.getElementById('nav-links-menu');
 
@@ -218,48 +246,160 @@
             navLinks.classList.toggle('active');
         });
 
-        // Close menu if a user clicks a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
+        // Categories List mapped directly to your screenshots
+        const categoryData = {
+            THE_YEAR_AWARDS: [
+                "Footballer of the Year [Content Creator]",
+                "Gamer of the Year",
+                "Meme Lord/Lady of the Year",
+                "Movie Content Creator of the Year",
+                "TV Show Stan of the Year",
+                "Music Artist / Group of the Year",
+                "Overall Creator of the Year",
+                "Rising Star of the Year",
+                "Viral Phenomenon of the Year"
+            ],
+            MUSIC_CATEGORY: [
+                "Best K-pop Group",
+                "Best Music Edit / MV Recreation",
+                "Best Solo Artist (K-pop or General)",
+                "Most Hyped Music Video Edit",
+                "Best Fandom / Stan Account",
+                "Best Song Cover / Dance Cover",
+                "Viral Music Trend Creator",
+                "Best Music Reaction / Breakdown"
+            ],
+            MEME_AND_VIRAL_CULTURE: [
+                "Funniest Viral Meme",
+                "Best Meme Edit / Sound",
+                "Most Relatable Meme",
+                "Wildest Trend Jumper",
+                "Best Roast Meme",
+                "Meme of the Year"
+            ],
+            MOVIES_AND_FILM_CONTENT: [
+                "Best Movie Edit / Recap",
+                "Most Hyped Movie Scene Recreation",
+                "Best Movie Trailer Reaction",
+                "Best Movie Meme",
+                "Cinema Guru / Film Reviewer"
+            ],
+            TV_SHOWS_AND_SERIES: [
+                "Best TV Show Edit",
+                "Most Addictive Show Moments",
+                "Best Series Theory / Breakdown",
+                "Funniest Show Reaction",
+                "Best Show Recap Creator"
+            ],
+            FOOTBALL_SPORTS_CONTENT: [
+                "Best Football Edit",
+                "Most Hyped Goal Montage",
+                "Football Skills King",
+                "Best Match Highlight Creator",
+                "Viral Football Meme",
+                "Best Player Tribute Edit"
+            ],
+            GAMING: [
+                "Best Gaming Edit / Montage",
+                "Funniest Gaming Fail",
+                "Best Game Clip / Highlight",
+                "Gaming Meme Master",
+                "Best Gaming Streamer / Creator"
+            ],
+            LIVE_STREAMING: [
+                "Best Streamer of the Year",
+                "Most Chaotic Stream Moment",
+                "Best Streamer Duo / Squad",
+                "Chat Choice Award [Most Active Community]",
+                "Breakout / Rising Streamer"
+            ],
+            GENERAL_CONTENT_CREATORS: [
+                "Most Viral Content Creator",
+                "Best Storytelling Creator",
+                "Charisma King / Queen",
+                "Most Relatable Daily Vlogger",
+                "Best Duet / Collab",
+                "Community Favorite Creator"
+            ],
+            EDITING_AND_CREATIVE_CRAFT: [
+                "Best Mobile Editor",
+                "Best Transition / Effects",
+                "Cleanest Video Editor",
+                "Audio Sync Wizard",
+                "Most Creative Edit Overall"
+            ]
+        };
 
-        // 2. CUSTOM NEON GRADIENT NOTIFICATION ENGINE
+        function populateSpecificCategories() {
+            const groupSelect = document.getElementById('category-group-select');
+            const specificSelect = document.getElementById('specific-category-select');
+            const selectedGroup = groupSelect.value;
+            
+            specificSelect.innerHTML = "";
+            
+            if (categoryData[selectedGroup]) {
+                categoryData[selectedGroup].forEach(cat => {
+                    const opt = document.createElement('option');
+                    opt.value = cat;
+                    opt.innerText = cat;
+                    specificSelect.appendChild(opt);
+                });
+            }
+        }
+
+        // Initialize lists on load
+        populateSpecificCategories();
+
+        // Custom Toast Notification Function
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
-            
-            // Create the toast element
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             toast.innerHTML = `
                 <span>${message}</span>
                 <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
             `;
-            
             container.appendChild(toast);
-            
-            // Trigger animation slide-in
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 100);
-            
-            // Auto-remove toast after 4 seconds
+            setTimeout(() => { toast.classList.add('show'); }, 100);
             setTimeout(() => {
                 toast.classList.remove('show');
-                setTimeout(() => {
-                    toast.remove();
-                }, 400); // Wait for transition out to finish
+                setTimeout(() => { toast.remove(); }, 400);
             }, 4000);
         }
 
-        // Example trigger for nomination submit
         function handleNominationSubmit(event) {
             event.preventDefault();
-            // Call our fancy toast!
             showToast("✨ Nomination submitted successfully! Thank you for participating.", "success");
             event.target.reset();
+        }
+
+        // Countdown Timer to Nov 4, 2026
+        const targetDate = new Date("November 4, 2026 00:00:00").getTime();
+        const countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown-timer").innerText = "SUBMISSIONS CLOSED!";
+                return;
+            }
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            const d = days.toString().padStart(2, '0');
+            const h = hours.toString().padStart(2, '0');
+            const m = minutes.toString().padStart(2, '0');
+            const s = seconds.toString().padStart(2, '0');
+
+            document.getElementById("countdown-timer").innerText = `${d}d : ${h}h : ${m}m : ${s}s`;
+        }, 1000);
+
+        function handleSignOut() {
+            showToast("Successfully logged out.", "success");
         }
     </script>
 </body>
