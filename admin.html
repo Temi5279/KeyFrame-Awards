@@ -359,14 +359,14 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Define your exact email address to restrict dashboard access to you alone
-        const ADMIN_EMAIL = "your-actual-email@gmail.com"; 
+        // Your exact admin email (locked-in and case-insensitive)
+        const ADMIN_EMAIL = "temiloluwa809@gmail.com"; 
 
         let globalSubmissionsList = []; // Memory array for instant client filtering
 
         // --- SECURITY & AUTHORIZATION CHECK ---
         onAuthStateChanged(auth, async (user) => {
-            if (user && user.email === ADMIN_EMAIL) {
+            if (user && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
                 document.getElementById('loading-screen').style.display = 'none';
                 loadAllPortalData();
             } else {
@@ -532,7 +532,7 @@
                             <td style="font-weight: bold; color: var(--neon-cyan);">${data.fullName || data.name || 'Visitor'}</td>
                             <td>${data.email || 'No Email'}</td>
                             <td style="max-width: 400px; word-wrap: break-word; color: #ddd;">${data.message || 'No message provided'}</td>
- <td><span class="badge" style="background: rgba(255, 0, 170, 0.1); color: var(--neon-pink);">${ticketDate}</span></td>
+                            <td><span class="badge" style="background: rgba(255, 0, 170, 0.1); color: var(--neon-pink);">${ticketDate}</span></td>
                         </tr>
                     `;
                     tableBody.insertAdjacentHTML('beforeend', row);
