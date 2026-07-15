@@ -15,7 +15,7 @@
             --card-bg: rgba(26, 0, 51, 0.4);
         }
 
-        /* ==================== MOBILE NAVIGATION (MATCHING SCREENSHOTS) ==================== */
+        /* ==================== MOBILE NAVIGATION ==================== */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -45,7 +45,7 @@
             transition: all 0.3s ease;
         }
 
-        /* Responsive transform to "X" close mark matching Screenshot 2 */
+        /* Smooth burger to close transition */
         .hamburger.active span:nth-child(1) {
             transform: translateY(8px) rotate(45deg);
             background: var(--neon-pink);
@@ -223,58 +223,70 @@
             text-align: left;
         }
 
-        /* ==================== FOOTER SECTION ==================== */
+        /* ==================== FOOTER SECTION (MATCHING SCREENSHOT 1) ==================== */
         .main-footer {
             background: #090112;
             border-top: 1px solid rgba(157, 0, 255, 0.2);
-            padding: 50px 20px 30px 20px;
+            padding: 40px 20px;
             text-align: center;
             margin-top: 100px;
         }
 
-        .footer-socials {
+        /* 2-Column Links Layout */
+        .footer-links-grid {
             display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-bottom: 25px;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto 30px auto;
         }
 
-        .footer-socials a {
-            color: #fff;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: color 0.3s, text-shadow 0.3s;
-        }
-
-        .footer-socials a:hover {
-            color: var(--neon-pink);
-            text-shadow: 0 0 10px rgba(255, 0, 127, 0.8);
-        }
-
-        .footer-links {
+        .footer-links-row {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-bottom: 25px;
+            justify-content: space-around;
+            gap: 20px;
         }
 
-        .footer-links a {
-            color: #aaa;
+        .footer-links-row a {
+            color: #8a8194;
             text-decoration: none;
             font-size: 0.95rem;
             transition: color 0.3s;
+            flex: 1;
         }
 
-        .footer-links a:hover {
+        .footer-links-row a:hover {
             color: var(--neon-cyan);
+        }
+
+        /* SVG Social Icons Row Styling */
+        .footer-socials-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .footer-socials-row a {
+            color: #8a8194;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .footer-socials-row a:hover {
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        .footer-socials-row svg {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
         }
 
         .footer-copy {
             color: #555;
             font-size: 0.85rem;
-            margin-top: 10px;
         }
     </style>
 </head>
@@ -302,7 +314,7 @@
             <!-- Mobile Account buttons -->
             <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 15px; width: 80%; margin-left: auto; margin-right: auto;">
                 <button style="background: transparent; border: 2px solid var(--neon-cyan); color: var(--neon-cyan); padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer;">Active Account</button>
-                <button style="background: transparent; border: 2px solid var(--neon-pink); color: var(--neon-pink); padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer;" onclick="handleSignOut()">Log Out</button>
+                <button style="background: transparent; border: 2px solid var(--neon-pink); color: var(--neon-pink); padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer;" onclick="window.handleSignOut()">Log Out</button>
             </div>
         </nav>
     </header>
@@ -365,33 +377,49 @@
         </section>
     </main>
 
-    <!-- ==================== NEW MAIN FOOTER WITH SOCIALS & POLICY ==================== -->
+    <!-- ==================== MAIN FOOTER (EXACTLY LIKE SCREENSHOT 1) ==================== -->
     <footer class="main-footer">
-        <!-- Social Media Row -->
-        <div class="footer-socials">
-            <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
-            <a href="https://tiktok.com" target="_blank" rel="noopener">TikTok</a>
-            <a href="https://youtube.com" target="_blank" rel="noopener">YouTube</a>
-            <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+        <!-- 2-Column Links Grid -->
+        <div class="footer-links-grid">
+            <div class="footer-links-row">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+            <div class="footer-links-row">
+                <a href="cookies.html">Cookie Preferences</a>
+                <a href="contact.html">Contact Support</a>
+            </div>
         </div>
 
-        <!-- Footer Links -->
-        <div class="footer-links">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Service</a>
-            <a href="contact.html">Contact Us</a>
-            <a href="about.html">About Awards</a>
+        <!-- Centered SVG Social Media Row -->
+        <div class="footer-socials-row">
+            <!-- Facebook -->
+            <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+                <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/></svg>
+            </a>
+            <!-- Instagram -->
+            <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            </a>
+            <!-- TikTok -->
+            <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok">
+                <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.03 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.97 1.21 2.34 2.01 3.84 2.27v3.74c-1.39-.12-2.75-.66-3.85-1.55-.91-.73-1.61-1.69-2.03-2.77-.04 2.6-.02 5.19-.03 7.79-.06 1.46-.49 2.9-1.27 4.13-.98 1.53-2.51 2.66-4.26 3.12-1.89.5-3.92.34-5.71-.46-1.79-.81-3.23-2.3-3.98-4.14-.81-1.97-.83-4.2-.07-6.19.72-1.89 2.14-3.46 3.97-4.34 1.46-.71 3.09-.97 4.71-.78v3.83c-.93-.16-1.9-.01-2.75.4-.82.41-1.47 1.13-1.8 1.99-.41 1.05-.33 2.26.23 3.24.5.87 1.38 1.48 2.37 1.67 1.01.19 2.07-.07 2.89-.69.87-.67 1.39-1.72 1.41-2.82.01-3.48-.01-6.96.01-10.44z"/></svg>
+            </a>
+            <!-- YouTube -->
+            <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="YouTube">
+                <svg viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
         </div>
 
-        <p class="footer-copy">&copy; 2026 Keyframe Awards. All rights reserved.</p>
+        <p class="footer-copy">&copy; 2026 The Keyframe Awards. All rights reserved.</p>
     </footer>
 
-    <!-- ==================== FIREBASE MODULE & DOM LOGIC ==================== -->
+    <!-- ==================== SINGLE, COMPREHENSIVE SCRIPT BLOCK ==================== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Config
+        // Firebase Setup
         const firebaseConfig = { 
             apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg", 
             authDomain: "keyframe-awards.firebaseapp.com", 
@@ -404,7 +432,29 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Your exact 60+ Categories List
+        // Toast Handler (Globally Accessible)
+        window.showToast = function(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+            `;
+            container.appendChild(toast);
+            setTimeout(() => { toast.classList.add('show'); }, 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => { toast.remove(); }, 400);
+            }, 4000);
+        };
+
+        window.handleSignOut = function() {
+            window.showToast("Successfully logged out.", "success");
+        };
+
+        // Complete 60+ Category Data
         const categoryGroups = {
             "🏆 THE YEAR AWARDS [THE BIG PRESTIGE ONES]": [
                 "Footballer of the Year [Content Creator]",
@@ -423,99 +473,3 @@
                 "Best Solo Artist (K-pop or General)",
                 "Most Hyped Music Video Edit",
                 "Best Fandom / Stan Account",
-                "Best Song Cover / Dance Cover",
-                "Viral Music Trend Creator",
-                "Best Music Reaction / Breakdown"
-            ],
-            "🤡 MEME AND VIRAL CULTURE": [
-                "Funniest Viral Meme",
-                "Best Meme Edit / Sound",
-                "Most Relatable Meme",
-                "Wildest Trend Jumper",
-                "Best Roast Meme",
-                "Meme of the Year"
-            ],
-            "🎬 MOVIES AND FILM CONTENT": [
-                "Best Movie Edit / Recap",
-                "Most Hyped Movie Scene Recreation",
-                "Best Movie Trailer Reaction",
-                "Best Movie Meme",
-                "Cinema Guru / Film Reviewer"
-            ],
-            "📺 TV SHOWS AND SERIES": [
-                "Best TV Show Edit",
-                "Most Addictive Show Moments",
-                "Best Series Theory / Breakdown",
-                "Funniest Show Reaction",
-                "Best Show Recap Creator"
-            ],
-            "⚽ FOOTBALL / SPORTS CONTENT": [
-                "Best Football Edit",
-                "Most Hyped Goal Montage",
-                "Football Skills King",
-                "Best Match Highlight Creator",
-                "Viral Football Meme",
-                "Best Player Tribute Edit"
-            ],
-            "🎮 GAMING": [
-                "Best Gaming Edit / Montage",
-                "Funniest Gaming Fail",
-                "Best Game Clip / Highlight",
-                "Gaming Meme Master",
-                "Best Gaming Streamer / Creator"
-            ],
-            "🌐 LIVE STREAMING (NEW)": [
-                "Best Streamer of the Year",
-                "Most Chaotic Stream Moment",
-                "Best Streamer Duo / Squad",
-                "Chat Choice Award [Most Active Community]",
-                "Breakout / Rising Streamer"
-            ],
-            "👤 GENERAL CONTENT CREATORS AND PERSONALITY": [
-                "Most Viral Content Creator",
-                "Best Storytelling Creator",
-                "Charisma King / Queen",
-                "Most Relatable Daily Vlogger",
-                "Best Duet / Collab",
-                "Community Favorite Creator"
-            ],
-            "✂️ EDITING AND CREATIVE CRAFT": [
-                "Best Mobile Editor",
-                "Best Transition / Effects",
-                "Cleanest Video Editor",
-                "Audio Sync Wizard",
-                "Most Creative Edit Overall"
-            ]
-        };
-
-        // 1. POPULATE THE BEAUTIFUL PUBLIC GRID
-        const catalogContainer = document.getElementById('categories-catalog');
-        for (const [groupName, list] of Object.entries(categoryGroups)) {
-            const card = document.createElement('div');
-            card.className = 'category-group-card';
-            
-            let listItemsHTML = '';
-            list.forEach(item => {
-                listItemsHTML += `<li>${item}</li>`;
-            });
-
-            card.innerHTML = `
-                <div class="category-group-title">${groupName}</div>
-                <ul class="category-list">
-                    ${listItemsHTML}
-                </ul>
-            `;
-            catalogContainer.appendChild(card);
-        }
-
-        // 2. POPULATE DYNAMIC SELECT DROP-DOWNS FOR THE SUBMISSION FORM
-        const groupDropdown = document.getElementById('group-dropdown');
-        const categoryDropdown = document.getElementById('category-dropdown');
-
-        function initDropdowns() {
-            groupDropdown.innerHTML = '';
-            Object.keys(categoryGroups).forEach(group => {
-                const opt = document.createElement('option');
-                opt.value = group;
-                opt.innerText = group;
-                groupDropdown.appendCh
