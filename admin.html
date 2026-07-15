@@ -412,14 +412,21 @@
         let globalSubmissionsList = []; // Master memory array for instant search & filtering
         let currentActiveCategory = 'all';
 
-        // --- SECURITY & AUTHORIZATION CHECK ---
+      // --- SECURITY & AUTHORIZATION CHECK ---
         onAuthStateChanged(auth, async (user) => {
-            if (user && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
-                document.getElementById('loading-screen').style.display = 'none';
-                loadAllPortalData();
+            if (user) {
+                console.log("Logged in user email:", user.email);
+                if (user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+                    document.getElementById('loading-screen').style.display = 'none';
+                    loadAllPortalData();
+                } else {
+                    alert(`Unauthorized Access. ${user.email} is not the admin!`);
+                    window.location.href = "index.html"; // Redirects back to home/login
+                }
             } else {
-                alert("Unauthorized Access. Admin credentials required.");
-                window.location.href = "index.html";
+                console.log("No user is logged in.");
+                alert("Please log in first!");
+                window.location.href = "index.html"; // Sends you to log in
             }
         });
 
