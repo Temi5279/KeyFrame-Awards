@@ -3,366 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Official Nominations Categories | The Keyframe Awards</title>
+    <title>Nominations | Keyframe Awards</title>
+    <!-- Link to your existing external stylesheet -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        .page-header {
-            padding: 140px 5% 40px 5%;
-            text-align: center;
-            background: linear-gradient(to bottom, rgba(26, 0, 51, 0.5), var(--deep-bg));
-        }
-        .page-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px 5% 80px 5%;
-        }
-        
-        /* Grid Layout for Category Cards */
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        /* Neon Card Design */
-        .category-card {
-            background: rgba(26, 0, 51, 0.4);
-            border: 1px solid rgba(157, 0, 255, 0.2);
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--neon-cyan);
-            box-shadow: 0 8px 25px rgba(0, 240, 255, 0.15);
-        }
-
-        /* Prestige Cards (The Year Awards) get a special pink glow */
-        .category-card.prestige {
-            border-color: rgba(255, 0, 127, 0.3);
-            box-shadow: 0 5px 15px rgba(255, 0, 127, 0.05);
-        }
-        .category-card.prestige:hover {
-            border-color: var(--neon-pink);
-            box-shadow: 0 8px 25px rgba(255, 0, 127, 0.2);
-        }
-
-        .category-header {
+        /* ==================== MOBILE HAMBURGER NAVIGATION ==================== */
+        .navbar {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 15px;
+            padding: 20px;
+            position: relative;
+            z-index: 1000;
         }
 
-        .category-header i {
-            font-size: 1.8rem;
-        }
-        
-        .category-card.prestige .category-header i { color: var(--neon-pink); text-shadow: 0 0 10px var(--neon-pink); }
-        .category-card.music .category-header i { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan); }
-        .category-card.meme .category-header i { color: #ffe600; text-shadow: 0 0 10px #ffe600; }
-        .category-card.movies .category-header i { color: #ff5500; text-shadow: 0 0 10px #ff5500; }
-        .category-card.tv .category-header i { color: #00ff66; text-shadow: 0 0 10px #00ff66; }
-        .category-card.sports .category-header i { color: #00a2ff; text-shadow: 0 0 10px #00a2ff; }
-        .category-card.gaming .category-header i { color: #bd00ff; text-shadow: 0 0 10px #bd00ff; }
-        .category-card.live .category-header i { color: #ff003c; text-shadow: 0 0 10px #ff003c; }
-        .category-card.general .category-header i { color: #00ffff; text-shadow: 0 0 10px #00ffff; }
-        .category-card.editing .category-header i { color: #ff00aa; text-shadow: 0 0 10px #ff00aa; }
-
-        .category-header h3 {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--text-white);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        /* Hamburger Icon Styling */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
         }
 
-        .subcategories-list {
-            list-style: none;
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        /* Active Hamburger Animations */
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+            background: var(--neon-pink, #ff007f);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+            background: var(--neon-cyan, #00f0ff);
+        }
+
+        /* Responsive Styles for Navbar */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(15, 2, 28, 0.95);
+                border-bottom: 2px solid rgba(157, 0, 255, 0.2);
+                padding: 20px 0;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+        }
+
+        /* ==================== GLOWING CUSTOM TOAST NOTIFICATIONS ==================== */
+        #toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
+            pointer-events: none;
         }
 
-        .subcategories-list li {
-            color: #ddd;
-            font-size: 1.02rem;
+        .toast {
+            min-width: 300px;
+            max-width: 400px;
+            padding: 16px 20px;
+            background: rgba(15, 2, 28, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(157, 0, 255, 0.2);
+            color: #fff;
+            font-family: sans-serif;
+            font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            pointer-events: auto;
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+            opacity: 0;
+            position: relative;
+            overflow: hidden;
         }
 
-        .subcategories-list li i {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.4);
+        /* Beautiful glowing gradient bar at the bottom of the toast */
+        .toast::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-pink, #ff007f), var(--neon-cyan, #00f0ff));
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border: 1px solid rgba(0, 240, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+        }
+
+        .toast.error {
+            border: 1px solid rgba(255, 0, 127, 0.4);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.15);
+        }
+
+        .toast-close {
+            background: transparent;
+            border: none;
+            color: #aaa;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding-left: 10px;
+        }
+
+        .toast-close:hover {
+            color: #fff;
+        }
+
+        /* ==================== NOMINATIONS DESIGN WRAPPER ==================== */
+        .nominations-container {
+            max-width: 800px;
+            margin: 120px auto 60px auto;
+            padding: 30px;
+            background: rgba(26, 0, 51, 0.5);
+            border: 1px solid rgba(157, 0, 255, 0.2);
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(157, 0, 255, 0.1);
         }
     </style>
 </head>
 <body>
+
+    <!-- Floating Custom Toast Notifications Container -->
+    <div id="toast-container"></div>
+
+    <!-- Navigation Header -->
     <header class="navbar">
         <div class="logo">Keyframe Awards</div>
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-        </div>
-        <nav class="nav-links">
+        
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger" id="hamburger-menu" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-links" id="nav-links-menu">
             <a href="index.html">Home</a>
             <a href="nominations.html" class="active">Nominations</a>
-            <a href="vote.html">Vote</a>
-            <a href="live.html">Live Stream</a>
-            <a href="about.html">About</a>
-            <div class="auth-buttons" id="auth-header-actions">
-                <span class="user-welcome">Checking Session...</span>
-            </div>
+            <a href="blog.html">Blog</a>
         </nav>
     </header>
 
-    <main>
-        <section class="page-header">
-            <h1 class="animated-gradient-text">Award Categories</h1>
-            <p>Explore all the official spaces where visual architects compete this year.</p>
+    <main class="nominations-container">
+        <h1 class="animated-gradient-text" style="font-size: 2.5rem; margin-bottom: 15px;">Submit Nominations</h1>
+        <p style="color: #ccc; font-size: 1rem; margin-bottom: 30px;">Who ruled the creative spaces this year? Let us know below!</p>
 
-            <!-- Glistening Countdown Clock Box -->
-            <div style="margin-top: 35px; background: rgba(26, 0, 51, 0.4); border: 1px solid rgba(157, 0, 255, 0.2); border-radius: 12px; padding: 20px 30px; display: inline-block; box-shadow: 0 0 20px rgba(157, 0, 255, 0.1);">
-                <span style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; color: var(--neon-pink); font-weight: bold; display: block; margin-bottom: 15px;">
-                    Voting Gates Unlock In:
-                </span>
-                <div id="nominations-countdown" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-                    <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(157, 0, 255, 0.2); padding: 10px 15px; border-radius: 8px; min-width: 70px; text-align: center;">
-                        <span id="days" style="font-size: 1.8rem; font-weight: bold; color: #ffffff; text-shadow: 0 0 10px var(--neon-pink);">00</span>
-                        <p style="font-size: 0.7rem; color: #aaa; margin: 5px 0 0 0; text-transform: uppercase; letter-spacing: 1px;">Days</p>
-                    </div>
-                    <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(157, 0, 255, 0.2); padding: 10px 15px; border-radius: 8px; min-width: 70px; text-align: center;">
-                        <span id="hours" style="font-size: 1.8rem; font-weight: bold; color: #ffffff; text-shadow: 0 0 10px var(--neon-pink);">00</span>
-                        <p style="font-size: 0.7rem; color: #aaa; margin: 5px 0 0 0; text-transform: uppercase; letter-spacing: 1px;">Hours</p>
-                    </div>
-                    <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(157, 0, 255, 0.2); padding: 10px 15px; border-radius: 8px; min-width: 70px; text-align: center;">
-                        <span id="minutes" style="font-size: 1.8rem; font-weight: bold; color: #ffffff; text-shadow: 0 0 10px var(--neon-pink);">00</span>
-                        <p style="font-size: 0.7rem; color: #aaa; margin: 5px 0 0 0; text-transform: uppercase; letter-spacing: 1px;">Mins</p>
-                    </div>
-                    <div style="background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(157, 0, 255, 0.2); padding: 10px 15px; border-radius: 8px; min-width: 70px; text-align: center;">
-                        <span id="seconds" style="font-size: 1.8rem; font-weight: bold; color: #ffffff; text-shadow: 0 0 10px var(--neon-pink);">00</span>
-                        <p style="font-size: 0.7rem; color: #aaa; margin: 5px 0 0 0; text-transform: uppercase; letter-spacing: 1px;">Secs</p>
-                    </div>
-                </div>
+        <!-- Dummy form for layout testing -->
+        <form id="nomination-form" onsubmit="handleNominationSubmit(event)">
+            <div style="margin-bottom: 20px; text-align: left;">
+                <label style="color: #fff; display: block; margin-bottom: 8px;">Category Group</label>
+                <select style="width: 100%; padding: 12px; border-radius: 8px; background: #22003c; border: 1px solid rgba(157, 0, 255, 0.4); color: #fff;">
+                    <option>🎬 Creative & Editing Zone</option>
+                    <option>🎵 Music Zone</option>
+                    <option>🎮 Gaming & Streaming Zone</option>
+                </select>
             </div>
-        </section>
-
-        <div class="page-container">
-            <div class="categories-grid">
-
-                <!-- 1. THE YEAR AWARDS -->
-                <div class="category-card prestige">
-                    <div class="category-header">
-                        <i class="fa-solid fa-crown"></i>
-                        <h3>The Year Awards</h3>
-                    </div>
-                    <ul class="subcategories-list">
-                        <li><i class="fa-solid fa-star"></i> Footballer of the Year [Content Creator]</li>
-                        <li><i class="fa-solid fa-star"></i> Gamer of the Year</li>
-                        <li><i class="fa-solid fa-star"></i> Meme Lord/Lady of the Year</li>
-                        <li><i class="fa-solid fa-star"></i> Movie Content Creator of the Year</li>
-                        <li><i class="fa-solid fa-star"></i> TV Show Stan of the Year</li>
-                        <li><i class="fa-solid fa-star"></i> Music Artist / Group of the Year</li>
-                        <li><i class="fa-solid fa-star"></i> Overall Creator of the Year</li>
-                        <li><i class="fa-solid fa-star"></i> Rising Star of the Year</li>
-                        <li><i class="fa-solid fa-star"></i> Viral Phenomenon of the Year</li>
-                    </ul>
-                </div>
-
-                <!-- 2. MUSIC CATEGORY -->
-                <div class="category-card music">
-                    <div class="category-header">
-                        <i class="fa-solid fa-microphone"></i>
-                        <h3>Music Category</h3>
-                    </div>
-                    <ul class="subcategories-list">
-                        <li><i class="fa-solid fa-music"></i> Best K-pop Group</li>
-                        <li><i class="fa-solid fa-music"></i> Best Music Edit / MV Recreation</li>
-                        <li><i class="fa-solid fa-music"></i> Best Solo Artist (K-pop or General)</li>
-                        <li><i class="fa-solid fa-music"></i> Most Hyped Music Video Edit</li>
-                        <li><i class="fa-solid fa-music"></i> Best Fandom / Stan Account</li>
-                        <li><i class="fa-solid fa-music"></i> Best Song Cover / Dance Cover</li>
-                        <li><i class="fa-solid fa-music"></i> Viral Music Trend Creator</li>
-                        <li><i class="fa-solid fa-music"></i> Best Music Reaction / Breakdown</li>
-                    </ul>
-                </div>
-
-                <!-- 3. MEME AND VIRAL CULTURE -->
-                <div class="category-card meme">
-                    <div class="category-header">
-                        <i class="fa-solid fa-face-laugh-squint"></i>
-                        <h3>Meme & Viral Culture</h3>
-                    </div>
-                    <ul class="subcategories-list">
-                        <li><i class="fa-solid fa-bolt"></i> Funniest Viral Meme</li>
-                        <li><i class="fa-solid fa-bolt"></i> Best Meme Edit / Sound</li>
-                        <li><i class="fa-solid fa-bolt"></i> Most Relatable Meme</li>
-                        <li><i class="fa-solid fa-bolt"></i> Wildest Trend Jumper</li>
-                        <li><i class="fa-solid fa-bolt"></i> Best Roast Meme</li>
-                        <li><i class="fa-solid fa-bolt"></i> Meme of the Year</li>
-                    </ul>
-                </div>
-
-                <!-- 4. MOVIES AND FILM CONTENT -->
-                <div class="category-card movies">
-                    <div class="category-header">
-                        <i class="fa-solid fa-film"></i>
-                        <h3>Movies & Film</h3>
-                    </div>
-                    <ul class="subcategories-list">
-                        <li><i class="fa-solid fa-clapperboard"></i> Best Movie Edit / Recap</li>
-                        <li><i class="fa-solid fa-clapperboard"></i> Most Hyped Movie Scene Recreation</li>
-                        <li><i class="fa-solid fa-clapperboard"></i> Best Movie Trailer Reaction</li>
-                        <li><i class="fa-solid fa-clapperboard"></i> Best Movie Meme</li>
-                        <li><i class="fa-solid fa-clapperboard"></i> Cinema Guru / Film Reviewer</li>
-                    </ul>
-                </div>
-
-                <!-- 5. TV SHOWS AND SERIES -->
-                <div class="category-card tv">
-                    <div class="category-header">
-                        <i class="fa-solid fa-tv"></i>
-                        <h3>TV Shows & Series</h3>
-                    </div>
-                    <ul class="subcategories-list">
-                        <li><i class="fa-solid fa-circle-play"></i> Best TV Show Edit</li>
-                        <li><i class="fa-solid fa-circle-play"></i> Most Addictive Show Moments</li>
-                        <li><i class="fa-solid fa-circle-play"></i> Best Series Theory / Breakdown</li>
-                        <li><i class="fa-solid fa-circle-play"></i> Funniest Show Reaction</li>
-                        <li><i class="fa-solid fa-circle-play"></i> Best Show Recap Creator</li>
-                    </ul>
-                </div>
-
-                <!-- 6. FOOTBALL / SPORTS CONTENT -->
-                <div class="category-card sports">
-                    <div class="category-header">
-                        <i class="fa-solid fa-football"></i>
-                        <h3>Football & Sports</h3>
-                    </div>
-                    <ul class="subcategories-list">
-                        <li><i class="fa-solid fa-circle"></i> Best Football Edit</li>
-                        <li><i class="fa-solid fa-circle"></i> Most Hyped Goal Montage</li>
-                        <li><i class="fa-solid fa-circle"></i> Football Skills King</li>
-                        <li><i class="fa-solid fa-circle"></i> Best Match Highlight Creator</li>
-                        <li><i class="fa-solid fa-circle"></i> Viral Football Meme</li>
-                        <li><i class="fa-solid fa-circle"></i> Best Player Tribute Edit</li>
-                    </ul>
-                </div>
-
-                <!-- 7. GAMING -->
-                <div class="category-card gaming">
-                    <div class="category-header">
-                        <i class="fa-solid fa-gamepad"></i>
-                        <h3>Gaming</h3>
-                    </div>
-                    <ul class="subcategories-list">
-                        <li><i class="fa-solid fa-headset"></i> Best Gaming Edit / Montage</li>
-                        <li><i class="fa-solid fa-headset"></i> Funniest Gaming Fail</li>
-                        <li><i class="fa-solid fa-headset"></i> Best Game Clip / Highlight</li>
-                        <li><i class="fa-solid fa-headset"></i> Gaming Meme Master</li>
-                        <li><i class="fa-solid fa-headset"></i> Best Gaming Streamer / Creator</li>
-                    </ul>
-                </div>
-
-                <!-- 8. LIVE STREAMING (NEW) -->
-                <div class="category-card live">
-                    <div class="category-header">
-                        <i class="fa-solid fa-globe"></i>
-                        <h3>Live Streaming</h3>
-                    </div>
-                    <ul class="subcategories-list">
-                        <li><i class="fa-solid fa-tower-broadcast"></i> Best Streamer of the Year</li>
-                        <li><i class="fa-solid fa-tower-broadcast"></i> Most Chaotic Stream Moment</li>
-                        <li><i class="fa-solid fa-tower-broadcast"></i> Best Streamer Duo / Squad</li>
-                        <li><i class="fa-solid fa-tower-broadcast"></i> Chat Choice Award [Most Active]</li>
-                        <li><i class="fa-solid fa-tower-broadcast"></i> Breakout / Rising Streamer</li>
-                    </ul>
-                </div>
-
-                <!-- 9. GENERAL CREATORS & PERSONALITY -->
-                <div class="category-card general">
-                    <div class="category-header">
-                        <i class="fa-solid fa-user"></i>
-                        <h3>General Creators</h3>
-                    </div>
-                    <ul class="subcategories-list">
-                        <li><i class="fa-solid fa-hashtag"></i> Most Viral Content Creator</li>
-                        <li><i class="fa-solid fa-hashtag"></i> Best Storytelling Creator</li>
-                        <li><i class="fa-solid fa-hashtag"></i> Charisma King / Queen</li>
-                        <li><i class="fa-solid fa-hashtag"></i> Most Relatable Daily Vlogger</li>
-                        <li><i class="fa-solid fa-hashtag"></i> Best Duet / Collab</li>
-                        <li><i class="fa-solid fa-hashtag"></i> Community Favorite Creator</li>
-                    </ul>
-                </div>
-
-                <!-- 10. EDITING & CREATIVE CRAFT -->
-                <div class="category-card editing">
-                    <div class="category-header">
-                        <i class="fa-solid fa-scissors"></i>
-                        <h3>Editing & Craft</h3>
-                    </div>
-                    <ul class="subcategories-list">
-                        <li><i class="fa-solid fa-wand-magic-sparkles"></i> Best Mobile Editor</li>
-                        <li><i class="fa-solid fa-wand-magic-sparkles"></i> Best Transition / Effects</li>
-                        <li><i class="fa-solid fa-wand-magic-sparkles"></i> Cleanest Video Editor</li>
-                        <li><i class="fa-solid fa-wand-magic-sparkles"></i> Audio Sync Wizard</li>
-                        <li><i class="fa-solid fa-wand-magic-sparkles"></i> Most Creative Edit Overall</li>
-                    </ul>
-                </div>
-
+            <div style="margin-bottom: 25px; text-align: left;">
+                <label style="color: #fff; display: block; margin-bottom: 8px;">Your Nominee (Channel Name or @handle)</label>
+                <input type="text" placeholder="e.g., @skew_1" required style="width: 100%; padding: 12px; border-radius: 8px; background: #22003c; border: 1px solid rgba(157, 0, 255, 0.4); color: #fff; box-sizing: border-box;">
             </div>
-        </div>
+            <button type="submit" class="cta-btn" style="background: linear-gradient(90deg, var(--neon-pink, #ff007f), var(--neon-cyan, #00f0ff)); color: #fff; border: none; padding: 12px 30px; font-weight: bold; border-radius: 25px; cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.5);">
+                Submit Nomination
+            </button>
+        </form>
     </main>
 
-    <footer>
-        <div class="footer-links">
-            <a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="cookies.html">Cookie Preferences</a><a href="contact.html">Contact Support</a>
-        </div>
-        <div class="social-icons">
-            <a href="#" target="_blank"><i class="fab fa-facebook"></i></a><a href="#" target="_blank"><i class="fab fa-instagram"></i></a><a href="#" target="_blank"><i class="fab fa-tiktok"></i></a><a href="#" target="_blank"><i class="fab fa-x-twitter"></i></a><a href="#" target="_blank"><i class="fab fa-threads"></i></a><a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
-        </div>
-        <div class="copyright"><p>&copy; 2026 The Keyframe Awards. All rights reserved.</p></div>
-    </footer>
-
-    <!-- Countdown Javascript -->
+    <!-- UI Interaction Scripts -->
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            function updateNominationsCountdown() {
-                const targetDate = new Date("November 4, 2026 00:00:00").getTime();
-                const now = new Date().getTime();
-                const difference = targetDate - now;
-                
-                if (difference <= 0) {
-                    const clockContainer = document.getElementById('nominations-countdown');
-                    if (clockContainer) {
-                        clockContainer.innerHTML = "<h4 style='color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan); margin: 0;'>Voting is officially open!</h4>";
-                    }
-                    return;
-                }
-                
-                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-                
-                const daysEl = document.getElementById('days');
-                const hoursEl = document.getElementById('hours');
-                const minsEl = document.getElementById('minutes');
-                const secsEl = document.getElementById('seconds');
+        // 1. MOBILE HAMBURGER MENU INTERACTION
+        const hamburger = document.getElementById('hamburger-menu');
+        const navLinks = document.getElementById('nav-links-menu');
 
-                if (daysEl && hoursEl && minsEl && secsEl) {
-                    daysEl.innerText = days < 10 ? '0' + days : days;
-                    hoursEl.innerText = hours < 10 ? '0' + hours : hours;
-                    minsEl.innerText = minutes < 10 ? '0' + minutes : minutes;
-                    secsEl.innerText = seconds < 10 ? '0' + seconds : seconds;
-                }
-            }
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu if a user clicks a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // 2. CUSTOM NEON GRADIENT NOTIFICATION ENGINE
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
             
-            s
+            // Create the toast element
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button class="toast-close" onclick="this.parentElement.remove()">✕</button>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Trigger animation slide-in
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+            
+            // Auto-remove toast after 4 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 400); // Wait for transition out to finish
+            }, 4000);
+        }
+
+        // Example trigger for nomination submit
+        function handleNominationSubmit(event) {
+            event.preventDefault();
+            // Call our fancy toast!
+            showToast("✨ Nomination submitted successfully! Thank you for participating.", "success");
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
