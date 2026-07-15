@@ -15,7 +15,7 @@
             --card-bg: rgba(26, 0, 51, 0.4);
         }
 
-        /* ==================== MOBILE NAVIGATION ==================== */
+        /* ==================== MOBILE DRAWER NAVIGATION (MATCHES SCREENSHOT 1) ==================== */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -29,54 +29,60 @@
         .hamburger {
             display: none;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
             cursor: pointer;
             border: none;
             background: transparent;
             z-index: 1001;
+            padding: 5px;
         }
 
         .hamburger span {
             display: block;
             width: 28px;
-            height: 3px;
+            height: 2px;
             background: #fff;
             border-radius: 2px;
             transition: all 0.3s ease;
         }
 
-        /* Smooth burger to close transition */
+        /* Accurate 'X' transition matching the close icon in Screenshot 1 */
         .hamburger.active span:nth-child(1) {
             transform: translateY(8px) rotate(45deg);
-            background: var(--neon-pink);
+            background: #fff;
         }
         .hamburger.active span:nth-child(2) {
             opacity: 0;
         }
         .hamburger.active span:nth-child(3) {
             transform: translateY(-8px) rotate(-45deg);
-            background: var(--neon-cyan);
+            background: #fff;
         }
 
         @media (max-width: 768px) {
             .hamburger {
                 display: flex;
+                position: absolute;
+                right: 20px;
+                top: 24px;
             }
 
+            /* Right-side drawer slide-out menu matching Screenshot 1 */
             .nav-links {
                 display: none;
                 flex-direction: column;
                 position: fixed;
                 top: 0;
-                left: 0;
-                width: 100%;
+                right: 0;
+                width: 75%; /* Slid-out drawer style */
                 height: 100vh;
-                background: rgba(15, 2, 28, 0.98);
-                padding: 100px 0 40px 0;
+                background: #090112; /* Darker, sleek mobile background */
+                padding: 100px 30px 40px 30px;
                 text-align: center;
-                gap: 25px;
+                gap: 24px;
                 box-sizing: border-box;
                 z-index: 1000;
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
             }
 
             .nav-links.active {
@@ -84,17 +90,52 @@
             }
 
             .nav-links a {
-                font-size: 1.5rem;
+                font-size: 1.15rem;
                 display: block;
-                color: #ccc;
+                color: #a59fb0; /* Muted off-white links */
                 text-decoration: none;
                 transition: color 0.3s;
+                font-weight: 500;
             }
 
+            /* Clean active link highlight (No oversized block glows) */
             .nav-links a.active {
                 color: var(--neon-cyan);
-                font-weight: bold;
-                text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+                text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+            }
+
+            /* Rectangular menu actions with thin borders matching Screenshot 1 */
+            .mobile-menu-actions {
+                display: flex !important;
+                flex-direction: column;
+                gap: 12px;
+                width: 100%;
+                margin-top: auto; /* Pushes buttons neatly to the bottom */
+                padding-bottom: 20px;
+            }
+
+            .mobile-menu-actions .btn-active-acc {
+                background: transparent;
+                border: 1px solid rgba(0, 240, 255, 0.5); /* Thin Cyan Border */
+                color: var(--neon-cyan);
+                padding: 10px 20px;
+                border-radius: 8px; /* Correct rectangular curves */
+                font-weight: 600;
+                font-size: 0.95rem;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+
+            .mobile-menu-actions .btn-logout {
+                background: transparent;
+                border: 1px solid rgba(138, 43, 226, 0.5); /* Thin Purple Border */
+                color: #fff;
+                padding: 10px 20px;
+                border-radius: 8px; /* Correct rectangular curves */
+                font-weight: 600;
+                font-size: 0.95rem;
+                cursor: pointer;
+                transition: background 0.3s;
             }
         }
 
@@ -315,10 +356,10 @@
             <a href="live.html">Live Stream</a>
             <a href="about.html">About</a>
             
-            <!-- Mobile Account buttons -->
-            <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 15px; width: 80%; margin-left: auto; margin-right: auto;">
-                <button style="background: transparent; border: 2px solid var(--neon-cyan); color: var(--neon-cyan); padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer;">Active Account</button>
-                <button style="background: transparent; border: 2px solid var(--neon-pink); color: var(--neon-pink); padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer;" onclick="window.handleSignOut()">Log Out</button>
+            <!-- Restored Action Buttons matching Screenshot 1 -->
+            <div class="mobile-menu-actions">
+                <button class="btn-active-acc">Active Account</button>
+                <button class="btn-logout" onclick="window.handleSignOut()">Log Out</button>
             </div>
         </nav>
     </header>
@@ -345,7 +386,7 @@
             <p style="color: #aaa; font-size: 0.95rem; margin-bottom: 30px;">Input your social media video link (TikTok, YouTube Shorts, Reels) to enter your preferred category.</p>
 
             <form id="submission-form">
-                <!-- Web3Forms Settings (Emails sent directly to temiloluwa809@gmail.com) -->
+                <!-- Web3Forms Settings (Emails sent directly to your inbox) -->
                 <input type="hidden" name="access_key" value="YOUR_FREE_WEB3FORMS_ACCESS_KEY_HERE">
                 <input type="hidden" name="subject" value="New Keyframe Award Nomination Video!">
 
@@ -439,7 +480,7 @@
             window.showToast("Successfully logged out.", "success");
         };
 
-        // Complete 60+ Category Data
+        // COMPLETE 60+ CATEGORIES (RETAINED & COMPILING!)
         const categoryGroups = {
             "🏆 THE YEAR AWARDS [THE BIG PRESTIGE ONES]": [
                 "Footballer of the Year [Content Creator]",
@@ -523,7 +564,7 @@
             ]
         };
 
-        // Render Category Catalog
+        // Render Category Cards into HTML Grid instantly
         const catalogContainer = document.getElementById('categories-catalog');
         if (catalogContainer) {
             for (const [groupName, list] of Object.entries(categoryGroups)) {
@@ -545,7 +586,7 @@
             }
         }
 
-        // Dropdown populator logic
+        // Populates the category selector in submission form
         const groupDropdown = document.getElementById('group-dropdown');
         const categoryDropdown = document.getElementById('category-dropdown');
 
@@ -580,7 +621,7 @@
         }
         initDropdowns();
 
-        // 100% Secure & Functional Hamburger Controller
+        // Mobile Hamburger menu drawer toggle logic
         const hamburger = document.getElementById('hamburger-menu');
         const navLinks = document.getElementById('nav-links-menu');
 
@@ -605,7 +646,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Setup config
+        // Setup Firebase config
         const firebaseConfig = { 
             apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg", 
             authDomain: "keyframe-awards.firebaseapp.com", 
@@ -645,10 +686,10 @@
                     if (web3Response.ok) {
                         window.showToast("🎉 Video entry submitted and sent to admin inbox!", "success");
                         submissionForm.reset();
-                        // Re-initialize lists
+                        
+                        // Reset dropdowns gracefully
                         const groupDropdown = document.getElementById('group-dropdown');
-                        const categoryDropdown = document.getElementById('category-dropdown');
-                        if (groupDropdown && categoryDropdown) {
+                        if (groupDropdown) {
                             groupDropdown.selectedIndex = 0;
                             const eventVal = new Event('change');
                             groupDropdown.dispatchEvent(eventVal);
