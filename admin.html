@@ -386,11 +386,24 @@
 
     </div>
 
-    <!-- Firebase Admin Script Module -->
+   <!-- Firebase Admin Script Module -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, collection, getDocs, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Help debug on mobile screens
+        window.addEventListener('error', function(e) {
+            const loader = document.getElementById('loading-screen');
+            if (loader) {
+                loader.innerHTML = `<div style="padding: 20px; color: #ff3333; text-align: center;">
+                    <h3>⚠️ JavaScript Error Detected:</h3>
+                    <p style="font-size: 0.9rem;">${e.message}</p>
+                    <p style="font-size: 0.8rem; color: gray;">Line: ${e.lineno}</p>
+                    <button onclick="location.reload()" style="background: var(--neon-purple); color: white; border: none; padding: 10px; border-radius: 5px; margin-top: 10px;">Reload Page</button>
+                </div>`;
+            }
+        });
 
         const firebaseConfig = {
           apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
@@ -409,24 +422,27 @@
         // Secure locking admin email
         const ADMIN_EMAIL = "temiloluwa809@gmail.com"; 
 
-        let globalSubmissionsList = []; // Master memory array for instant search & filtering
+        let globalSubmissionsList = []; 
         let currentActiveCategory = 'all';
 
-      // --- SECURITY & AUTHORIZATION CHECK ---
+        // --- SECURITY & AUTHORIZATION CHECK ---
+        console.log("Initializing Auth state listener...");
         onAuthStateChanged(auth, async (user) => {
+            console.log("Auth state changed. User object:", user);
             if (user) {
                 console.log("Logged in user email:", user.email);
-                if (user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
-                    document.getElementById('loading-screen').style.display = 'none';
+                if (user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+                    const loader = document.getElementById('loading-screen');
+                    if (loader) loader.style.display = 'none';
                     loadAllPortalData();
                 } else {
-                    alert(`Unauthorized Access. ${user.email} is not the admin!`);
-                    window.location.href = "index.html"; // Redirects back to home/login
+                    alert(`Unauthorized Access. ${user.email} is not authorized.`);
+                    window.location.href = "index.html";
                 }
             } else {
-                console.log("No user is logged in.");
+                console.log("No user is currently logged in.");
                 alert("Please log in first!");
-                window.location.href = "index.html"; // Sends you to log in
+                window.location.href = "index.html"; 
             }
         });
 
@@ -437,7 +453,7 @@
             await loadVoteTallies();
         }
 
-        // --- FETCH USER DIRECTORY & CALCULATE DAILY REGISTERED ---
+        // --- FETCH USER DIRECTORY ---
         async function loadUserData() {
             try {
                 const querySnapshot = await getDocs(collection(db, "users"));
@@ -445,6 +461,7 @@
                 const totalCountElement = document.getElementById('total-users-count');
                 const todayCountElement = document.getElementById('today-signups-count');
                 
+                if (!tableBody) return;
                 tableBody.innerHTML = "";
                 let totalUsers = 0;
                 let todayUsers = 0;
@@ -459,11 +476,9 @@
                     let regDate = "N/A";
                     if (data.registeredAt) {
                         const dateObj = new Date(data.registeredAt);
-                        
                         if (dateObj >= today) {
                             todayUsers++;
                         }
-
                         regDate = dateObj.toLocaleDateString(undefined, {
                             year: 'numeric',
                             month: 'short',
@@ -471,8 +486,7 @@
                         });
                     }
 
-                    const userEmail = data.email || "No Associated Email Address";
-
+                    const userEmail = data.email || "No Email";
                     const row = `
                         <tr>
                             <td style="font-weight: bold; color: var(--neon-cyan);">${data.fullName || 'No Name'}</td>
@@ -484,106 +498,42 @@
                     tableBody.insertAdjacentHTML('beforeend', row);
                 });
 
-                totalCountElement.innerText = totalUsers;
-                todayCountElement.innerText = todayUsers;
+                if (totalCountElement) totalCountElement.innerText = totalUsers;
+                if (todayCountElement) todayCountElement.innerText = todayUsers;
 
             } catch (error) {
                 console.error("Error fetching users: ", error);
             }
         }
 
-        // --- FETCH VIDEO SUBMISSIONS FROM (nominations_submissions) ---
+        // --- FETCH VIDEO SUBMISSIONS ---
         async function loadSubmissionData() {
             try {
                 const querySnapshot = await getDocs(collection(db, "nominations_submissions"));
                 const totalSubmissionsElement = document.getElementById('total-submissions-count');
                 
-                globalSubmissionsList = []; // Clear array
+                globalSubmissionsList = []; 
                 
                 querySnapshot.forEach((docSnap) => {
                     const data = docSnap.data();
-                    data.id = docSnap.id; // Store document ID so we can delete it later if needed!
+                    data.id = docSnap.id; 
                     globalSubmissionsList.push(data);
                 });
 
-                totalSubmissionsElement.innerText = globalSubmissionsList.length;
+                if (totalSubmissionsElement) totalSubmissionsElement.innerText = globalSubmissionsList.length;
                 renderSubmissionsTable(globalSubmissionsList);
 
             } catch (error) {
                 console.error("Error fetching submissions: ", error);
-                document.getElementById('submissions-table-body').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--neon-pink);">Error querying collection 'nominations_submissions'</td></tr>`;
+                const tbody = document.getElementById('submissions-table-body');
+                if (tbody) tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--neon-pink);">Error loading submissions.</td></tr>`;
             }
         }
 
-        // Render submissions array inside DOM
-        window.renderSubmissionsTable = function(entries) {
+        // Render submissions table
+        function renderSubmissionsTable(entries) {
             const tableBody = document.getElementById('submissions-table-body');
-            tableBody.innerHTML = "";
-
-            if (entries.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-gray);">No matching submissions found.</td></tr>`;
-                return;
-            }
-
-            entries.forEach((data) => {
-                let submitDate = "N/A";
-                if (data.submitted_at) {
-                    submitDate = new Date(data.submitted_at).toLocaleDateString(undefined, {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                    });
-                }
-
-                const row = `
-                    <tr>
-                        <td style="font-weight: bold; color: var(--text-white);">@${data.nominee_handle || 'anonymous'}</td>
-                        <td><span class="badge" style="background: rgba(157,0,255,0.15); border: 1px solid var(--neon-purple);">${data.category_group || 'Unspecified'}</span></td>
-                        <td style="color: var(--text-gray);">${data.specific_category || 'Unspecified'}</td>
-                        <td><a href="${data.video_link}" target="_blank" class="video-link-anchor"><i class="fa-solid fa-up-right-from-square"></i> Play Video</a></td>
-                        <td>${submitDate}</td>
-                        <td style="text-align: center;">
-                            <button class="btn-delete" onclick="deleteSubmission('${data.id}')"><i class="fa-regular fa-trash-can"></i> Delete</button>
-                        </td>
-                    </tr>
-                `;
-                tableBody.insertAdjacentHTML('beforeend', row);
-                });
-
-                totalCountElement.innerText = totalUsers;
-                todayCountElement.innerText = todayUsers;
-
-            } catch (error) {
-                console.error("Error fetching users: ", error);
-            }
-        }
-
-        // --- FETCH VIDEO SUBMISSIONS FROM (nominations_submissions) ---
-        async function loadSubmissionData() {
-            try {
-                const querySnapshot = await getDocs(collection(db, "nominations_submissions"));
-                const totalSubmissionsElement = document.getElementById('total-submissions-count');
-                
-                globalSubmissionsList = []; // Clear array
-                
-                querySnapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    data.id = docSnap.id; // Store document ID so we can delete it later if needed!
-                    globalSubmissionsList.push(data);
-                });
-
-                totalSubmissionsElement.innerText = globalSubmissionsList.length;
-                renderSubmissionsTable(globalSubmissionsList);
-
-            } catch (error) {
-                console.error("Error fetching submissions: ", error);
-                document.getElementById('submissions-table-body').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--neon-pink);">Error querying collection 'nominations_submissions'</td></tr>`;
-            }
-        }
-
-        // Render submissions array inside DOM
-        window.renderSubmissionsTable = function(entries) {
-            const tableBody = document.getElementById('submissions-table-body');
+            if (!tableBody) return;
             tableBody.innerHTML = "";
 
             if (entries.length === 0) {
@@ -617,48 +567,32 @@
             });
         }
 
-        // --- EXPOSED FIREBASE SYSTEM ACTIONS ---
-        window.deleteSubmission = async function(docId) {
-            if (confirm("Are you sure you want to permanently delete this submission? This cannot be undone.")) {
+        // Action: Delete Submission
+        async function deleteSubmission(docId) {
+            if (confirm("Are you sure you want to permanently delete this submission?")) {
                 try {
                     await deleteDoc(doc(db, "nominations_submissions", docId));
-                    alert("Submission successfully removed from database!");
-                    loadSubmissionData(); // Reload UI
+                    alert("Submission deleted!");
+                    loadSubmissionData(); 
                 } catch (error) {
                     console.error("Error deleting document: ", error);
-                    alert("Failed to delete entry. Make sure you have authorized rules.");
+                    alert("Failed to delete entry.");
                 }
             }
         }
 
-        // Category Filter Hook
-        window.filterSubmissions = function(category, btnElement) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active-filter'));
-            btnElement.classList.add('active-filter');
-            currentActiveCategory = category;
-
-            applyFilterAndSearch();
-        }
-
-        // Search bar typing hook
-        window.searchSubmissions = function() {
-            applyFilterAndSearch();
-        }
-
-        // Combined Filter and Search Function
+        // Multi-Filter Hook
         function applyFilterAndSearch() {
-            const searchQuery = document.getElementById('submissions-search').value.toLowerCase();
-            
+            const searchInput = document.getElementById('submissions-search');
+            const searchQuery = searchInput ? searchInput.value.toLowerCase() : "";
             let filteredList = globalSubmissionsList;
 
-            // Apply category filter
             if (currentActiveCategory !== 'all') {
                 filteredList = filteredList.filter(item => 
                     item.category_group && item.category_group.toLowerCase() === currentActiveCategory.toLowerCase()
                 );
             }
 
-            // Apply search query filter
             if (searchQuery.trim() !== '') {
                 filteredList = filteredList.filter(item => 
                     item.nominee_handle && item.nominee_handle.toLowerCase().includes(searchQuery)
@@ -668,15 +602,15 @@
             renderSubmissionsTable(filteredList);
         }
 
-        // --- FETCH LIVE TALLIES FROM (tally) ---
+        // --- FETCH LIVE TALLIES ---
         async function loadVoteTallies() {
             try {
                 const querySnapshot = await getDocs(collection(db, "tally"));
                 const tableBody = document.getElementById('votes-table-body');
+                if (!tableBody) return;
                 tableBody.innerHTML = "";
 
                 let voteEntries = [];
-
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
                     voteEntries.push({
@@ -686,7 +620,6 @@
                     });
                 });
 
-                // Sort descending (Highest votes at the top!)
                 voteEntries.sort((a, b) => b.votes - a.votes);
 
                 if(voteEntries.length === 0) {
@@ -707,26 +640,37 @@
 
             } catch (error) {
                 console.error("Error loading vote tallies: ", error);
-                document.getElementById('votes-table-body').innerHTML = `<tr><td colspan="3" style="text-align:center; color: var(--neon-pink);">Error querying collection 'tally'</td></tr>`;
             }
         }
 
+        // Expose functions globally so regular HTML elements can call them
+        window.deleteSubmission = deleteSubmission;
+        window.searchSubmissions = applyFilterAndSearch;
+        
+        window.filterSubmissions = function(category, btnElement) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active-filter'));
+            btnElement.classList.add('active-filter');
+            currentActiveCategory = category;
+            applyFilterAndSearch();
+        };
+
         // --- EXIT SYSTEM PORTAL ---
-        document.getElementById('logout-admin').addEventListener('click', () => {
-            signOut(auth).then(() => {
-                window.location.href = "index.html";
+        const logoutBtn = document.getElementById('logout-admin');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                signOut(auth).then(() => {
+                    window.location.href = "index.html";
+                });
             });
-        });
+        }
     </script>
 
     <!-- UI Interaction Navigation Scripts -->
     <script>
         function switchSection(sectionId, tabButton) {
-            // Deactivate all sections & tabs
             document.querySelectorAll('.dashboard-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active-tab'));
 
-            // Activate chosen target section & tabs
             document.getElementById(sectionId).classList.add('active');
             tabButton.classList.add('active-tab');
         }
