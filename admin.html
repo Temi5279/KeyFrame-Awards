@@ -532,4 +532,40 @@
                             <td style="font-weight: bold; color: var(--neon-cyan);">${data.fullName || data.name || 'Visitor'}</td>
                             <td>${data.email || 'No Email'}</td>
                             <td style="max-width: 400px; word-wrap: break-word; color: #ddd;">${data.message || 'No message provided'}</td>
- 
+ <td><span class="badge" style="background: rgba(255, 0, 170, 0.1); color: var(--neon-pink);">${ticketDate}</span></td>
+                        </tr>
+                    `;
+                    tableBody.insertAdjacentHTML('beforeend', row);
+                });
+
+                if(messagesFound === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-gray);">No support entries stored in Firestore collection "support".</td></tr>`;
+                }
+
+            } catch (error) {
+                console.error("Error loading support tickets: ", error);
+            }
+        }
+
+        // --- EXIT SYSTEM PORTAL ---
+        document.getElementById('logout-admin').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                window.location.href = "index.html";
+            });
+        });
+    </script>
+
+    <!-- UI Interaction Navigation Scripts -->
+    <script>
+        function switchSection(sectionId, tabButton) {
+            // Deactivate all sections & tabs
+            document.querySelectorAll('.dashboard-section').forEach(sec => sec.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active-tab'));
+
+            // Activate chosen target section & tabs
+            document.getElementById(sectionId).classList.add('active');
+            tabButton.classList.add('active-tab');
+        }
+    </script>
+</body>
+</html>
