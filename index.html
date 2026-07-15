@@ -320,7 +320,7 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
+        const googleProvider = new GoogleAuthProvider();
 
         // --- GOOGLE SIGN IN LOGIC ---
         function handleGoogleAuth() {
@@ -423,7 +423,9 @@ const googleProvider = new GoogleAuthProvider();
                     <button class="btn-login" id="open-login">Login</button>
                     <button class="btn-signup" id="open-signup">Sign Up</button>
                 `;
-                attachModalTriggers();
+                if (typeof window.attachModalTriggers === 'function') {
+                    window.attachModalTriggers();
+                }
             }
         });
     </script>
@@ -452,7 +454,8 @@ const googleProvider = new GoogleAuthProvider();
             if (target === 'forgot') forgotView.classList.remove('hidden');
         }
 
-        function attachModalTriggers() {
+        // Exposed globally to the window object so Firebase module script can trigger it securely
+        window.attachModalTriggers = function() {
             const loginBtn = document.getElementById('open-login');
             const signupBtn = document.getElementById('open-signup');
             if(loginBtn) loginBtn.addEventListener('click', () => { modalOverlay.classList.add('open'); switchFormView('login'); });
@@ -465,7 +468,7 @@ const googleProvider = new GoogleAuthProvider();
         document.getElementById('go-forgot').addEventListener('click', (e) => { e.preventDefault(); switchFormView('forgot'); });
         document.getElementById('back-to-login').addEventListener('click', (e) => { e.preventDefault(); switchFormView('login'); });
 
-        attachModalTriggers();
+        window.attachModalTriggers();
 
         // Live Countdown Timer
         function updateCountdown() {
