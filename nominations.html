@@ -477,4 +477,192 @@
                 "Best Movie Meme",
                 "Cinema Guru / Film Reviewer"
             ],
-            "
+            "📺 TV SHOWS AND SERIES": [
+                "Best TV Show Edit",
+                "Most Addictive Show Moments",
+                "Best Series Theory / Breakdown",
+                "Funniest Show Reaction",
+                "Best Show Recap Creator"
+            ],
+            "⚽ FOOTBALL / SPORTS CONTENT": [
+                "Best Football Edit",
+                "Most Hyped Goal Montage",
+                "Football Skills King",
+                "Best Match Highlight Creator",
+                "Viral Football Meme",
+                "Best Player Tribute Edit"
+            ],
+            "🎮 GAMING": [
+                "Best Gaming Edit / Montage",
+                "Funniest Gaming Fail",
+                "Best Game Clip / Highlight",
+                "Gaming Meme Master",
+                "Best Gaming Streamer / Creator"
+            ],
+            "🌐 LIVE STREAMING (NEW)": [
+                "Best Streamer of the Year",
+                "Most Chaotic Stream Moment",
+                "Best Streamer Duo / Squad",
+                "Chat Choice Award [Most Active Community]",
+                "Breakout / Rising Streamer"
+            ],
+            "👤 GENERAL CONTENT CREATORS AND PERSONALITY": [
+                "Most Viral Content Creator",
+                "Best Storytelling Creator",
+                "Charisma King / Queen",
+                "Most Relatable Daily Vlogger",
+                "Best Duet / Collab",
+                "Community Favorite Creator"
+            ],
+            "✂️ EDITING AND CREATIVE CRAFT": [
+                "Best Mobile Editor",
+                "Best Transition / Effects",
+                "Cleanest Video Editor",
+                "Audio Sync Wizard",
+                "Most Creative Edit Overall"
+            ]
+        };
+
+        // Render Category Catalog
+        const catalogContainer = document.getElementById('categories-catalog');
+        if (catalogContainer) {
+            for (const [groupName, list] of Object.entries(categoryGroups)) {
+                const card = document.createElement('div');
+                card.className = 'category-group-card';
+                
+                let listItemsHTML = '';
+                list.forEach(item => {
+                    listItemsHTML += `<li>${item}</li>`;
+                });
+
+                card.innerHTML = `
+                    <div class="category-group-title">${groupName}</div>
+                    <ul class="category-list">
+                        ${listItemsHTML}
+                    </ul>
+                `;
+                catalogContainer.appendChild(card);
+            }
+        }
+
+        // Dropdown populator logic
+        const groupDropdown = document.getElementById('group-dropdown');
+        const categoryDropdown = document.getElementById('category-dropdown');
+
+        function initDropdowns() {
+            if (!groupDropdown) return;
+            groupDropdown.innerHTML = '';
+            Object.keys(categoryGroups).forEach(group => {
+                const opt = document.createElement('option');
+                opt.value = group;
+                opt.innerText = group;
+                groupDropdown.appendChild(opt);
+            });
+            populateFormCategories();
+        }
+
+        function populateFormCategories() {
+            if (!groupDropdown || !categoryDropdown) return;
+            const selectedGroup = groupDropdown.value;
+            categoryDropdown.innerHTML = '';
+            if (categoryGroups[selectedGroup]) {
+                categoryGroups[selectedGroup].forEach(cat => {
+                    const opt = document.createElement('option');
+                    opt.value = cat;
+                    opt.innerText = cat;
+                    categoryDropdown.appendChild(opt);
+                });
+            }
+        }
+
+        if (groupDropdown) {
+            groupDropdown.addEventListener('change', populateFormCategories);
+        }
+        initDropdowns();
+
+        // 100% Secure & Functional Hamburger Controller
+        const hamburger = document.getElementById('hamburger-menu');
+        const navLinks = document.getElementById('nav-links-menu');
+
+        if (hamburger && navLinks) {
+            hamburger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!navLinks.contains(e.target) && !hamburger.contains(e.target)) {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+        }
+    </script>
+
+    <!-- ==================== FIREBASE BACKEND MODULE ==================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // Setup config
+        const firebaseConfig = { 
+            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg", 
+            authDomain: "keyframe-awards.firebaseapp.com", 
+            projectId: "keyframe-awards", 
+            storageBucket: "keyframe-awards.firebasestorage.app", 
+            messagingSenderId: "882083630221", 
+            appId: "1:882083630221:web:629df7642fdf822018a6c4" 
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const submissionForm = document.getElementById('submission-form');
+        if (submissionForm) {
+            submissionForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const formData = new FormData(submissionForm);
+
+                const submissionData = {
+                    category_group: formData.get('category_group'),
+                    specific_category: formData.get('specific_category'),
+                    nominee_handle: formData.get('nominee_handle'),
+                    video_link: formData.get('video_link'),
+                    submitted_at: new Date().toISOString()
+                };
+
+                try {
+                    // Save database nomination (Firebase Firestore)
+                    await addDoc(collection(db, "nominations_submitted"), submissionData);
+
+                    // Send email through Web3Forms
+                    const web3Response = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (web3Response.ok) {
+                        window.showToast("🎉 Video entry submitted and sent to admin inbox!", "success");
+                        submissionForm.reset();
+                        // Re-initialize lists
+                        const groupDropdown = document.getElementById('group-dropdown');
+                        const categoryDropdown = document.getElementById('category-dropdown');
+                        if (groupDropdown && categoryDropdown) {
+                            groupDropdown.selectedIndex = 0;
+                            const eventVal = new Event('change');
+                            groupDropdown.dispatchEvent(eventVal);
+                        }
+                    } else {
+                        window.showToast("Nomination saved, but there was an email routing issue.", "error");
+                    }
+
+                } catch (error) {
+                    console.error("Submission error:", error);
+                    window.showToast("❌ Could not save submission. Please try again.", "error");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
