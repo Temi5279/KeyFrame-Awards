@@ -7,7 +7,15 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
-        /* ==================== NAVIGATION & TOASTS ==================== */
+        /* ==================== UNIFIED STYLING & VARIABLES ==================== */
+        :root {
+            --neon-pink: #ff007f;
+            --neon-cyan: #00f0ff;
+            --bg-dark: #0f021c;
+            --card-bg: rgba(26, 0, 51, 0.4);
+        }
+
+        /* ==================== MOBILE NAVIGATION (MATCHING SCREENSHOTS) ==================== */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -15,7 +23,7 @@
             padding: 20px;
             position: relative;
             z-index: 1000;
-            background: #0f021c;
+            background: var(--bg-dark);
         }
 
         .hamburger {
@@ -25,6 +33,7 @@
             cursor: pointer;
             border: none;
             background: transparent;
+            z-index: 1001;
         }
 
         .hamburger span {
@@ -36,12 +45,24 @@
             transition: all 0.3s ease;
         }
 
-        .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); background: var(--neon-pink, #ff007f); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); background: var(--neon-cyan, #00f0ff); }
+        /* Responsive transform to "X" close mark matching Screenshot 2 */
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+            background: var(--neon-pink);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+            background: var(--neon-cyan);
+        }
 
         @media (max-width: 768px) {
-            .hamburger { display: flex; }
+            .hamburger {
+                display: flex;
+            }
+
             .nav-links {
                 display: none;
                 flex-direction: column;
@@ -55,10 +76,29 @@
                 text-align: center;
                 gap: 25px;
                 box-sizing: border-box;
+                z-index: 1000;
             }
-            .nav-links.active { display: flex; }
+
+            .nav-links.active {
+                display: flex !important;
+            }
+
+            .nav-links a {
+                font-size: 1.5rem;
+                display: block;
+                color: #ccc;
+                text-decoration: none;
+                transition: color 0.3s;
+            }
+
+            .nav-links a.active {
+                color: var(--neon-cyan);
+                font-weight: bold;
+                text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+            }
         }
 
+        /* ==================== TOAST NOTIFICATIONS ==================== */
         #toast-container {
             position: fixed;
             top: 20px;
@@ -96,18 +136,28 @@
             left: 0;
             width: 100%;
             height: 4px;
-            background: linear-gradient(90deg, var(--neon-pink, #ff007f), var(--neon-cyan, #00f0ff));
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan));
         }
 
-        .toast.show { transform: translateX(0); opacity: 1; }
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
         .toast.success { border: 1px solid rgba(0, 240, 255, 0.4); }
         .toast.error { border: 1px solid rgba(255, 0, 127, 0.4); }
 
-        .toast-close { background: transparent; border: none; color: #aaa; font-size: 1.2rem; cursor: pointer; }
+        .toast-close {
+            background: transparent;
+            border: none;
+            color: #aaa;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
 
-        /* ==================== NEW DESIGN FOR THE FULL LIST ==================== */
+        /* ==================== PAGE LAYOUT & CATALOG ==================== */
         .nominations-container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 120px auto 60px auto;
             padding: 20px;
             text-align: center;
@@ -115,23 +165,24 @@
 
         .category-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             margin-top: 40px;
             text-align: left;
         }
 
         .category-group-card {
-            background: rgba(26, 0, 51, 0.4);
+            background: var(--card-bg);
             border: 1px solid rgba(157, 0, 255, 0.2);
             border-radius: 16px;
             padding: 25px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, transform 0.3s;
         }
 
         .category-group-card:hover {
-            border-color: var(--neon-cyan, #00f0ff);
+            border-color: var(--neon-cyan);
+            transform: translateY(-3px);
         }
 
         .category-group-title {
@@ -160,16 +211,70 @@
             border-bottom: none;
         }
 
-        /* Form styling */
+        /* Submission Form Section */
         .submission-form-section {
             max-width: 650px;
             margin: 80px auto 40px auto;
             padding: 40px;
             background: rgba(15, 2, 28, 0.9);
-            border: 2px solid var(--neon-pink, #ff007f);
+            border: 2px solid var(--neon-pink);
             box-shadow: 0 0 30px rgba(255, 0, 127, 0.2);
             border-radius: 20px;
             text-align: left;
+        }
+
+        /* ==================== FOOTER SECTION ==================== */
+        .main-footer {
+            background: #090112;
+            border-top: 1px solid rgba(157, 0, 255, 0.2);
+            padding: 50px 20px 30px 20px;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .footer-socials a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .footer-socials a:hover {
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.8);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--neon-cyan);
+        }
+
+        .footer-copy {
+            color: #555;
+            font-size: 0.85rem;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -194,9 +299,10 @@
             <a href="live.html">Live Stream</a>
             <a href="about.html">About</a>
             
+            <!-- Mobile Account buttons -->
             <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 15px; width: 80%; margin-left: auto; margin-right: auto;">
-                <button style="background: transparent; border: 2px solid #00f0ff; color: #00f0ff; padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer;">Active Account</button>
-                <button style="background: transparent; border: 2px solid #ff007f; color: #ff007f; padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer;" onclick="handleSignOut()">Log Out</button>
+                <button style="background: transparent; border: 2px solid var(--neon-cyan); color: var(--neon-cyan); padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer;">Active Account</button>
+                <button style="background: transparent; border: 2px solid var(--neon-pink); color: var(--neon-pink); padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer;" onclick="handleSignOut()">Log Out</button>
             </div>
         </nav>
     </header>
@@ -204,7 +310,7 @@
     <main class="nominations-container">
         <!-- Live Countdown Timer -->
         <div style="margin-bottom: 40px;">
-            <h3 style="color: var(--neon-pink, #ff007f); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 5px;">Voting Opens November 4</h3>
+            <h3 style="color: var(--neon-pink); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 5px;">Voting Opens November 4</h3>
             <div id="countdown-timer" style="font-size: 2.5rem; font-weight: bold; font-family: monospace; color: #fff; text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);">
                 00d : 00h : 00m : 00s
             </div>
@@ -218,20 +324,19 @@
             <!-- Dynamically populated from JS below -->
         </div>
 
-        <!-- ==================== SUBMISSION FORM (LAST OF THE PAGE) ==================== -->
+        <!-- ==================== SUBMISSION FORM ==================== -->
         <section class="submission-form-section" id="nomination-booth">
             <h2 class="animated-gradient-text" style="font-size: 2rem; margin-bottom: 10px; font-weight: bold;">SUBMIT YOUR VIDEO</h2>
             <p style="color: #aaa; font-size: 0.95rem; margin-bottom: 30px;">Input your social media video link (TikTok, YouTube Shorts, Reels) to enter your preferred category.</p>
 
-            <!-- Web3Forms handles the free automated emails straight to temiloluwa809@gmail.com -->
-            <form id="submission-form" onsubmit="handleVideoSubmission(event)">
-                <!-- Hidden key for Web3Forms (Free processing to email) -->
+            <form id="submission-form">
+                <!-- Web3Forms Hidden Settings (Automated Free emails straight to temiloluwa809@gmail.com) -->
                 <input type="hidden" name="access_key" value="YOUR_FREE_WEB3FORMS_ACCESS_KEY_HERE">
                 <input type="hidden" name="subject" value="New Keyframe Award Nomination Video!">
 
                 <div style="margin-bottom: 20px;">
                     <label style="color: #fff; display: block; margin-bottom: 8px; font-weight: 600;">Category Group</label>
-                    <select id="group-dropdown" name="category_group" onchange="populateFormCategories()" style="width: 100%; padding: 12px; border-radius: 8px; background: #22003c; border: 1px solid rgba(157, 0, 255, 0.4); color: #fff; font-size: 1rem;" required>
+                    <select id="group-dropdown" name="category_group" style="width: 100%; padding: 12px; border-radius: 8px; background: #22003c; border: 1px solid rgba(157, 0, 255, 0.4); color: #fff; font-size: 1rem;" required>
                         <!-- Injected via Javascript -->
                     </select>
                 </div>
@@ -253,19 +358,40 @@
                     <input type="url" name="video_link" placeholder="https://youtube.com/shorts/... or https://tiktok.com/..." required style="width: 100%; padding: 12px; border-radius: 8px; background: #22003c; border: 1px solid rgba(157, 0, 255, 0.4); color: #fff; box-sizing: border-box; font-size: 1rem;">
                 </div>
 
-                <button type="submit" class="cta-btn" style="background: linear-gradient(90deg, var(--neon-pink, #ff007f), var(--neon-cyan, #00f0ff)); color: #fff; border: none; padding: 15px; font-weight: bold; border-radius: 25px; cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.5); font-size: 1.1rem; width: 100%; text-align: center;">
+                <button type="submit" class="cta-btn" style="background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan)); color: #fff; border: none; padding: 15px; font-weight: bold; border-radius: 25px; cursor: pointer; text-shadow: 0 0 5px rgba(0,0,0,0.5); font-size: 1.1rem; width: 100%; text-align: center;">
                     Submit Video Entry
                 </button>
             </form>
         </section>
     </main>
 
-    <!-- Import Firebase Module SDKs -->
+    <!-- ==================== NEW MAIN FOOTER WITH SOCIALS & POLICY ==================== -->
+    <footer class="main-footer">
+        <!-- Social Media Row -->
+        <div class="footer-socials">
+            <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://tiktok.com" target="_blank" rel="noopener">TikTok</a>
+            <a href="https://youtube.com" target="_blank" rel="noopener">YouTube</a>
+            <a href="https://facebook.com" target="_blank" rel="noopener">Facebook</a>
+        </div>
+
+        <!-- Footer Links -->
+        <div class="footer-links">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="about.html">About Awards</a>
+        </div>
+
+        <p class="footer-copy">&copy; 2026 Keyframe Awards. All rights reserved.</p>
+    </footer>
+
+    <!-- ==================== FIREBASE MODULE & DOM LOGIC ==================== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Firebase Configuration
+        // Config
         const firebaseConfig = { 
             apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg", 
             authDomain: "keyframe-awards.firebaseapp.com", 
@@ -278,7 +404,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // All the categories directly from your notes
+        // Your exact 60+ Categories List
         const categoryGroups = {
             "🏆 THE YEAR AWARDS [THE BIG PRESTIGE ONES]": [
                 "Footballer of the Year [Content Creator]",
@@ -362,7 +488,7 @@
             ]
         };
 
-        // 1. POPULATE THE BEAUTIFUL PUBLIC GRID AT THE TOP
+        // 1. POPULATE THE BEAUTIFUL PUBLIC GRID
         const catalogContainer = document.getElementById('categories-catalog');
         for (const [groupName, list] of Object.entries(categoryGroups)) {
             const card = document.createElement('div');
@@ -392,88 +518,4 @@
                 const opt = document.createElement('option');
                 opt.value = group;
                 opt.innerText = group;
-                groupDropdown.appendChild(opt);
-            });
-            populateFormCategories();
-        }
-
-        window.populateFormCategories = function() {
-            const selectedGroup = groupDropdown.value;
-            categoryDropdown.innerHTML = '';
-            if (categoryGroups[selectedGroup]) {
-                categoryGroups[selectedGroup].forEach(cat => {
-                    const opt = document.createElement('option');
-                    opt.value = cat;
-                    opt.innerText = cat;
-                    categoryDropdown.appendChild(opt);
-                });
-            }
-        }
-
-        initDropdowns();
-
-        // 3. SECURE FORM HANDLER: SAVES TO FIREBASE & MAKES SENDING EMAIL COMPLETELY FREE
-        window.handleVideoSubmission = async function(event) {
-            event.preventDefault();
-            const form = event.target;
-            const formData = new FormData(form);
-
-            const submissionData = {
-                category_group: formData.get('category_group'),
-                specific_category: formData.get('specific_category'),
-                nominee_handle: formData.get('nominee_handle'),
-                video_link: formData.get('video_link'),
-                submitted_at: new Date().toISOString()
-            };
-
-            try {
-                // Save to Firestore (Totally Free!)
-                await addDoc(collection(db, "nominations_submitted"), submissionData);
-
-                // Send email to temiloluwa809@gmail.com for free using Web3Forms
-                // (To make this work live, generate a free key at web3forms.com and swap it above!)
-                const web3Response = await fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (web3Response.ok) {
-                    showToast("🎉 Video entry submitted and sent to admin inbox!", "success");
-                    form.reset();
-                    initDropdowns();
-                } else {
-                    showToast("Nomination saved, but there was an email routing issue.", "error");
-                }
-
-            } catch (error) {
-                console.error("Submission error:", error);
-                showToast("❌ Could not save submission. Please try again.", "error");
-            }
-        };
-    </script>
-
-    <script>
-        // Hamburger Toggle code
-        const hamburger = document.getElementById('hamburger-menu');
-        const navLinks = document.getElementById('nav-links-menu');
-
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        // Countdown Timer to Nov 4, 2026
-        const targetDate = new Date("November 4, 2026 00:00:00").getTime();
-        const countdownInterval = setInterval(() => {
-            const now = new Date().getTime();
-            const difference = targetDate - now;
-
-            if (difference < 0) {
-                clearInterval(countdownInterval);
-                document.getElementById("countdown-timer").innerText = "SUBMISSIONS CLOSED!";
-                return;
-            }
-
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m
+                groupDropdown.appendCh
