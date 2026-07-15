@@ -17,7 +17,6 @@
             box-shadow: 0 0 20px rgba(157, 0, 255, 0.1);
         }
 
-        /* Hub / Group Buttons */
         .hub-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -30,11 +29,12 @@
             border: 2px solid rgba(157, 0, 255, 0.3);
             padding: 20px;
             border-radius: 12px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: #fff;
             cursor: pointer;
             transition: all 0.3s ease;
+            text-align: left;
         }
 
         .hub-card:hover {
@@ -125,10 +125,6 @@
             margin-bottom: 20px;
             font-size: 0.9rem;
         }
-        .back-btn:hover {
-            color: #fff;
-            border-color: #fff;
-        }
     </style>
 </head>
 <body>
@@ -141,7 +137,6 @@
     </header>
 
     <main class="test-container">
-        <!-- Live Auth Status Block -->
         <div id="auth-status" style="margin-bottom: 20px; padding: 10px; border-radius: 8px; background: rgba(255, 0, 127, 0.1); border: 1px solid var(--neon-pink);">
             Checking account status...
         </div>
@@ -149,11 +144,18 @@
         <!-- SCREEN 1: HUB SELECTION -->
         <div id="hub-selection-screen" style="display: none;">
             <h2 class="animated-gradient-text" style="font-size: 1.8rem; margin-bottom: 10px;">Select a Voting Zone</h2>
-            <p style="color: #ccc; font-size: 0.95rem; margin-bottom: 25px;">Pick a category group to vote in. You can vote in as many zones as you like!</p>
+            <p style="color: #ccc; font-size: 0.95rem; margin-bottom: 25px;">Pick a category group to vote in. Cast up to 10 daily votes per category!</p>
             <div class="hub-grid">
-                <div class="hub-card" onclick="startVotingHub('music')">🎵 Music Zone</div>
-                <div class="hub-card" onclick="startVotingHub('gaming')">🎮 Gaming & Streaming Zone</div>
-                <div class="hub-card" onclick="startVotingHub('editing')">🎬 Creative & Editing Zone</div>
+                <div class="hub-card" onclick="startVotingHub('THE_YEAR_AWARDS')">🏆 The Year Awards (Prestige)</div>
+                <div class="hub-card" onclick="startVotingHub('MUSIC_CATEGORY')">🎤 Music Category</div>
+                <div class="hub-card" onclick="startVotingHub('MEME_AND_VIRAL_CULTURE')">🤡 Meme & Viral Culture</div>
+                <div class="hub-card" onclick="startVotingHub('MOVIES_AND_FILM_CONTENT')">🎬 Movies & Film Content</div>
+                <div class="hub-card" onclick="startVotingHub('TV_SHOWS_AND_SERIES')">📺 TV Shows & Series</div>
+                <div class="hub-card" onclick="startVotingHub('FOOTBALL_SPORTS_CONTENT')">⚽ Football & Sports</div>
+                <div class="hub-card" onclick="startVotingHub('GAMING')">🎮 Gaming</div>
+                <div class="hub-card" onclick="startVotingHub('LIVE_STREAMING')">🌐 Live Streaming</div>
+                <div class="hub-card" onclick="startVotingHub('GENERAL_CONTENT_CREATORS')">👤 General Content Creators</div>
+                <div class="hub-card" onclick="startVotingHub('EDITING_AND_CREATIVE_CRAFT')">✂️ Editing & Creative Craft</div>
             </div>
         </div>
 
@@ -166,24 +168,22 @@
             </div>
             <div id="category-step" style="font-size: 0.9rem; color: #aaa; text-transform: uppercase; margin-bottom: 15px;">Category 1 of 3</div>
 
-            <h3 id="current-category-title" style="color: var(--text-white); text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">
+            <h3 id="current-category-title" style="color: #fff; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;">
                 Category Name
             </h3>
+            <div id="vote-limit-counter" style="color: var(--neon-cyan); font-size: 0.85rem; text-align: left; margin: 5px 0 15px 0;">Votes remaining today: 10</div>
             
-            <div id="nominee-list">
-                <!-- Nominees get injected here -->
-            </div>
+            <div id="nominee-list"></div>
         </div>
 
-        <!-- SCREEN 3: HUB COMPLETION SCREEN -->
+        <!-- SCREEN 3: HUB COMPLETION -->
         <div id="completion-screen" style="display: none; padding: 40px 20px;">
-            <h3 style="color: #00ff66; font-size: 1.8rem; margin-bottom: 10px;">Zone Completed! 🎉</h3>
-            <p style="color: #ccc; margin-bottom: 30px;">Your votes for this zone have been registered in our database.</p>
-            <button class="vote-btn" style="pointer-events: auto; background: var(--neon-pink); color: #fff;" onclick="showHubSelection()">Vote in Another Zone</button>
+            <h3 style="color: #00ff66; font-size: 1.8rem; margin-bottom: 10px;">Zone Finished! 🎉</h3>
+            <p style="color: #ccc; margin-bottom: 30px;">Your votes are counted securely.</p>
+            <button class="vote-btn" style="pointer-events: auto; background: var(--neon-pink); color: #fff; padding: 12px 25px;" onclick="showHubSelection()">Vote in Another Zone</button>
         </div>
     </main>
 
-    <!-- FIREBASE CONSOLE CONNECTION -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -205,55 +205,52 @@
         let currentUser = null;
         let activeHubCategories = [];
         let currentCategoryIndex = 0;
-        let userVotedCategories = []; // Track already voted items securely from Firestore
+        let userDailyVoteCount = {}; // Tracks: { categoryId: count_voted_today }
 
-        // Categories grouped by "Zones" (Hubs)
+        // Category Groups from your exact list 
         const hubsData = {
-            music: [
-                {
-                    id: "music_category",
-                    title: "Best Music Sync",
-                    nominees: [
-                        { name: "Sync Wizard", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=150&q=80" },
-                        { name: "Lyric Master", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=150&q=80" }
-                    ]
-                }
+            THE_YEAR_AWARDS: [
+                { id: "footballer_of_the_year", title: "Footballer of the Year [Content Creator]", nominees: [{ name: "Creator A", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150" }, { name: "Creator B", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150" }] },
+                { id: "gamer_of_the_year", title: "Gamer of the Year", nominees: [{ name: "Player A", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150" }, { name: "Player B", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150" }] }
             ],
-            gaming: [
-                {
-                    id: "meme_and_viral",
-                    title: "Meme & Viral Gaming Culture",
-                    nominees: [
-                        { name: "Shitpost King", img: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=150&q=80" },
-                        { name: "Trend Jumper", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" }
-                    ]
-                }
+            MUSIC_CATEGORY: [
+                { id: "best_kpop_group", title: "Best K-pop Group", nominees: [{ name: "Group Black", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150" }, { name: "Group Pink", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150" }] }
             ],
-            editing: [
-                {
-                    id: "best_editing_craft",
-                    title: "Best Editing Craft",
-                    nominees: [
-                        { name: "Creator Alpha", img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" },
-                        { name: "Creator Beta", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" }
-                    ]
-                }
+            MEME_AND_VIRAL_CULTURE: [
+                { id: "funniest_viral_meme", title: "Funniest Viral Meme", nominees: [{ name: "Meme Alpha", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150" }, { name: "Meme Beta", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150" }] }
+            ],
+            MOVIES_AND_FILM_CONTENT: [
+                { id: "best_movie_edit", title: "Best Movie Edit / Recap", nominees: [{ name: "Recap A", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150" }, { name: "Recap B", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150" }] }
+            ],
+            TV_SHOWS_AND_SERIES: [
+                { id: "best_tv_edit", title: "Best TV Show Edit", nominees: [{ name: "Editor X", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150" }, { name: "Editor Y", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150" }] }
+            ],
+            FOOTBALL_SPORTS_CONTENT: [
+                { id: "best_football_edit", title: "Best Football Edit", nominees: [{ name: "Footy Cuts", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150" }, { name: "Skills Show", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150" }] }
+            ],
+            GAMING: [
+                { id: "best_gaming_edit", title: "Best Gaming Edit / Montage", nominees: [{ name: "ClipMaster", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150" }, { name: "FragShow", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150" }] }
+            ],
+            LIVE_STREAMING: [
+                { id: "best_streamer", title: "Best Streamer of the Year", nominees: [{ name: "Streamer A", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150" }, { name: "Streamer B", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150" }] }
+            ],
+            GENERAL_CONTENT_CREATORS: [
+                { id: "most_viral_creator", title: "Most Viral Content Creator", nominees: [{ name: "Viral King", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150" }, { name: "Charisma Queen", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150" }] }
+            ],
+            EDITING_AND_CREATIVE_CRAFT: [
+                { id: "best_mobile_editor", title: "Best Mobile Editor", nominees: [{ name: "CapCut Master", img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=150" }, { name: "YouCut Guru", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=150" }] }
             ]
         };
 
-        // Track Login Status
         onAuthStateChanged(auth, async (user) => {
             const authStatus = document.getElementById('auth-status');
-            
             if (user) {
                 currentUser = user;
                 authStatus.style.borderColor = "var(--neon-cyan)";
                 authStatus.style.background = "rgba(0, 240, 255, 0.1)";
                 authStatus.innerHTML = `<span style="color: var(--neon-cyan)">✔ Logged in as: ${user.email}</span>`;
                 
-                // Fetch user's existing history from Firestore to enforce strict block rules
                 await fetchUserVoteHistory();
-
                 showHubSelection();
             } else {
                 currentUser = null;
@@ -266,34 +263,38 @@
             }
         });
 
-        // 1. Fetch user vote history directly from Firestore
         async function fetchUserVoteHistory() {
             if (!currentUser) return;
             try {
                 const userDoc = await getDoc(doc(db, "user_votes", currentUser.uid));
+                userDailyVoteCount = {}; // Reset local tracker
+
                 if (userDoc.exists() && userDoc.data().votes) {
-                    // Extract list of all category IDs they have already voted in
-                    userVotedCategories = userDoc.data().votes.map(v => v.category);
-                } else {
-                    userVotedCategories = [];
+                    const allVotes = userDoc.data().votes;
+                    const todayStr = new Date().toISOString().split('T')[0]; // Current date
+
+                    // Count how many times they voted today per category
+                    allVotes.forEach(vote => {
+                        const voteDate = vote.timestamp.split('T')[0];
+                        if (voteDate === todayStr) {
+                            userDailyVoteCount[vote.category] = (userDailyVoteCount[vote.category] || 0) + 1;
+                        }
+                    });
                 }
             } catch (err) {
                 console.error("Error loading vote history: ", err);
             }
         }
 
-        // 2. Go back to Hub Home
         window.showHubSelection = function() {
             document.getElementById('voting-booth-screen').style.display = "none";
             document.getElementById('completion-screen').style.display = "none";
             document.getElementById('hub-selection-screen').style.display = "block";
         }
 
-        // 3. Start a Hub
         window.startVotingHub = function(hubKey) {
             activeHubCategories = hubsData[hubKey] || [];
             currentCategoryIndex = 0;
-
             if (activeHubCategories.length === 0) return;
 
             document.getElementById('hub-selection-screen').style.display = "none";
@@ -301,55 +302,54 @@
             renderCategory();
         }
 
-        // 4. Render Current Active Category 
         function renderCategory() {
             if (currentCategoryIndex >= activeHubCategories.length) {
-                // Done with this hub!
                 document.getElementById('voting-booth-screen').style.display = "none";
                 document.getElementById('completion-screen').style.display = "block";
                 return;
             }
 
             const currentCat = activeHubCategories[currentCategoryIndex];
-            
-            // Check if user has already voted in this category from Firestore history
-            const hasAlreadyVoted = userVotedCategories.includes(currentCat.id);
+            const votesToday = userDailyVoteCount[currentCat.id] || 0;
+            const remainingVotes = Math.max(0, 10 - votesToday);
+            const hasReachedLimit = votesToday >= 10;
 
-            // Update progress bar
             const percent = (currentCategoryIndex / activeHubCategories.length) * 100;
             document.getElementById('progress-indicator').style.width = `${percent}%`;
             document.getElementById('category-step').innerText = `Category ${currentCategoryIndex + 1} of ${activeHubCategories.length}`;
-
-            // Update title
             document.getElementById('current-category-title').innerText = currentCat.title;
+            
+            // Show dynamic limit text
+            const counterText = document.getElementById('vote-limit-counter');
+            counterText.innerText = `Daily votes remaining for this category: ${remainingVotes}/10`;
+            counterText.style.color = hasReachedLimit ? "var(--neon-pink)" : "var(--neon-cyan)";
 
-            // Render Nominees list
             const listContainer = document.getElementById('nominee-list');
             listContainer.innerHTML = "";
 
             currentCat.nominees.forEach(nom => {
                 const box = document.createElement('div');
-                box.className = `nominee-box ${hasAlreadyVoted ? 'already-voted' : ''}`;
+                box.className = `nominee-box ${hasReachedLimit ? 'already-voted' : ''}`;
                 box.innerHTML = `
                     <div class="nominee-info">
                         <img class="nominee-avatar" src="${nom.img}" alt="${nom.name}">
                         <span class="nominee-name">${nom.name}</span>
                     </div>
-                    <button class="vote-btn">${hasAlreadyVoted ? 'Voted' : 'Vote'}</button>
+                    <button class="vote-btn" style="background: ${hasReachedLimit ? 'gray' : 'var(--neon-cyan)'}">
+                        ${hasReachedLimit ? 'Locked' : 'Vote'}
+                    </button>
                 `;
                 
-                // Only let them click if they haven't voted in this category yet
-                if (!hasAlreadyVoted) {
+                if (!hasReachedLimit) {
                     box.onclick = () => {
                         submitVote(currentCat.id, nom.name);
                     };
                 }
-
                 listContainer.appendChild(box);
             });
 
-            // If they already voted, auto-skip to the next after 1.5 seconds so they don't get stuck!
-            if (hasAlreadyVoted) {
+            // Auto-skip if they've already used up all 10 daily votes for this category
+            if (hasReachedLimit) {
                 setTimeout(() => {
                     currentCategoryIndex++;
                     renderCategory();
@@ -357,20 +357,20 @@
             }
         }
 
-        // 5. Submit vote & slide to next
         async function submitVote(categoryId, nomineeName) {
             if (!currentUser) return;
 
-            // Push category into our local history block array instantly so they can't double-click
-            userVotedCategories.push(categoryId);
+            // Increment local vote counter
+            userDailyVoteCount[categoryId] = (userDailyVoteCount[categoryId] || 0) + 1;
 
-            // Instantly load next category visually
-            currentCategoryIndex++;
+            // Instantly update view or jump to next category if they reached the limit
+            if (userDailyVoteCount[categoryId] >= 10) {
+                currentCategoryIndex++;
+            }
             renderCategory();
 
-            // Silently record to Firebase background
+            // Record securely to Firebase background
             try {
-                // Record secure transaction in history list
                 const userVoteRef = doc(db, "user_votes", currentUser.uid);
                 await setDoc(userVoteRef, {
                     votes: arrayUnion({
@@ -380,7 +380,6 @@
                     })
                 }, { merge: true });
 
-                // Increment vote total
                 const tallyRef = doc(db, "tally", categoryId);
                 await setDoc(tallyRef, {
                     [nomineeName]: increment(1)
