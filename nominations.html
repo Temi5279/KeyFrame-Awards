@@ -223,54 +223,57 @@
             text-align: left;
         }
 
-        /* ==================== FOOTER SECTION (MATCHING SCREENSHOT 1) ==================== */
+        /* ==================== FOOTER SECTION (EXACTLY MATCHING SCREENSHOT 1) ==================== */
         .main-footer {
-            background: #090112;
-            border-top: 1px solid rgba(157, 0, 255, 0.2);
+            background: #05000a;
+            border-top: 1px solid rgba(157, 0, 255, 0.1);
             padding: 40px 20px;
             text-align: center;
             margin-top: 100px;
         }
 
-        /* 2-Column Links Layout */
         .footer-links-grid {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            max-width: 400px;
-            margin: 0 auto 30px auto;
+            gap: 12px;
+            max-width: 320px;
+            margin: 0 auto 25px auto;
         }
 
         .footer-links-row {
             display: flex;
-            justify-content: space-around;
-            gap: 20px;
+            justify-content: space-between;
+            gap: 15px;
         }
 
         .footer-links-row a {
-            color: #8a8194;
+            color: #6d6475;
             text-decoration: none;
             font-size: 0.95rem;
             transition: color 0.3s;
             flex: 1;
+            text-align: center;
         }
 
         .footer-links-row a:hover {
-            color: var(--neon-cyan);
+            color: #fff;
         }
 
-        /* SVG Social Icons Row Styling */
+        /* Perfectly Centered SVG Social Icons */
         .footer-socials-row {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 25px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .footer-socials-row a {
-            color: #8a8194;
-            transition: color 0.3s, transform 0.3s;
+            color: #6d6475;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s, transform 0.2s;
         }
 
         .footer-socials-row a:hover {
@@ -285,8 +288,9 @@
         }
 
         .footer-copy {
-            color: #555;
+            color: #433c4a;
             font-size: 0.85rem;
+            margin: 0;
         }
     </style>
 </head>
@@ -320,12 +324,11 @@
     </header>
 
     <main class="nominations-container">
-        <!-- Live Countdown Timer -->
-        <div style="margin-bottom: 40px;">
-            <h3 style="color: var(--neon-pink); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 5px;">Voting Opens November 4</h3>
-            <div id="countdown-timer" style="font-size: 2.5rem; font-weight: bold; font-family: monospace; color: #fff; text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);">
-                00d : 00h : 00m : 00s
-            </div>
+        <!-- Clean Open Info Header (Countdown Removed!) -->
+        <div style="margin-bottom: 40px; text-align: center;">
+            <h2 style="color: var(--neon-pink); text-transform: uppercase; letter-spacing: 2px; font-size: 1.4rem; margin-bottom: 5px; font-weight: bold; text-shadow: 0 0 10px rgba(255, 0, 127, 0.4);">
+                Nominations Open November 4
+            </h2>
         </div>
 
         <h1 class="animated-gradient-text" style="font-size: 3rem; margin-bottom: 10px; font-weight: 800;">KEYFRAME AWARD CATEGORIES</h1>
@@ -333,7 +336,7 @@
 
         <!-- ==================== COMPLETE CATEGORY LISTING ==================== -->
         <div class="category-grid" id="categories-catalog">
-            <!-- Dynamically populated from JS below -->
+            <!-- Dynamically populated instantly by regular script below -->
         </div>
 
         <!-- ==================== SUBMISSION FORM ==================== -->
@@ -342,21 +345,21 @@
             <p style="color: #aaa; font-size: 0.95rem; margin-bottom: 30px;">Input your social media video link (TikTok, YouTube Shorts, Reels) to enter your preferred category.</p>
 
             <form id="submission-form">
-                <!-- Web3Forms Hidden Settings (Automated Free emails straight to temiloluwa809@gmail.com) -->
+                <!-- Web3Forms Settings (Emails sent directly to temiloluwa809@gmail.com) -->
                 <input type="hidden" name="access_key" value="YOUR_FREE_WEB3FORMS_ACCESS_KEY_HERE">
                 <input type="hidden" name="subject" value="New Keyframe Award Nomination Video!">
 
                 <div style="margin-bottom: 20px;">
                     <label style="color: #fff; display: block; margin-bottom: 8px; font-weight: 600;">Category Group</label>
                     <select id="group-dropdown" name="category_group" style="width: 100%; padding: 12px; border-radius: 8px; background: #22003c; border: 1px solid rgba(157, 0, 255, 0.4); color: #fff; font-size: 1rem;" required>
-                        <!-- Injected via Javascript -->
+                        <!-- Injected instantly via Javascript -->
                     </select>
                 </div>
 
                 <div style="margin-bottom: 20px;">
                     <label style="color: #fff; display: block; margin-bottom: 8px; font-weight: 600;">Specific Category</label>
                     <select id="category-dropdown" name="specific_category" style="width: 100%; padding: 12px; border-radius: 8px; background: #22003c; border: 1px solid rgba(157, 0, 255, 0.4); color: #fff; font-size: 1rem;" required>
-                        <!-- Injected via Javascript -->
+                        <!-- Injected instantly via Javascript -->
                     </select>
                 </div>
 
@@ -377,9 +380,8 @@
         </section>
     </main>
 
-    <!-- ==================== MAIN FOOTER (EXACTLY LIKE SCREENSHOT 1) ==================== -->
+    <!-- ==================== MAIN FOOTER (EXACT MATCH TO YOUR SCREENSHOT 1) ==================== -->
     <footer class="main-footer">
-        <!-- 2-Column Links Grid -->
         <div class="footer-links-grid">
             <div class="footer-links-row">
                 <a href="privacy.html">Privacy Policy</a>
@@ -391,21 +393,20 @@
             </div>
         </div>
 
-        <!-- Centered SVG Social Media Row -->
         <div class="footer-socials-row">
-            <!-- Facebook -->
+            <!-- Facebook SVG -->
             <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
                 <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/></svg>
             </a>
-            <!-- Instagram -->
+            <!-- Instagram SVG -->
             <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
                 <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
             </a>
-            <!-- TikTok -->
+            <!-- TikTok SVG -->
             <a href="https://tiktok.com" target="_blank" rel="noopener" aria-label="TikTok">
                 <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.03 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.97 1.21 2.34 2.01 3.84 2.27v3.74c-1.39-.12-2.75-.66-3.85-1.55-.91-.73-1.61-1.69-2.03-2.77-.04 2.6-.02 5.19-.03 7.79-.06 1.46-.49 2.9-1.27 4.13-.98 1.53-2.51 2.66-4.26 3.12-1.89.5-3.92.34-5.71-.46-1.79-.81-3.23-2.3-3.98-4.14-.81-1.97-.83-4.2-.07-6.19.72-1.89 2.14-3.46 3.97-4.34 1.46-.71 3.09-.97 4.71-.78v3.83c-.93-.16-1.9-.01-2.75.4-.82.41-1.47 1.13-1.8 1.99-.41 1.05-.33 2.26.23 3.24.5.87 1.38 1.48 2.37 1.67 1.01.19 2.07-.07 2.89-.69.87-.67 1.39-1.72 1.41-2.82.01-3.48-.01-6.96.01-10.44z"/></svg>
             </a>
-            <!-- YouTube -->
+            <!-- YouTube SVG -->
             <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="YouTube">
                 <svg viewBox="0 0 24 24"><path d="M23.498 6.163a3.003 3.003 0 0 0-2.11-2.11C19.517 3.545 12 3.545 12 3.545s-7.517 0-9.388.508a3.003 3.003 0 0 0-2.11 2.11C0 8.033 0 12 0 12s0 3.967.502 5.837a3.003 3.003 0 0 0 2.11 2.11c1.871.508 9.388.508 9.388.508s7.517 0 9.388-.508a3.003 3.003 0 0 0 2.11-2.11C24 15.967 24 12 24 12s0-3.967-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
             </a>
@@ -414,25 +415,9 @@
         <p class="footer-copy">&copy; 2026 The Keyframe Awards. All rights reserved.</p>
     </footer>
 
-    <!-- ==================== SINGLE, COMPREHENSIVE SCRIPT BLOCK ==================== -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        // Firebase Setup
-        const firebaseConfig = { 
-            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg", 
-            authDomain: "keyframe-awards.firebaseapp.com", 
-            projectId: "keyframe-awards", 
-            storageBucket: "keyframe-awards.firebasestorage.app", 
-            messagingSenderId: "882083630221", 
-            appId: "1:882083630221:web:629df7642fdf822018a6c4" 
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // Toast Handler (Globally Accessible)
+    <!-- ==================== LOCAL, UN-BLOCKABLE UI CONTROLLER ==================== -->
+    <script>
+        // Global helper for toast popups
         window.showToast = function(message, type = 'success') {
             const container = document.getElementById('toast-container');
             if (!container) return;
@@ -473,3 +458,23 @@
                 "Best Solo Artist (K-pop or General)",
                 "Most Hyped Music Video Edit",
                 "Best Fandom / Stan Account",
+                "Best Song Cover / Dance Cover",
+                "Viral Music Trend Creator",
+                "Best Music Reaction / Breakdown"
+            ],
+            "🤡 MEME AND VIRAL CULTURE": [
+                "Funniest Viral Meme",
+                "Best Meme Edit / Sound",
+                "Most Relatable Meme",
+                "Wildest Trend Jumper",
+                "Best Roast Meme",
+                "Meme of the Year"
+            ],
+            "🎬 MOVIES AND FILM CONTENT": [
+                "Best Movie Edit / Recap",
+                "Most Hyped Movie Scene Recreation",
+                "Best Movie Trailer Reaction",
+                "Best Movie Meme",
+                "Cinema Guru / Film Reviewer"
+            ],
+            "
