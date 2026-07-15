@@ -17,6 +17,7 @@
             --text-white: #ffffff;
             --text-gray: #aaaaaa;
             --border-color: rgba(157, 0, 255, 0.2);
+            --danger-red: #ff3333;
         }
 
         body {
@@ -157,6 +158,27 @@
             color: var(--neon-cyan);
         }
 
+        /* Search Bar styling */
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 350px;
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            color: white;
+            outline: none;
+            font-size: 0.9rem;
+        }
+
+        .search-input:focus {
+            border-color: var(--neon-cyan);
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -222,6 +244,25 @@
         .video-link-anchor:hover {
             text-decoration: underline;
         }
+
+        /* Action Buttons */
+        .btn-delete {
+            background: rgba(255, 51, 51, 0.1);
+            border: 1px solid var(--danger-red);
+            color: var(--danger-red);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-delete:hover {
+            background: var(--danger-red);
+            color: white;
+            box-shadow: 0 0 8px var(--danger-red);
+        }
     </style>
 </head>
 <body>
@@ -233,7 +274,7 @@
         <header>
             <div>
                 <h1>Keyframe Awards Control Room</h1>
-                <p style="color: var(--text-gray); margin: 5px 0 0 0;">Platform data monitoring & auto-sorting controls</p>
+                <p style="color: var(--text-gray); margin: 5px 0 0 0;">Platform data monitoring & voting stand controls</p>
             </div>
             <button class="btn-btn" id="logout-admin">Exit Admin Portal</button>
         </header>
@@ -258,7 +299,7 @@
         <div class="dashboard-nav">
             <button class="nav-tab active-tab" onclick="switchSection('users-section', this)"><i class="fa-solid fa-users"></i> Users</button>
             <button class="nav-tab" onclick="switchSection('submissions-section', this)"><i class="fa-solid fa-clapperboard"></i> Video Submissions</button>
-            <button class="nav-tab" onclick="switchSection('support-section', this)"><i class="fa-solid fa-headset"></i> Support Tickets</button>
+            <button class="nav-tab" onclick="switchSection('votes-section', this)"><i class="fa-solid fa-square-poll-vertical"></i> Live Standings</button>
         </div>
 
         <!-- SECTION 1: REGISTERED USERS DIRECTORY -->
@@ -286,52 +327,58 @@
             <div class="table-section">
                 <h2>Video Submissions Directory</h2>
                 <p style="color: var(--text-gray); margin-bottom: 20px; font-size: 0.9rem;">
-                    Submissions are automatically categorized based on the selected field from your user form submission. Click categories to filter down instant views.
+                    Submissions are automatically retrieved from <strong>nominations_submissions</strong>. Click category headers to filter instantly.
                 </p>
                 
                 <!-- Category filtering tab controls -->
                 <div class="category-filters">
-                    <button class="filter-btn active-filter" onclick="filterSubmissions('all', this)">All Category Brackets</button>
-                    <button class="filter-btn" onclick="filterSubmissions('The Year Awards', this)">The Year Awards</button>
-                    <button class="filter-btn" onclick="filterSubmissions('Music', this)">Music</button>
-                    <button class="filter-btn" onclick="filterSubmissions('Memes', this)">Memes</button>
-                    <button class="filter-btn" onclick="filterSubmissions('Gaming', this)">Gaming</button>
-                    <button class="filter-btn" onclick="filterSubmissions('TV & Movies', this)">TV & Movies</button>
-                    <button class="filter-btn" onclick="filterSubmissions('Editing Craft', this)">Editing Craft</button>
+                    <button class="filter-btn active-filter" onclick="filterSubmissions('all', this)">All Category Groups</button>
+                    <button class="filter-btn" onclick="filterSubmissions('MUSIC CATEGORY', this)">Music Category</button>
+                    <button class="filter-btn" onclick="filterSubmissions('GAMING CATEGORY', this)">Gaming Category</button>
+                    <button class="filter-btn" onclick="filterSubmissions('MEME CATEGORY', this)">Meme Category</button>
+                    <button class="filter-btn" onclick="filterSubmissions('THE YEAR AWARDS', this)">The Year Awards</button>
+                </div>
+
+                <!-- Instant Search Bar -->
+                <div class="search-container">
+                    <input type="text" id="submissions-search" class="search-input" placeholder="Search by nominee handle..." oninput="searchSubmissions(this.value)">
                 </div>
 
                 <table>
                     <thead>
                         <tr>
-                            <th>Creator / Submitter</th>
-                            <th>Submitting Email</th>
-                            <th>Category Bracket</th>
+                            <th>Nominee Handle</th>
+                            <th>Category Group</th>
+                            <th>Specific Category</th>
                             <th>Visual Entry Link</th>
-                            <th>Date Uploaded</th>
+                            <th>Date Submitted</th>
+                            <th style="text-align: center;">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="submissions-table-body">
-                        <tr><td colspan="5" style="text-align:center; color: var(--text-gray);">No entries loaded yet.</td></tr>
+                        <tr><td colspan="6" style="text-align:center; color: var(--text-gray);">No entries loaded yet.</td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- SECTION 3: SUPPORT TICKETS & MESSAGES -->
-        <div id="support-section" class="dashboard-section">
+        <!-- SECTION 3: LIVE VOTE STANDINGS -->
+        <div id="votes-section" class="dashboard-section">
             <div class="table-section">
-                <h2>Contact Support Messages</h2>
+                <h2>Live Voting Standings</h2>
+                <p style="color: var(--text-gray); margin-bottom: 20px; font-size: 0.9rem;">
+                    Real-time tallies retrieved directly from the <strong>tally</strong> collection. Nominees with the most votes are automatically sorted to the top.
+                </p>
                 <table>
                     <thead>
                         <tr>
-                            <th>Sender Name</th>
-                            <th>Email Address</th>
-                            <th>Support Issue / Message</th>
-                            <th>Received Date</th>
+                            <th>Nominee ID / Name</th>
+                            <th>Category Reference</th>
+                            <th style="text-align: right;">Current Votes</th>
                         </tr>
                     </thead>
-                    <tbody id="support-table-body">
-                        <tr><td colspan="4" style="text-align:center; color: var(--text-gray);">No support submissions found.</td></tr>
+                    <tbody id="votes-table-body">
+                        <tr><td colspan="3" style="text-align:center; color: var(--text-gray);">Loading current voting tallies...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -343,7 +390,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
           apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
@@ -359,10 +406,11 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Your exact admin email (locked-in and case-insensitive)
+        // Secure locking admin email
         const ADMIN_EMAIL = "temiloluwa809@gmail.com"; 
 
-        let globalSubmissionsList = []; // Memory array for instant client filtering
+        let globalSubmissionsList = []; // Master memory array for instant search & filtering
+        let currentActiveCategory = 'all';
 
         // --- SECURITY & AUTHORIZATION CHECK ---
         onAuthStateChanged(auth, async (user) => {
@@ -379,7 +427,7 @@
         async function loadAllPortalData() {
             await loadUserData();
             await loadSubmissionData();
-            await loadSupportMessages();
+            await loadVoteTallies();
         }
 
         // --- FETCH USER DIRECTORY & CALCULATE DAILY REGISTERED ---
@@ -394,7 +442,6 @@
                 let totalUsers = 0;
                 let todayUsers = 0;
 
-                // Today's boundaries
                 const today = new Date();
                 today.setHours(0,0,0,0);
 
@@ -406,7 +453,6 @@
                     if (data.registeredAt) {
                         const dateObj = new Date(data.registeredAt);
                         
-                        // Check if registered today
                         if (dateObj >= today) {
                             todayUsers++;
                         }
@@ -418,10 +464,12 @@
                         });
                     }
 
+                    const userEmail = data.email || "No Associated Email Address";
+
                     const row = `
                         <tr>
                             <td style="font-weight: bold; color: var(--neon-cyan);">${data.fullName || 'No Name'}</td>
-                            <td>${data.email || 'No Email'}</td>
+                            <td>${userEmail}</td>
                             <td>${data.dateOfBirth || 'Not Provided'}</td>
                             <td><span class="badge">${regDate}</span></td>
                         </tr>
@@ -437,16 +485,17 @@
             }
         }
 
-        // --- FETCH VIDEO SUBMISSIONS ---
+        // --- FETCH VIDEO SUBMISSIONS FROM (nominations_submissions) ---
         async function loadSubmissionData() {
             try {
-                const querySnapshot = await getDocs(collection(db, "submissions"));
+                const querySnapshot = await getDocs(collection(db, "nominations_submissions"));
                 const totalSubmissionsElement = document.getElementById('total-submissions-count');
                 
                 globalSubmissionsList = []; // Clear array
                 
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    data.id = docSnap.id; // Store document ID so we can delete it later if needed!
                     globalSubmissionsList.push(data);
                 });
 
@@ -455,7 +504,7 @@
 
             } catch (error) {
                 console.error("Error fetching submissions: ", error);
-                document.getElementById('submissions-table-body').innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--neon-pink);">Create "submissions" collection in Firestore to see data.</td></tr>`;
+                document.getElementById('submissions-table-body').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--neon-pink);">Error querying collection 'nominations_submissions'</td></tr>`;
             }
         }
 
@@ -465,14 +514,14 @@
             tableBody.innerHTML = "";
 
             if (entries.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color: var(--text-gray);">No submissions found for this filter.</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-gray);">No matching submissions found.</td></tr>`;
                 return;
             }
 
             entries.forEach((data) => {
                 let submitDate = "N/A";
-                if (data.submittedAt) {
-                    submitDate = new Date(data.submittedAt).toLocaleDateString(undefined, {
+                if (data.submitted_at) {
+                    submitDate = new Date(data.submitted_at).toLocaleDateString(undefined, {
                         year: 'numeric',
                         month: 'short',
                         day: 'numeric'
@@ -481,69 +530,177 @@
 
                 const row = `
                     <tr>
-                        <td style="font-weight: bold; color: var(--text-white);">${data.creatorName || data.fullName || 'Anonymous'}</td>
-                        <td>${data.email || 'N/A'}</td>
-                        <td><span class="badge" style="background: rgba(157,0,255,0.15); border: 1px solid var(--neon-purple);">${data.category || 'Unassigned'}</span></td>
-                        <td><a href="${data.videoLink}" target="_blank" class="video-link-anchor"><i class="fa-solid fa-up-right-from-square"></i> View Link</a></td>
+                        <td style="font-weight: bold; color: var(--text-white);">@${data.nominee_handle || 'anonymous'}</td>
+                        <td><span class="badge" style="background: rgba(157,0,255,0.15); border: 1px solid var(--neon-purple);">${data.category_group || 'Unspecified'}</span></td>
+                        <td style="color: var(--text-gray);">${data.specific_category || 'Unspecified'}</td>
+                        <td><a href="${data.video_link}" target="_blank" class="video-link-anchor"><i class="fa-solid fa-up-right-from-square"></i> Play Video</a></td>
                         <td>${submitDate}</td>
+                        <td style="text-align: center;">
+                            <button class="btn-delete" onclick="deleteSubmission('${data.id}')"><i class="fa-regular fa-trash-can"></i> Delete</button>
+                        </td>
+                    </tr>
+                `;
+                tableBody.insertAdjacentHTML('beforeend', row);
+                });
+
+                totalCountElement.innerText = totalUsers;
+                todayCountElement.innerText = todayUsers;
+
+            } catch (error) {
+                console.error("Error fetching users: ", error);
+            }
+        }
+
+        // --- FETCH VIDEO SUBMISSIONS FROM (nominations_submissions) ---
+        async function loadSubmissionData() {
+            try {
+                const querySnapshot = await getDocs(collection(db, "nominations_submissions"));
+                const totalSubmissionsElement = document.getElementById('total-submissions-count');
+                
+                globalSubmissionsList = []; // Clear array
+                
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    data.id = docSnap.id; // Store document ID so we can delete it later if needed!
+                    globalSubmissionsList.push(data);
+                });
+
+                totalSubmissionsElement.innerText = globalSubmissionsList.length;
+                renderSubmissionsTable(globalSubmissionsList);
+
+            } catch (error) {
+                console.error("Error fetching submissions: ", error);
+                document.getElementById('submissions-table-body').innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--neon-pink);">Error querying collection 'nominations_submissions'</td></tr>`;
+            }
+        }
+
+        // Render submissions array inside DOM
+        window.renderSubmissionsTable = function(entries) {
+            const tableBody = document.getElementById('submissions-table-body');
+            tableBody.innerHTML = "";
+
+            if (entries.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; color: var(--text-gray);">No matching submissions found.</td></tr>`;
+                return;
+            }
+
+            entries.forEach((data) => {
+                let submitDate = "N/A";
+                if (data.submitted_at) {
+                    submitDate = new Date(data.submitted_at).toLocaleDateString(undefined, {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                }
+
+                const row = `
+                    <tr>
+                        <td style="font-weight: bold; color: var(--text-white);">@${data.nominee_handle || 'anonymous'}</td>
+                        <td><span class="badge" style="background: rgba(157,0,255,0.15); border: 1px solid var(--neon-purple);">${data.category_group || 'Unspecified'}</span></td>
+                        <td style="color: var(--text-gray);">${data.specific_category || 'Unspecified'}</td>
+                        <td><a href="${data.video_link}" target="_blank" class="video-link-anchor"><i class="fa-solid fa-up-right-from-square"></i> Play Video</a></td>
+                        <td>${submitDate}</td>
+                        <td style="text-align: center;">
+                            <button class="btn-delete" onclick="deleteSubmission('${data.id}')"><i class="fa-regular fa-trash-can"></i> Delete</button>
+                        </td>
                     </tr>
                 `;
                 tableBody.insertAdjacentHTML('beforeend', row);
             });
         }
 
-        // Dynamic Filtering Core Action
-        window.filterSubmissions = function(category, btnElement) {
-            // Highlight current filter tab button
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active-filter'));
-            btnElement.classList.add('active-filter');
-
-            if (category === 'all') {
-                renderSubmissionsTable(globalSubmissionsList);
-            } else {
-                const filtered = globalSubmissionsList.filter(item => item.category && item.category.toLowerCase() === category.toLowerCase());
-                renderSubmissionsTable(filtered);
+        // --- EXPOSED FIREBASE SYSTEM ACTIONS ---
+        window.deleteSubmission = async function(docId) {
+            if (confirm("Are you sure you want to permanently delete this submission? This cannot be undone.")) {
+                try {
+                    await deleteDoc(doc(db, "nominations_submissions", docId));
+                    alert("Submission successfully removed from database!");
+                    loadSubmissionData(); // Reload UI
+                } catch (error) {
+                    console.error("Error deleting document: ", error);
+                    alert("Failed to delete entry. Make sure you have authorized rules.");
+                }
             }
         }
 
-        // --- FETCH CONTACT SUPPORT TICKETS ---
-        async function loadSupportMessages() {
+        // Category Filter Hook
+        window.filterSubmissions = function(category, btnElement) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active-filter'));
+            btnElement.classList.add('active-filter');
+            currentActiveCategory = category;
+
+            applyFilterAndSearch();
+        }
+
+        // Search bar typing hook
+        window.searchSubmissions = function() {
+            applyFilterAndSearch();
+        }
+
+        // Combined Filter and Search Function
+        function applyFilterAndSearch() {
+            const searchQuery = document.getElementById('submissions-search').value.toLowerCase();
+            
+            let filteredList = globalSubmissionsList;
+
+            // Apply category filter
+            if (currentActiveCategory !== 'all') {
+                filteredList = filteredList.filter(item => 
+                    item.category_group && item.category_group.toLowerCase() === currentActiveCategory.toLowerCase()
+                );
+            }
+
+            // Apply search query filter
+            if (searchQuery.trim() !== '') {
+                filteredList = filteredList.filter(item => 
+                    item.nominee_handle && item.nominee_handle.toLowerCase().includes(searchQuery)
+                );
+            }
+
+            renderSubmissionsTable(filteredList);
+        }
+
+        // --- FETCH LIVE TALLIES FROM (tally) ---
+        async function loadVoteTallies() {
             try {
-                const querySnapshot = await getDocs(collection(db, "support"));
-                const tableBody = document.getElementById('support-table-body');
+                const querySnapshot = await getDocs(collection(db, "tally"));
+                const tableBody = document.getElementById('votes-table-body');
                 tableBody.innerHTML = "";
 
-                let messagesFound = 0;
+                let voteEntries = [];
+
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    messagesFound++;
+                    voteEntries.push({
+                        id: doc.id,
+                        category: data.category || 'Unknown Category',
+                        votes: data.votes || 0
+                    });
+                });
 
-                    let ticketDate = "N/A";
-                    if (data.timestamp) {
-                        ticketDate = new Date(data.timestamp).toLocaleDateString(undefined, {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric'
-                        });
-                    }
+                // Sort descending (Highest votes at the top!)
+                voteEntries.sort((a, b) => b.votes - a.votes);
 
+                if(voteEntries.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="3" style="text-align:center; color: var(--text-gray);">No votes tallied yet.</td></tr>`;
+                    return;
+                }
+
+                voteEntries.forEach((entry) => {
                     const row = `
                         <tr>
-                            <td style="font-weight: bold; color: var(--neon-cyan);">${data.fullName || data.name || 'Visitor'}</td>
-                            <td>${data.email || 'No Email'}</td>
-                            <td style="max-width: 400px; word-wrap: break-word; color: #ddd;">${data.message || 'No message provided'}</td>
-                            <td><span class="badge" style="background: rgba(255, 0, 170, 0.1); color: var(--neon-pink);">${ticketDate}</span></td>
+                            <td style="font-weight: bold; color: var(--neon-cyan);">${entry.id}</td>
+                            <td style="color: var(--text-gray);">${entry.category}</td>
+                            <td style="text-align: right; font-weight: bold; color: var(--neon-pink);">${entry.votes} votes</td>
                         </tr>
                     `;
                     tableBody.insertAdjacentHTML('beforeend', row);
                 });
 
-                if(messagesFound === 0) {
-                    tableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-gray);">No support entries stored in Firestore collection "support".</td></tr>`;
-                }
-
             } catch (error) {
-                console.error("Error loading support tickets: ", error);
+                console.error("Error loading vote tallies: ", error);
+                document.getElementById('votes-table-body').innerHTML = `<tr><td colspan="3" style="text-align:center; color: var(--neon-pink);">Error querying collection 'tally'</td></tr>`;
             }
         }
 
