@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Render Error | Keyframe-Awards</title>
+    <style>
+        /* Dark, cinematic, premium color palette */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0d0e12;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            z-index: 2;
+        }
+
+        /* Glitch styling for the 404 text */
+        .glitch-wrapper {
+            position: relative;
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #ff0055; /* Neon accent */
+            text-shadow: 0 0 20px rgba(255, 0, 85, 0.4);
+            letter-spacing: -2px;
+            margin-bottom: 10px;
+            animation: pulse 2s infinite alternate;
+        }
+
+        /* Editing Software / Timeline UI styling elements */
+        .ui-alert {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 0, 85, 0.3);
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #ffb703;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        p {
+            color: #8f94a6;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        /* Premium glowing button */
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #ff0055;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 0, 85, 0.4);
+        }
+
+        .btn:hover {
+            background: #e0004c;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 0, 85, 0.6);
+        }
+
+        /* Background grid/render lines to mimic a viewport */
+        .viewport-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            border: 20px solid rgba(255, 255, 255, 0.02);
+            z-index: 1;
+        }
+
+        .grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-position: center;
+            opacity: 0.5;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.03); }
+        }
+
+        /* Responsive scaling */
+        @media (max-width: 480px) {
+            .error-code {
+                font-size: 6rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="viewport-lines">
+        <div class="grid"></div>
+    </div>
+
+    <div class="container">
+        <div class="glitch-wrapper">
+            <div class="error-code">404</div>
+        </div>
+        <div class="ui-alert">
+            [!] ERROR: Missing_Keyframe_Asset_Offline
+        </div>
+        <h1>Media Offline</h1>
+        <p>
+            It looks like this scene didn't render correctly. The keyframe or asset you are trying to preview has been moved, deleted, or never existed in the timeline.
+        </p>
+        <a href="/" class="btn">Return to Timeline</a>
+    </div>
+
+</body>
+</html>
