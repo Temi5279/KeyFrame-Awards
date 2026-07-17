@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Keyframe Awards</title>
-    <!-- Appended ?v=1.1 to break browser cache instantly on your phone -->
-    <link rel="stylesheet" href="style.css">
-    <!-- FontAwesome for Social Icons & Google Icon -->
+    <link rel="stylesheet" href="style.css?v=1.1">
+    <!-- Font Awesome for Social Icons & Google Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         /* CSS engine for the swipeable cards */
         .blog-swipe-container::-webkit-scrollbar {
@@ -38,23 +36,21 @@
     </style>
 </head>
 <body>
-
     <!-- HEADER / NAVIGATION -->
     <header class="navbar">
         <div class="logo">Keyframe Awards</div>
-        
         <div class="menu-toggle" id="mobile-menu">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </div>
-
         <nav class="nav-links">
-            <a href="index.html" class="active">Home</a>
-            <a href="nominations.html">Nominations</a>
-            <a href="vote.html">Vote</a>
-            <a href="live.html">Live Stream</a>
-            <a href="about.html">About</a>
+            <!-- Clean Links (No .html) -->
+            <a href="/" class="active">Home</a>
+            <a href="nominations">Nominations</a>
+            <a href="vote">Vote</a>
+            <a href="live">Live Stream</a>
+            <a href="about">About</a>
             <div class="auth-buttons" id="auth-header-actions">
                 <button class="btn-login" id="open-login">Login</button>
                 <button class="btn-signup" id="open-signup">Sign Up</button>
@@ -82,10 +78,8 @@
                     </div>
                     <button type="submit" class="btn-submit">Log In</button>
                 </form>
-                
                 <div class="divider"><span>OR</span></div>
                 <button class="btn-google" id="google-login-btn"><i class="fab fa-google"></i> Continue with Google</button>
-
                 <div class="form-footer">
                     <a href="#" id="go-forgot">Forgot Password?</a>
                     <p>Don't have an account? <a href="#" id="switch-to-signup">Sign Up</a></p>
@@ -115,10 +109,8 @@
                     </div>
                     <button type="submit" class="btn-submit">Register</button>
                 </form>
-                
                 <div class="divider"><span>OR</span></div>
                 <button class="btn-google" id="google-signup-btn"><i class="fab fa-google"></i> Sign up with Google</button>
-
                 <div class="form-footer">
                     <p>Already have an account? <a href="#" id="switch-to-login">Log In</a></p>
                 </div>
@@ -149,11 +141,9 @@
             Your browser does not support the video tag.
         </video>
         <div class="video-overlay"></div>
-        
         <div class="hero-content">
             <h1 class="animated-gradient-text">The Keyframe Awards</h1>
             <p class="hero-subtitle">Celebrating Excellence in Motion & Creativity</p>
-            
             <div class="countdown-container">
                 <h3>Nominations Open In</h3>
                 <div id="countdown">
@@ -166,177 +156,129 @@
         </div>
     </section>
 
-    <!-- INFO SECTION SCROLLING DOWN -->
+    <!-- INFO SECTION -->
     <section class="info-section">
         <h2>About The Event</h2>
         <p>Welcome to the ultimate stage where visual creators, motion designers, and editors get their flowers. The Keyframe Awards honors the best of the best pushing the boundaries of frame-by-frame masterpieces.</p>
     </section>
 
-    <!-- ================= CATEGORIES TEASER SECTION ================= -->
+    <!-- CATEGORIES TEASER SECTION -->
     <section class="categories-teaser-section" style="padding: 60px 0 20px 0; background: var(--deep-bg);">
         <div style="max-width: 800px; margin: 0 auto; padding: 0 5%; text-align: center;">
-            
             <div style="background: linear-gradient(180deg, rgba(26, 0, 51, 0.6), rgba(13, 0, 26, 0.9)); padding: 40px 20px; text-align: center; border: 1px solid rgba(0, 240, 255, 0.15); border-radius: 12px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);">
-                
                 <span style="color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 3px; font-size: 0.85rem; font-weight: bold; margin-bottom: 12px; display: block; text-shadow: 0 0 8px rgba(0, 240, 255, 0.3);">
-                    10 Epic Categories • 60+ Unique Trophies
+                    10 Epic Categories 60+ Unique Trophies
                 </span>
-                
                 <h2 style="font-size: 2.2rem; margin-top: 0; margin-bottom: 20px; color: var(--text-white); text-shadow: 0 0 15px var(--neon-purple); font-weight: bold;">
                     The Battles Are Set
                 </h2>
-                
                 <p style="color: #bbb; font-size: 1rem; max-width: 650px; margin: 0 auto 30px auto; line-height: 1.8;">
-                    From high-energy Football edits and Gaming montages to the legendary Meme Culture clashes and professional Creative Editing Craft—explore where you can lock in your official votes.
+                    From high-energy Football edits and Gaming montages to the legendary Meme Culture clashes and professional Creative Editing Craft-explore where you can lock in your official votes.
                 </p>
-
                 <!-- Category Badges -->
                 <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 35px;">
                     <span style="background: rgba(255, 0, 127, 0.15); border: 1px solid var(--neon-pink); color: var(--text-white); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-shadow: 0 0 5px var(--neon-pink);"><i class="fa-solid fa-crown"></i> The Year Awards</span>
                     <span style="background: rgba(0, 240, 255, 0.15); border: 1px solid var(--neon-cyan); color: var(--text-white); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-shadow: 0 0 5px var(--neon-cyan);"><i class="fa-solid fa-microphone"></i> Music</span>
                     <span style="background: rgba(255, 230, 0, 0.15); border: 1px solid #ffe600; color: var(--text-white); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;"><i class="fa-solid fa-laugh"></i> Memes</span>
-                    <span style="background: rgba(189, 0, 255, 0.15); border: 1px solid #bd00ff; color: var(--text-white); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;"><i class="fa-solid fa-gamepad"></i> Gaming</span>
-                    <span style="background: rgba(0, 255, 102, 0.15); border: 1px solid #00ff66; color: var(--text-white); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;"><i class="fa-solid fa-tv"></i> TV & Movies</span>
-                    <span style="background: rgba(255, 0, 170, 0.15); border: 1px solid #ff00aa; color: var(--text-white); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;"><i class="fa-solid fa-scissors"></i> Editing Craft</span>
+                    <span style="background: rgba(0, 255, 102, 0.15); border: 1px solid #00ff66; color: var(--text-white); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;"><i class="fa-solid fa-gamepad"></i> Gaming</span>
+                    <span style="background: rgba(255, 0, 170, 0.15); border: 1px solid #ff00aa; color: var(--text-white); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;"><i class="fa-solid fa-tv"></i> TV & Movies</span>
+                    <span style="background: rgba(189, 0, 255, 0.15); border: 1px solid #bd00ff; color: var(--text-white); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;"><i class="fa-solid fa-scissors"></i> Editing Craft</span>
                 </div>
-
-                <!-- Explore All Categories Button (Takes you to Nominations) -->
-                <a href="nominations.html" style="display: inline-block; background: var(--neon-purple); border: none; color: var(--text-white); padding: 14px 32px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s, transform 0.3s; box-shadow: 0 0 15px var(--neon-purple);">
+                <!-- Clean Link to Nominations (No .html) -->
+                <a href="nominations" style="display: inline-block; background: var(--neon-purple); border: none; color: var(--text-white); padding: 14px 32px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s, transform 0.3s; box-shadow: 0 0 15px var(--neon-purple);">
                     Explore All Categories <i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i>
                 </a>
             </div>
-
         </div>
     </section>
 
-    <!-- ================= SWIPEABLE BLOG PREVIEW SECTION ================= -->
+    <!-- SWIPEABLE BLOG PREVIEW SECTION -->
     <section class="blog-preview-section" style="padding: 60px 0 80px 0; background: rgba(13, 0, 26, 0.4); border-top: 1px solid rgba(157, 0, 255, 0.2); overflow: hidden;">
         <div style="max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center;">
-            
             <span style="color: var(--neon-pink); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; margin-bottom: 10px; display: block;">
                 Latest From Our Press Room
             </span>
-            
             <h2 style="font-size: 2.5rem; margin-bottom: 20px; color: var(--text-white); text-shadow: 0 0 10px var(--neon-purple);">
                 Behind the Frames
             </h2>
-            
-            <!-- Swipe Container (Hides scrollbar, enables swipe on mobile) -->
             <div class="blog-swipe-container" style="display: flex; gap: 20px; width: 100%; overflow-x: auto; padding: 20px 10px 30px 10px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;">
-                
-                <!-- ================= CARD 1 (WHY KEYFRAME WAS CREATED) ================= -->
-                <div class="blog-card-item" style="flex: 0 0 90%; max-width: 800px; margin: 0 auto; scroll-snap-align: center; background: rgba(26, 0, 51, 0.6); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 12px; padding: 40px; text-align: left; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;" 
-                     onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--neon-cyan)'; this.style.boxShadow='0 8px 25px rgba(0, 240, 255, 0.15)';" 
-                     onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 240, 255, 0.2)'; this.style.boxShadow='0 5px 15px rgba(0, 0, 0, 0.3)';">
-                    
-                    <span style="font-size: 0.85rem; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 12px;">Official Editorial • July 15</span>
-                    
+                <!-- CARD 1 -->
+                <div class="blog-card-item" style="flex: 0 0 90%; max-width: 800px; margin: 0 auto; scroll-snap-align: center; background: rgba(26, 0, 51, 0.6); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 12px; padding: 40px; text-align: left; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;"
+                    onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--neon-cyan)'; this.style.boxShadow='0 8px 25px rgba(0, 240, 255, 0.15)';"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 240, 255, 0.2)'; this.style.boxShadow='0 5px 15px rgba(0, 0, 0, 0.3)';">
+                    <span style="font-size: 0.85rem; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 12px;">Official Editorial July 15</span>
                     <h3 style="font-size: 1.6rem; color: var(--neon-cyan); margin-bottom: 15px;">
                         Why The Keyframe Awards Was Created: Redefining Digital Visual Artistry
                     </h3>
-                    
                     <p style="color: #ccc; font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
                         For decades, traditional media has isolated post-production appreciation. Discover how we are building a premium, transparent platform to give digital editors, animators, and visual technicians their definitive industry honors.
                     </p>
-                    
-                    <!-- Direct Link to Press Index page -->
-                    <a href="blog/index.html" style="display: inline-block; background: transparent; border: 2px solid var(--neon-pink); color: var(--text-white); padding: 10px 24px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s, box-shadow 0.3s; box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);"
-                       onmouseover="this.style.background='var(--neon-pink)'; this.style.boxShadow='0 0 20px var(--neon-pink)';"
-                       onmouseout="this.style.background='transparent'; this.style.boxShadow='0 0 10px rgba(255, 0, 127, 0.2)';">
+                    <!-- Clean URL Link to Blog Index -->
+                    <a href="blog" style="display: inline-block; background: transparent; border: 2px solid var(--neon-pink); color: var(--text-white); padding: 10px 24px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s, box-shadow 0.3s; box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);"
+                        onmouseover="this.style.background='var(--neon-pink)'; this.style.boxShadow='0 0 20px var(--neon-pink)';"
+                        onmouseout="this.style.background='transparent'; this.style.boxShadow='0 0 10px rgba(255, 0, 127, 0.2)';">
                         Read Full Press Release &rarr;
                     </a>
                 </div>
 
-                <!-- ================= CARD 2 (ROAD TO KEYFRAME) ================= -->
-                <div class="blog-card-item" style="flex: 0 0 90%; max-width: 800px; margin: 0 auto; scroll-snap-align: center; background: rgba(26, 0, 51, 0.6); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 12px; padding: 40px; text-align: left; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;" 
-                     onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--neon-cyan)'; this.style.boxShadow='0 8px 25px rgba(0, 240, 255, 0.15)';" 
-                     onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 240, 255, 0.2)'; this.style.boxShadow='0 5px 15px rgba(0, 0, 0, 0.3)';">
-                    
-                    <span style="font-size: 0.85rem; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 12px;">Official Editorial • July 14</span>
-                    
+                <!-- CARD 2 -->
+                <div class="blog-card-item" style="flex: 0 0 90%; max-width: 800px; margin: 0 auto; scroll-snap-align: center; background: rgba(26, 0, 51, 0.6); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 12px; padding: 40px; text-align: left; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;"
+                    onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--neon-cyan)'; this.style.boxShadow='0 8px 25px rgba(0, 240, 255, 0.15)';"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 240, 255, 0.2)'; this.style.boxShadow='0 5px 15px rgba(0, 0, 0, 0.3)';">
+                    <span style="font-size: 0.85rem; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 12px;">Official Editorial July 14</span>
                     <h3 style="font-size: 1.6rem; color: var(--neon-cyan); margin-bottom: 15px;">
                         Road to Keyframe: Nominations, Voting & Timeline Launch Guide
                     </h3>
-                    
                     <p style="color: #ccc; font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
                         We're mapping out the road to honors! Submissions run through October, official voting begins in November, and the dynamic award night event rolls out in January. See how to secure your bracket positions.
                     </p>
-                    
-                    <!-- Direct Link to Press Index page -->
-                    <a href="blog/index.html" style="display: inline-block; background: transparent; border: 2px solid var(--neon-pink); color: var(--text-white); padding: 10px 24px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s, box-shadow 0.3s; box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);"
-                       onmouseover="this.style.background='var(--neon-pink)'; this.style.boxShadow='0 0 20px var(--neon-pink)';"
-                       onmouseout="this.style.background='transparent'; this.style.boxShadow='0 0 10px rgba(255, 0, 127, 0.2)';">
+                    <!-- Clean URL Link to Blog Index -->
+                    <a href="blog" style="display: inline-block; background: transparent; border: 2px solid var(--neon-pink); color: var(--text-white); padding: 10px 24px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s, box-shadow 0.3s; box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);"
+                        onmouseover="this.style.background='var(--neon-pink)'; this.style.boxShadow='0 0 20px var(--neon-pink)';"
+                        onmouseout="this.style.background='transparent'; this.style.boxShadow='0 0 10px rgba(255, 0, 127, 0.2)';">
                         Read Full Press Release &rarr;
                     </a>
                 </div>
-
             </div>
-
-            <!-- Touch Hint for Swiping -->
-            <p class="blog-swipe-hint" style="color: #666; font-size: 0.85rem; margin-top: 15px; display: none;">← Swipe sideways to see other releases →</p>
-            
+            <p class="blog-swipe-hint" style="color: #666; font-size: 0.85rem; margin-top: 15px; display: none;"> Swipe sideways to see other releases →</p>
         </div>
     </section>
 
-    <!-- FOOTER LAYER -->
+    <!-- FOOTER -->
     <footer>
         <div class="footer-links">
-            <a href="privacy.html">Privacy Policy</a>
-            <a href="terms.html">Terms of Service</a>
-            <a href="cookies.html">Cookie Preferences</a>
-            <a href="contact.html">Contact Support</a>
+            <a href="privacy">Privacy Policy</a>
+            <a href="terms">Terms of Service</a>
+            <a href="cookies">Cookie Preferences</a>
+            <a href="contact">Contact Support</a>
         </div>
-
         <div class="social-icons">
-            <!-- Facebook Link -->
-<a href="https://www.facebook.com/profile.php?id=61591758598232" target="_blank">
-  <i class="fab fa-facebook"></i>
-</a>
-
-<!-- Instagram Link -->
-<a href="https://www.instagram.com/keyframeawards" target="_blank">
-  <i class="fab fa-instagram"></i>
-</a>
-
-<!-- Threads Link -->
-<a href="https://www.threads.net/@keyframeawards" target="_blank">
-  <i class="fab fa-threads"></i>
-</a>
-
-<!-- Twitter / X Link -->
-<a href="https://x.com/keyframeawards" target="_blank">
-  <i class="fab fa-x-twitter"></i>
-</a>
-
-<!-- TikTok Link -->
-<a href="https://www.tiktok.com/@keyframeawards" target="_blank">
-  <i class="fab fa-tiktok"></i>
-</a>
-
-<!-- YouTube Link -->
-<a href="https://www.youtube.com/@KeyframeAwards" target="_blank">
-  <i class="fab fa-youtube"></i>
-</a>
-
+            <a href="https://www.facebook.com/profile.php?id=61591758598232" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/keyframeawards" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.threads.net/@keyframeawards" target="_blank"><i class="fab fa-threads"></i></a>
+            <a href="https://x.com/keyframeawards" target="_blank"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://www.tiktok.com/@keyframeawards" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@KeyframeAwards" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
         <div class="copyright">
             <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Firebase System Module Script -->
+    <!-- Firebase SDK (Version 10.8.0) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
-          apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
-          authDomain: "keyframe-awards.firebaseapp.com",
-          projectId: "keyframe-awards",
-          storageBucket: "keyframe-awards.firebasestorage.app",
-          messagingSenderId: "882083630221",
-          appId: "1:882083630221:web:629df7642fdf822018a6c4",
-          measurementId: "G-Z8HX6L8WEG"
+            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+            authDomain: "keyframe-awards.firebaseapp.com",
+            projectId: "keyframe-awards",
+            storageBucket: "keyframe-awards.firebasestorage.app",
+            messagingSenderId: "882083630221",
+            appId: "1:882083630221:web:629df7642fdf822018a6c4",
+            measurementId: "G-Z8HX6L8WEG"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -344,34 +286,33 @@
         const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // --- GOOGLE SIGN IN LOGIC ---
+        // GOOGLE SIGN IN
         function handleGoogleAuth() {
             signInWithPopup(auth, googleProvider)
-                .then(async (result) => {
-                    const user = result.user;
-                    const docRef = doc(db, "users", user.uid);
-                    const docSnap = await getDoc(docRef);
-
-                    if (!docSnap.exists()) {
-                        await setDoc(docRef, {
-                            fullName: user.displayName || "Google User",
-                            dateOfBirth: "Not Provided (Google Login)",
-                            email: user.email,
-                            registeredAt: new Date().toISOString()
-                        });
-                    }
-                    alert("Authenticated successfully with Google!");
-                    document.getElementById('auth-modal').classList.remove('open');
-                })
-                .catch((error) => {
-                    alert("Google Auth Error: " + error.message);
-                });
+            .then(async (result) => {
+                const user = result.user;
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+                if (!docSnap.exists()) {
+                    await setDoc(docRef, {
+                        fullName: user.displayName || "Google User",
+                        dateOfBirth: "Not Provided (Google Login)",
+                        email: user.email,
+                        registeredAt: new Date().toISOString()
+                    });
+   }
+                alert("Authenticated successfully with Google!");
+                document.getElementById('auth-modal').classList.remove('open');
+            })
+            .catch((error) => {
+                alert("Google Auth Error: " + error.message);
+            });
         }
 
         document.getElementById('google-login-btn').addEventListener('click', handleGoogleAuth);
         document.getElementById('google-signup-btn').addEventListener('click', handleGoogleAuth);
 
-        // --- EMAIL SIGN UP EXECUTION ---
+        // EMAIL SIGN UP
         document.getElementById('signup-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const name = document.getElementById('signup-name').value;
@@ -380,56 +321,55 @@
             const password = document.getElementById('signup-password').value;
 
             createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    return setDoc(doc(db, "users", user.uid), {
-                        fullName: name,
-                        dateOfBirth: dob,
-                        email: email,
-                        registeredAt: new Date().toISOString()
-                    });
-                })
-                .then(() => {
-                    alert("Account registered successfully!");
-                    document.getElementById('auth-modal').classList.remove('open');
-                })
-                .catch((error) => {
-                    alert("Registration Error: " + error.message);
+            .then((userCredential) => {
+                const user = userCredential.user;
+                return setDoc(doc(db, "users", user.uid), {
+                    fullName: name,
+                    dateOfBirth: dob,
+                    email: email,
+                    registeredAt: new Date().toISOString()
                 });
+            })
+            .then(() => {
+                alert("Account registered successfully!");
+                document.getElementById('auth-modal').classList.remove('open');
+            })
+            .catch((error) => {
+                alert("Registration Error: " + error.message);
+            });
         });
 
-        // --- LOGIN EXECUTION ---
+        // EMAIL LOGIN
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
 
             signInWithEmailAndPassword(auth, email, password)
-                .then(() => {
-                    alert("Logged in successfully!");
-                    document.getElementById('auth-modal').classList.remove('open');
-                })
-                .catch((error) => {
-                    alert("Login Error: " + error.message);
-                });
+            .then(() => {
+                alert("Logged in successfully!");
+                document.getElementById('auth-modal').classList.remove('open');
+            })
+            .catch((error) => {
+                alert("Login Error: " + error.message);
+            });
         });
 
-        // --- FORGOT PASSWORD EXECUTION ---
+        // FORGOT PASSWORD
         document.getElementById('forgot-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('forgot-email').value;
-
             sendPasswordResetEmail(auth, email)
-                .then(() => {
-                    alert("Password reset email sent! Check your inbox.");
-                    switchFormView('login');
-                })
-                .catch((error) => {
-                    alert("Error: " + error.message);
-                });
+            .then(() => {
+                alert("Password reset email sent! Check your inbox.");
+                switchFormView('login');
+            })
+            .catch((error) => {
+                alert("Error: " + error.message);
+            });
         });
 
-        // --- LIVE AUTH LISTENER ---
+        // LIVE AUTH STATE LISTENER
         const authActions = document.getElementById('auth-header-actions');
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -456,7 +396,7 @@
     <script>
         const menuToggle = document.getElementById('mobile-menu');
         const navLinks = document.querySelector('.nav-links');
-        const modalOverlay = document.getElementById('auth-modal');
+        const modaloverlay = document.getElementById('auth-modal');
         const loginView = document.getElementById('login-form-view');
         const signupView = document.getElementById('signup-form-view');
         const forgotView = document.getElementById('forgot-form-view');
@@ -470,29 +410,53 @@
             loginView.classList.add('hidden');
             signupView.classList.add('hidden');
             forgotView.classList.add('hidden');
-
             if (target === 'login') loginView.classList.remove('hidden');
             if (target === 'signup') signupView.classList.remove('hidden');
             if (target === 'forgot') forgotView.classList.remove('hidden');
         }
 
-        // Exposed globally to the window object so Firebase module script can trigger it securely
         window.attachModalTriggers = function() {
             const loginBtn = document.getElementById('open-login');
             const signupBtn = document.getElementById('open-signup');
-            if(loginBtn) loginBtn.addEventListener('click', () => { modalOverlay.classList.add('open'); switchFormView('login'); });
-            if(signupBtn) signupBtn.addEventListener('click', () => { modalOverlay.classList.add('open'); switchFormView('signup'); });
-        }
+            if(loginBtn) {
+                loginBtn.addEventListener('click', () => {
+                    modaloverlay.classList.add('open'); 
+                    switchFormView('login'); 
+                });
+            }
+            if (signupBtn) {
+                signupBtn.addEventListener('click', () => {
+                    modaloverlay.classList.add('open'); 
+                    switchFormView('signup'); 
+                });
+            }
+        };
 
-        document.getElementById('close-modal').addEventListener('click', () => modalOverlay.classList.remove('open'));
-        document.getElementById('switch-to-signup').addEventListener('click', (e) => { e.preventDefault(); switchFormView('signup'); });
-        document.getElementById('switch-to-login').addEventListener('click', (e) => { e.preventDefault(); switchFormView('login'); });
-        document.getElementById('go-forgot').addEventListener('click', (e) => { e.preventDefault(); switchFormView('forgot'); });
-        document.getElementById('back-to-login').addEventListener('click', (e) => { e.preventDefault(); switchFormView('login'); });
+        document.getElementById('close-modal').addEventListener('click', () => modaloverlay.classList.remove('open'));
+        
+        document.getElementById('switch-to-signup').addEventListener('click', (e) => {
+            e.preventDefault(); 
+            switchFormView('signup'); 
+        });
+        
+        document.getElementById('switch-to-login').addEventListener('click', (e) => {
+            e.preventDefault(); 
+            switchFormView('login'); 
+        });
+        
+        document.getElementById('go-forgot').addEventListener('click', (e) => { 
+            e.preventDefault();
+            switchFormView('forgot'); 
+        });
+        
+        document.getElementById('back-to-login').addEventListener('click', (e) => {
+            e.preventDefault(); 
+            switchFormView('login'); 
+        });
 
         window.attachModalTriggers();
 
-        // Live Countdown Timer
+        // Countdown System
         function updateCountdown() {
             const targetDate = new Date("November 4, 2026 00:00:00").getTime();
             const now = new Date().getTime();
@@ -513,6 +477,7 @@
             document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
             document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
         }
+        
         setInterval(updateCountdown, 1000);
         updateCountdown();
     </script>
