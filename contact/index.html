@@ -4,94 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Support | The Keyframe Awards</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .page-header { padding: 140px 5% 40px 5%; text-align: center; background: linear-gradient(to bottom, rgba(26, 0, 51, 0.5), var(--deep-bg)); }
-        .page-container { max-width: 600px; margin: 0 auto; padding: 20px 5% 80px 5%; }
-        .contact-box { background: rgba(26, 0, 51, 0.4); border: 1px solid rgba(157, 0, 255, 0.2); border-radius: 12px; padding: 40px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); text-align: center; }
-        .contact-box p { color: #ddd; font-size: 1.1rem; line-height: 1.8; margin-bottom: 25px; }
-        .support-email { display: inline-flex; align-items: center; gap: 10px; font-size: 1.3rem; color: var(--neon-cyan); text-decoration: none; font-weight: bold; padding: 12px 25px; border: 1px dashed var(--neon-purple); border-radius: 8px; background: rgba(157,0,255,0.05); transition: background 0.3s; }
-        .support-email:hover { background: rgba(0,240,255,0.1); }
-        @media (max-width: 768px) { .contact-box { padding: 25px; } .support-email { font-size: 1.1rem; } }
-    </style>
 </head>
 <body>
     <header class="navbar">
         <div class="logo">Keyframe Awards</div>
-        <div class="menu-toggle" id="mobile-menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
         <nav class="nav-links">
-            <a href="index.html">Home</a><a href="nominations.html">Nominations</a><a href="vote.html">Vote</a><a href="live.html">Live Stream</a><a href="about.html">About</a>
-            <div class="auth-buttons" id="auth-header-actions"><span class="user-welcome">Checking Session...</span></div>
+            <a href="/">Home</a>
+            <a href="nominations">Nominations</a>
+            <a href="vote">Vote</a>
+            <a href="live">Live Stream</a>
+            <a href="about">About</a>
         </nav>
     </header>
 
-    <main>
-        <section class="page-header">
-            <h1 class="animated-gradient-text">Contact Support</h1>
-            <p>Need assistance or experiencing a system error?</p>
-        </section>
-        <div class="page-container">
-            <div class="contact-box">
-                <p>If you encounter submission troubles, Google connection pop-up freezes, account errors, or need a profile record removed from the database, drop our team a direct line:</p>
-                <a href="mailto:support@keyframe-awards.firebaseapp.com" class="support-email">
-                    <i class="fa-solid fa-envelope"></i> support@keyframe-awards.com
-                </a>
-            </div>
+    <section class="info-section" style="margin-top: 100px; min-height: 80vh;">
+        <h2 style="margin-bottom: 20px; color: var(--neon-cyan);">Get in Touch</h2>
+        <p style="margin-bottom: 40px;">Have questions regarding nominations, sponsorship, or technical issues? Send us a message.</p>
+
+        <div style="max-width: 500px; margin: 0 auto; background: var(--royal-purple); border: 1px solid rgba(157, 0, 255, 0.3); border-radius: 12px; padding: 30px; text-align: left;">
+            <form id="contact-form">
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="contact-name" required placeholder="Your Name">
+                </div>
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="contact-email" required placeholder="name@example.com">
+                </div>
+                <div class="input-group">
+                    <label>Message</label>
+                    <textarea id="contact-message" required placeholder="How can we help you?" style="background: rgba(13, 0, 26, 0.6); border: 1px solid rgba(157, 0, 255, 0.4); padding: 12px; border-radius: 6px; color: white; font-size: 1rem; outline: none; height: 120px; resize: none; font-family: inherit;"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
         </div>
-    </main>
+    </section>
 
     <footer>
         <div class="footer-links">
-            <a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="cookies.html">Cookie Preferences</a><a href="contact.html">Contact Support</a>
+            <a href="privacy">Privacy Policy</a>
+            <a href="terms">Terms of Service</a>
+            <a href="cookies">Cookie Preferences</a>
+            <a href="contact" style="color: var(--neon-pink);">Contact Support</a>
         </div>
-        <div class="social-icons">
-           <!-- Facebook Link -->
-<a href="https://www.facebook.com/profile.php?id=61591758598232" target="_blank">
-  <i class="fab fa-facebook"></i>
-</a>
-
-<!-- Instagram Link -->
-<a href="https://www.instagram.com/keyframeawards" target="_blank">
-  <i class="fab fa-instagram"></i>
-</a>
-
-<!-- Threads Link -->
-<a href="https://www.threads.net/@keyframeawards" target="_blank">
-  <i class="fab fa-threads"></i>
-</a>
-
-<!-- Twitter / X Link -->
-<a href="https://x.com/keyframeawards" target="_blank">
-  <i class="fab fa-x-twitter"></i>
-</a>
-
-<!-- TikTok Link -->
-<a href="https://www.tiktok.com/@keyframeawards" target="_blank">
-  <i class="fab fa-tiktok"></i>
-</a>
-
-<!-- YouTube Link -->
-<a href="https://www.youtube.com/@KeyframeAwards" target="_blank">
-  <i class="fab fa-youtube"></i>
-</a>
+        <div class="copyright">
+            <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
         </div>
-        <div class="copyright"><p>&copy; 2026 The Keyframe Awards. All rights reserved.</p></div>
     </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        const firebaseConfig = { apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg", authDomain: "keyframe-awards.firebaseapp.com", projectId: "keyframe-awards", storageBucket: "keyframe-awards.firebasestorage.app", messagingSenderId: "882083630221", appId: "1:882083630221:web:629df7642fdf822018a6c4" };
-        const app = initializeApp(firebaseConfig); const auth = getAuth(app);
-        const authActions = document.getElementById('auth-header-actions');
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                authActions.innerHTML = `<span class="user-welcome">Active Account</span> <button class="btn-login" id="logout-btn">Log Out</button>`;
-                document.getElementById('logout-btn').addEventListener('click', () => { signOut(auth).then(() => window.location.reload()); });
-            } else { authActions.innerHTML = `<button class="btn-login" onclick="window.location.href='index.html'">Login</button>`; }
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+            authDomain: "keyframe-awards.firebaseapp.com",
+            projectId: "keyframe-awards",
+            storageBucket: "keyframe-awards.firebasestorage.app",
+            messagingSenderId: "882083630221",
+            appId: "1:882083630221:web:629df7642fdf822018a6c4",
+            measurementId: "G-Z8HX6L8WEG"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const message = document.getElementById('contact-message').value;
+
+            try {
+                await addDoc(collection(db, "support"), {
+                    name,
+                    email,
+                    message,
+                    timestamp: new Date().toISOString()
+                });
+                alert("Message submitted! We will get back to you shortly.");
+                document.getElementById('contact-form').reset();
+            } catch (err) {
+                alert("Error sending message: " + err.message);
+            }
         });
-        document.getElementById('mobile-menu').addEventListener('click', () => { document.querySelector('.nav-links').classList.toggle('active'); document.getElementById('mobile-menu').classList.toggle('is-active'); });
+    </script>
+
+    <script>
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('is-active');
+        });
     </script>
 </body>
 </html>
