@@ -16,12 +16,17 @@
             <span class="bar"></span>
         </div>
         <nav class="nav-links">
-            <a href="/">Home</a>
-            <a href="/nominations">Nominations</a>
-            <a href="/vote">Vote</a>
-            <a href="/live">Live Stream</a>
-            <a href="/about">About</a>
-        </nav>
+  <a href="/">Home</a>
+  <a href="/nominations">Nominations</a>
+  <a href="/vote">Vote</a>
+  <a href="/live">Live Stream</a>
+  <a href="/about">About</a>
+
+  <!-- Container for dynamic login/logout actions -->
+  <div class="auth-buttons" id="auth-header-actions">
+    <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
+  </div>
+</nav>
     </header>
 
     <section class="info-section" style="margin-top: 100px; min-height: 80vh;">
