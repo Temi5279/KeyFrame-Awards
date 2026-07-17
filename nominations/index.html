@@ -3,11 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nominations | The Keyframe Awards</title>
+    <title>Nominations & Submissions | The Keyframe Awards</title>
     <link rel="stylesheet" href="style.css?v=1.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .nominations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .category-card {
+            background: rgba(26, 0, 51, 0.6);
+            border: 1px solid rgba(157, 0, 255, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 0 15px rgba(157, 0, 255, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(157, 0, 255, 0.3);
+        }
+        .category-title {
+            font-size: 1.3rem;
+            color: var(--neon-cyan);
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .subcategory-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .subcategory-list li {
+            color: #ccc;
+            padding: 6px 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+        }
+        .subcategory-list li i {
+            color: var(--neon-pink);
+            margin-right: 10px;
+            font-size: 0.8rem;
+        }
+        .submission-section {
+            padding: 60px 5%;
+            background: rgba(13, 0, 26, 0.7);
+            border-top: 1px solid rgba(157, 0, 255, 0.3);
+        }
+        .submission-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--royal-purple);
+            border: 2px solid var(--neon-purple);
+            box-shadow: 0 0 25px rgba(157, 0, 255, 0.3);
+            border-radius: 12px;
+            padding: 40px 30px;
+        }
+        .select-input {
+            width: 100%;
+            background: rgba(13, 0, 26, 0.6);
+            border: 1px solid rgba(157, 0, 255, 0.4);
+            padding: 12px;
+            border-radius: 6px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            cursor: pointer;
+        }
+        .select-input option {
+            background: #1a0033;
+            color: white;
+        }
+    </style>
 </head>
 <body>
+    <!-- HEADER / NAVIGATION -->
     <header class="navbar">
         <div class="logo">Keyframe Awards</div>
         <div class="menu-toggle" id="mobile-menu">
@@ -24,36 +102,308 @@
         </nav>
     </header>
 
-    <section class="info-section" style="margin-top: 100px; min-height: 70vh;">
-        <h2>Official Categories & Nominations</h2>
-        <p style="margin-bottom: 40px;">Explore the brackets for our 10 epic categories. Nominations officially open soon!</p>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; text-align: left;">
-            <div style="background: rgba(26, 0, 51, 0.6); border: 1px solid var(--neon-purple); padding: 25px; border-radius: 10px; box-shadow: 0 0 15px rgba(157, 0, 255, 0.2);">
-                <h3 style="color: var(--neon-cyan); margin-bottom: 10px;"><i class="fa-solid fa-crown"></i> The Year Awards</h3>
-                <p style="font-size: 0.95rem; color: #ccc;">Honoring the ultimate Editor of the Year, Creator of the Year, and Mobile Editor of the Year.</p>
-            </div>
-            <div style="background: rgba(26, 0, 51, 0.6); border: 1px solid var(--neon-purple); padding: 25px; border-radius: 10px; box-shadow: 0 0 15px rgba(157, 0, 255, 0.2);">
-                <h3 style="color: var(--neon-pink); margin-bottom: 10px;"><i class="fa-solid fa-gamepad"></i> Gaming</h3>
-                <p style="font-size: 0.95rem; color: #ccc;">Celebrating high-energy montages, cinematic transitions, and community gameplay editing.</p>
-            </div>
-            <div style="background: rgba(26, 0, 51, 0.6); border: 1px solid var(--neon-purple); padding: 25px; border-radius: 10px; box-shadow: 0 0 15px rgba(157, 0, 255, 0.2);">
-                <h3 style="color: var(--neon-cyan); margin-bottom: 10px;"><i class="fa-solid fa-scissors"></i> Editing Craft</h3>
-                <p style="font-size: 0.95rem; color: #ccc;">Spotlighting raw technical power, color grading, sound design, and VFX mastery.</p>
-            </div>
+    <!-- BANNER SECTION -->
+    <section class="info-section" style="margin-top: 100px; padding-bottom: 10px;">
+        <h1 style="font-size: 3rem; text-shadow: 0 0 15px var(--neon-purple); margin-bottom: 15px;">Categories & Brackets</h1>
+        <p style="max-width: 800px; margin: 0 auto; color: #aaa;">Below are all the official divisions for this year's visual battleground. Select your category and submit your entry directly using our system below.</p>
+    </section>
+
+    <!-- DYNAMIC LIST OF CATEGORIES -->
+    <div class="nominations-grid">
+        <!-- 1. THE YEAR AWARDS -->
+        <div class="category-card">
+            <div class="category-title"><i class="fa-solid fa-crown"></i> The Year Awards</div>
+            <ul class="subcategory-list">
+                <li><i class="fa-solid fa-star"></i> Footballer of the Year</li>
+                <li><i class="fa-solid fa-star"></i> Gamer of the Year</li>
+                <li><i class="fa-solid fa-star"></i> Meme Lord/Lady of the Year</li>
+                <li><i class="fa-solid fa-star"></i> Movie Content Creator of the Year</li>
+                <li><i class="fa-solid fa-star"></i> TV Show Stan of the Year</li>
+                <li><i class="fa-solid fa-star"></i> Music Artist / Group of the Year</li>
+                <li><i class="fa-solid fa-star"></i> Overall Creator of the Year</li>
+                <li><i class="fa-solid fa-star"></i> Rising Star of the Year</li>
+                <li><i class="fa-solid fa-star"></i> Viral Phenomenon of the Year</li>
+            </ul>
+        </div>
+
+        <!-- 2. MUSIC CATEGORY -->
+        <div class="category-card">
+            <div class="category-title"><i class="fa-solid fa-music"></i> Music Category</div>
+            <ul class="subcategory-list">
+                <li><i class="fa-solid fa-star"></i> Best K-pop Group</li>
+                <li><i class="fa-solid fa-star"></i> Best Music Edit / MV Recreation</li>
+                <li><i class="fa-solid fa-star"></i> Best Solo Artist</li>
+                <li><i class="fa-solid fa-star"></i> Most Hyped Music Video Edit</li>
+                <li><i class="fa-solid fa-star"></i> Best Fandom / Stan Account</li>
+                <li><i class="fa-solid fa-star"></i> Best Song Cover / Dance Cover</li>
+                <li><i class="fa-solid fa-star"></i> Viral Music Trend Creator</li>
+                <li><i class="fa-solid fa-star"></i> Best Music Reaction / Breakdown</li>
+            </ul>
+        </div>
+
+        <!-- 3. MEME & VIRAL CULTURE -->
+        <div class="category-card">
+            <div class="category-title"><i class="fa-solid fa-face-laugh-squint"></i> Meme & Viral Culture</div>
+            <ul class="subcategory-list">
+                <li><i class="fa-solid fa-star"></i> Funniest Viral Meme</li>
+                <li><i class="fa-solid fa-star"></i> Best Meme Edit / Sound</li>
+                <li><i class="fa-solid fa-star"></i> Most Relatable Meme</li>
+                <li><i class="fa-solid fa-star"></i> Wildest Trend Jumper</li>
+                <li><i class="fa-solid fa-star"></i> Best Roast Meme</li>
+                <li><i class="fa-solid fa-star"></i> Meme of the Year</li>
+            </ul>
+        </div>
+
+        <!-- 4. MOVIES & FILM CONTENT -->
+        <div class="category-card">
+            <div class="category-title"><i class="fa-solid fa-clapperboard"></i> Movies & Film</div>
+            <ul class="subcategory-list">
+                <li><i class="fa-solid fa-star"></i> Best Movie Edit / Recap</li>
+                <li><i class="fa-solid fa-star"></i> Most Hyped Movie Scene Recreation</li>
+                <li><i class="fa-solid fa-star"></i> Best Movie Trailer Reaction</li>
+                <li><i class="fa-solid fa-star"></i> Best Movie Meme</li>
+                <li><i class="fa-solid fa-star"></i> Cinema Guru / Film Reviewer</li>
+            </ul>
+        </div>
+
+        <!-- 5. TV SHOWS & SERIES -->
+        <div class="category-card">
+            <div class="category-title"><i class="fa-solid fa-tv"></i> TV Shows & Series</div>
+            <ul class="subcategory-list">
+                <li><i class="fa-solid fa-star"></i> Best TV Show Edit</li>
+                <li><i class="fa-solid fa-star"></i> Most Addictive Show Moments</li>
+                <li><i class="fa-solid fa-star"></i> Best Series Theory / Breakdown</li>
+                <li><i class="fa-solid fa-star"></i> Funniest Show Reaction</li>
+                <li><i class="fa-solid fa-star"></i> Best Show Recap Creator</li>
+            </ul>
+        </div>
+
+        <!-- 6. FOOTBALL / SPORTS CONTENT -->
+        <div class="category-card">
+            <div class="category-title"><i class="fa-solid fa-soccer-ball"></i> Football & Sports</div>
+            <ul class="subcategory-list">
+                <li><i class="fa-solid fa-star"></i> Best Football Edit</li>
+                <li><i class="fa-solid fa-star"></i> Most Hyped Goal Montage</li>
+                <li><i class="fa-solid fa-star"></i> Football Skills King</li>
+                <li><i class="fa-solid fa-star"></i> Best Match Highlight Creator</li>
+                <li><i class="fa-solid fa-star"></i> Viral Football Meme</li>
+                <li><i class="fa-solid fa-star"></i> Best Player Tribute Edit</li>
+            </ul>
+        </div>
+
+        <!-- 7. GAMING -->
+        <div class="category-card">
+            <div class="category-title"><i class="fa-solid fa-gamepad"></i> Gaming</div>
+            <ul class="subcategory-list">
+                <li><i class="fa-solid fa-star"></i> Best Gaming Edit / Montage</li>
+                <li><i class="fa-solid fa-star"></i> Funniest Gaming Fail</li>
+                <li><i class="fa-solid fa-star"></i> Best Game Clip / Highlight</li>
+                <li><i class="fa-solid fa-star"></i> Gaming Meme Master</li>
+                <li><i class="fa-solid fa-star"></i> Best Gaming Streamer / Creator</li>
+            </ul>
+        </div>
+
+        <!-- 8. LIVE STREAMING -->
+        <div class="category-card">
+            <div class="category-title"><i class="fa-solid fa-tower-broadcast"></i> Live Streaming</div>
+            <ul class="subcategory-list">
+                <li><i class="fa-solid fa-star"></i> Best Streamer of the Year</li>
+                <li><i class="fa-solid fa-star"></i> Most Chaotic Stream Moment</li>
+                <li><i class="fa-solid fa-star"></i> Best Streamer Duo / Squad</li>
+                <li><i class="fa-solid fa-star"></i> Chat Choice Award</li>
+                <li><i class="fa-solid fa-star"></i> Breakout / Rising Streamer</li>
+            </ul>
+        </div>
+
+        <!-- 9. GENERAL CONTENT CREATORS -->
+        <div class="category-card">
+            <div class="category-title"><i class="fa-solid fa-user-astronaut"></i> General Creator</div>
+            <ul class="subcategory-list">
+                <li><i class="fa-solid fa-star"></i> Most Viral Content Creator</li>
+                <li><i class="fa-solid fa-star"></i> Best Storytelling Creator</li>
+                <li><i class="fa-solid fa-star"></i> Charisma King / Queen</li>
+                <li><i class="fa-solid fa-star"></i> Most Relatable Daily Vlogger</li>
+                <li><i class="fa-solid fa-star"></i> Best Duet / Collab</li>
+                <li><i class="fa-solid fa-star"></i> Community Favorite Creator</li>
+            </ul>
+        </div>
+
+        <!-- 10. EDITING & CREATIVE CRAFT -->
+        <div class="category-card">
+            <div class="category-title"><i class="fa-solid fa-scissors"></i> Creative Craft</div>
+            <ul class="subcategory-list">
+                <li><i class="fa-solid fa-star"></i> Best Mobile Editor</li>
+                <li><i class="fa-solid fa-star"></i> Best Transition / Effects</li>
+                <li><i class="fa-solid fa-star"></i> Cleanest Video Editor</li>
+                <li><i class="fa-solid fa-star"></i> Audio Sync Wizard</li>
+                <li><i class="fa-solid fa-star"></i> Most Creative Edit Overall</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SUBMIT YOUR WORK SECTION -->
+    <section class="submission-section">
+        <div class="submission-container">
+            <h2 style="font-size: 2rem; color: var(--text-white); margin-bottom: 10px; text-shadow: 0 0 10px var(--neon-pink);">Submit Your Work</h2>
+            <p style="color: #aaa; margin-bottom: 30px; font-size: 0.95rem;">Do you have what it takes? Send in your entry details below directly to our processing system.</p>
+            
+            <form id="submission-form">
+                <div class="input-group">
+                    <label>Creator / Editor Name</label>
+                    <input type="text" id="submitter-name" required placeholder="Enter the creator's name">
+                </div>
+                <div class="input-group">
+                    <label>Select Category</label>
+                    <select id="submission-category" class="select-input" required>
+                        <option value="" disabled selected>Choose a Category</option>
+                        <optgroup label="The Year Awards">
+                            <option value="Footballer of the Year">Footballer of the Year</option>
+                            <option value="Gamer of the Year">Gamer of the Year</option>
+                            <option value="Meme Lord/Lady of the Year">Meme Lord/Lady of the Year</option>
+                            <option value="Movie Content Creator of the Year">Movie Content Creator of the Year</option>
+                            <option value="TV Show Stan of the Year">TV Show Stan of the Year</option>
+                            <option value="Music Artist / Group of the Year">Music Artist / Group of the Year</option>
+                            <option value="Overall Creator of the Year">Overall Creator of the Year</option>
+                            <option value="Rising Star of the Year">Rising Star of the Year</option>
+                            <option value="Viral Phenomenon of the Year">Viral Phenomenon of the Year</option>
+                        </optgroup>
+                        <optgroup label="Music Category">
+                            <option value="Best K-pop Group">Best K-pop Group</option>
+                            <option value="Best Music Edit / MV Recreation">Best Music Edit / MV Recreation</option>
+                            <option value="Best Solo Artist">Best Solo Artist</option>
+                            <option value="Most Hyped Music Video Edit">Most Hyped Music Video Edit</option>
+                            <option value="Best Fandom / Stan Account">Best Fandom / Stan Account</option>
+                            <option value="Best Song Cover / Dance Cover">Best Song Cover / Dance Cover</option>
+                            <option value="Viral Music Trend Creator">Viral Music Trend Creator</option>
+                            <option value="Best Music Reaction / Breakdown">Best Music Reaction / Breakdown</option>
+                        </optgroup>
+                        <optgroup label="Meme & Viral Culture">
+                            <option value="Funniest Viral Meme">Funniest Viral Meme</option>
+                            <option value="Best Meme Edit / Sound">Best Meme Edit / Sound</option>
+                            <option value="Most Relatable Meme">Most Relatable Meme</option>
+                            <option value="Wildest Trend Jumper">Wildest Trend Jumper</option>
+                            <option value="Best Roast Meme">Best Roast Meme</option>
+                            <option value="Meme of the Year">Meme of the Year</option>
+                        </optgroup>
+                        <optgroup label="Movies & Film Content">
+                            <option value="Best Movie Edit / Recap">Best Movie Edit / Recap</option>
+                            <option value="Most Hyped Movie Scene Recreation">Most Hyped Movie Scene Recreation</option>
+                            <option value="Best Movie Trailer Reaction">Best Movie Trailer Reaction</option>
+                            <option value="Best Movie Meme">Best Movie Meme</option>
+                            <option value="Cinema Guru / Film Reviewer">Cinema Guru / Film Reviewer</option>
+                        </optgroup>
+                        <optgroup label="TV Shows & Series">
+                            <option value="Best TV Show Edit">Best TV Show Edit</option>
+                            <option value="Most Addictive Show Moments">Most Addictive Show Moments</option>
+                            <option value="Best Series Theory / Breakdown">Best Series Theory / Breakdown</option>
+                            <option value="Funniest Show Reaction">Funniest Show Reaction</option>
+                            <option value="Best Show Recap Creator">Best Show Recap Creator</option>
+                        </optgroup>
+                        <optgroup label="Football / Sports Content">
+                            <option value="Best Football Edit">Best Football Edit</option>
+                            <option value="Most Hyped Goal Montage">Most Hyped Goal Montage</option>
+                            <option value="Football Skills King">Football Skills King</option>
+                            <option value="Best Match Highlight Creator">Best Match Highlight Creator</option>
+                            <option value="Viral Football Meme">Viral Football Meme</option>
+                            <option value="Best Player Tribute Edit">Best Player Tribute Edit</option>
+                        </optgroup>
+                        <optgroup label="Gaming">
+                            <option value="Best Gaming Edit / Montage">Best Gaming Edit / Montage</option>
+                            <option value="Funniest Gaming Fail">Funniest Gaming Fail</option>
+                            <option value="Best Game Clip / Highlight">Best Game Clip / Highlight</option>
+                            <option value="Gaming Meme Master">Gaming Meme Master</option>
+                            <option value="Best Gaming Streamer / Creator">Best Gaming Streamer / Creator</option>
+                        </optgroup>
+                        <optgroup label="Live Streaming">
+                            <option value="Best Streamer of the Year">Best Streamer of the Year</option>
+                            <option value="Most Chaotic Stream Moment">Most Chaotic Stream Moment</option>
+                            <option value="Best Streamer Duo / Squad">Best Streamer Duo / Squad</option>
+                            <option value="Chat Choice Award">Chat Choice Award</option>
+                            <option value="Breakout / Rising Streamer">Breakout / Rising Streamer</option>
+                        </optgroup>
+                        <optgroup label="General Content Creators & Personality">
+                            <option value="Most Viral Content Creator">Most Viral Content Creator</option>
+                            <option value="Best Storytelling Creator">Best Storytelling Creator</option>
+                            <option value="Charisma King / Queen">Charisma King / Queen</option>
+                            <option value="Most Relatable Daily Vlogger">Most Relatable Daily Vlogger</option>
+                            <option value="Best Duet / Collab">Best Duet / Collab</option>
+                            <option value="Community Favorite Creator">Community Favorite Creator</option>
+                        </optgroup>
+                        <optgroup label="Editing and Creative Craft">
+                            <option value="Best Mobile Editor">Best Mobile Editor</option>
+                            <option value="Best Transition / Effects">Best Transition / Effects</option>
+                            <option value="Cleanest Video Editor">Cleanest Video Editor</option>
+                            <option value="Audio Sync Wizard">Audio Sync Wizard</option>
+                            <option value="Most Creative Edit Overall">Most Creative Edit Overall</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Link to Work (YouTube, TikTok, Drive, etc.)</label>
+                    <input type="url" id="submission-link" required placeholder="https://...">
+                </div>
+                <div class="input-group">
+                    <label>Contact Email</label>
+                    <input type="email" id="submission-email" required placeholder="Enter your email address">
+                </div>
+                <button type="submit" class="btn-submit">Submit Application</button>
+            </form>
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer>
         <div class="footer-links">
             <a href="privacy">Privacy Policy</a>
             <a href="terms">Terms of Service</a>
+            <a href="cookies">Cookie Preferences</a>
             <a href="contact">Contact Support</a>
         </div>
         <div class="copyright">
             <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Firebase Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+            authDomain: "keyframe-awards.firebaseapp.com",
+            projectId: "keyframe-awards",
+            storageBucket: "keyframe-awards.firebasestorage.app",
+            messagingSenderId: "882083630221",
+            appId: "1:882083630221:web:629df7642fdf822018a6c4",
+            measurementId: "G-Z8HX6L8WEG"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.getElementById('submission-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('submitter-name').value;
+            const category = document.getElementById('submission-category').value;
+            const link = document.getElementById('submission-link').value;
+            const email = document.getElementById('submission-email').value;
+
+            try {
+                await addDoc(collection(db, "nominations"), {
+                    creatorName: name,
+                    category: category,
+                    workLink: link,
+                    email: email,
+                    submittedAt: new Date().toISOString()
+                });
+                alert("Nomination successfully submitted to Firestore!");
+                document.getElementById('submission-form').reset();
+            } catch (error) {
+                alert("Error sending submission: " + error.message);
+            }
+        });
+    </script>
 
     <script>
         const menuToggle = document.getElementById('mobile-menu');
