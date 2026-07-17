@@ -351,67 +351,75 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-links">
-            <a href="/privacy">Privacy Policy</a>
-            <a href="/terms">Terms of Service</a>
-            <a href="/cookies">Cookie Preferences</a>
-            <a href="/contact">Contact Support</a>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
-        </div>
-    </footer>
+   <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="/cookies">Cookie Preferences</a>
+      <a href="/contact">Contact Support</a>
+    </div>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/profile.php?id=61591758598232" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.instagram.com/keyframeawards" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.threads.net/@keyframeawards" target="_blank"><i class="fab fa-threads"></i></a>
+      <a href="https://x.com/keyframeawards" target="_blank"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://www.tiktok.com/@keyframeawards" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@KeyframeAwards" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
+    </div>
+  </footer>
 
-    <!-- Firebase Integration -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+  <!-- Firebase System Module Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
-            authDomain: "keyframe-awards.firebaseapp.com",
-            projectId: "keyframe-awards",
-            storageBucket: "keyframe-awards.firebasestorage.app",
-            messagingSenderId: "882083630221",
-            appId: "1:882083630221:web:629df7642fdf822018a6c4",
-            measurementId: "G-Z8HX6L8WEG"
-        };
+    const firebaseConfig = {
+      apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+      authDomain: "keyframe-awards.firebaseapp.com",
+      projectId: "keyframe-awards",
+      storageBucket: "keyframe-awards.firebasestorage.app",
+      messagingSenderId: "882083630221",
+      appId: "1:882083630221:web:629df7642fdf822018a6c4"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-        document.getElementById('submission-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('submitter-name').value;
-            const category = document.getElementById('submission-category').value;
-            const link = document.getElementById('submission-link').value;
-            const email = document.getElementById('submission-email').value;
-
-            try {
-                await addDoc(collection(db, "nominations"), {
-                    creatorName: name,
-                    category: category,
-                    workLink: link,
-                    email: email,
-                    submittedAt: new Date().toISOString()
-                });
-                alert("Nomination successfully submitted to Firestore!");
-                document.getElementById('submission-form').reset();
-            } catch (error) {
-                alert("Error sending submission: " + error.message);
-            }
+    const authActions = document.getElementById('auth-header-actions');
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        authActions.innerHTML = `
+          <span class="user-welcome">Active Account</span>
+          <button class="btn-login" id="logout-btn">Log Out</button>
+        `;
+        document.getElementById('logout-btn').addEventListener('click', () => {
+          signOut(auth).then(() => alert("Logged out!"));
         });
-    </script>
+      } else {
+        authActions.innerHTML = `
+          <button class="btn-login" id="open-login">Login</button>
+          <button class="btn-signup" id="open-signup">Sign Up</button>
+        `;
+        if (typeof window.attachModalTriggers === 'function') {
+          window.attachModalTriggers();
+        }
+      }
+    });
+  </script>
 
-    <script>
-        const menuToggle = document.getElementById('mobile-menu');
-        const navLinks = document.querySelector('.nav-links');
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            menuToggle.classList.toggle('is-active');
-        });
-    </script>
+  <!-- Local Interface Control Scripts -->
+  <script>
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+    
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      menuToggle.classList.toggle('is-active');
+    });
+  </script>
 </body>
 </html>
