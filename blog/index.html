@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keyframe Awards | Press Room</title>
     <style>
-        /* ==================== CLEAN PRESS ROOM THEME ==================== */
+        /* Clean Press Room Styles */
         body {
             background-color: #0c0812;
             color: #ffffff;
@@ -15,7 +15,6 @@
             line-height: 1.6;
         }
 
-        /* Top Header Navigation matching your Screenshot */
         .press-header {
             display: flex;
             justify-content: space-between;
@@ -42,7 +41,7 @@
             color: #3b82f6;
             text-decoration: none;
             font-size: 0.9rem;
-            transition: color 0.2s;
+            transition: color 0.25s;
         }
 
         .back-link:hover {
@@ -50,7 +49,6 @@
             text-decoration: underline;
         }
 
-        /* Main Container */
         .newsroom-container {
             max-width: 680px;
             margin: 80px auto;
@@ -64,7 +62,6 @@
             margin-bottom: 40px;
         }
 
-        /* Article Link Card (Very Simple, Clean Design) */
         .article-card {
             display: block;
             text-decoration: none;
@@ -102,7 +99,6 @@
             line-height: 1.6;
         }
 
-        /* Footer */
         .press-footer {
             text-align: center;
             padding: 60px 20px;
@@ -118,37 +114,31 @@
     </style>
 </head>
 <body>
-
-    <!-- Header Navigation -->
     <header class="press-header">
-        <a href="index.html" class="brand-logo">Keyframe Awards <span>Press Room</span></a>
-        <!-- Top Nav Back to the Main Website -->
-        <a href="../index.html" class="back-link">← Back to Keyframe Website</a>
+        <!-- Root direct links (Clean URLs) -->
+        <a href="/" class="brand-logo">Keyframe Awards <span>Press Room</span></a>
+        <a href="/" class="back-link">Back to Keyframe Website</a>
     </header>
 
     <main class="newsroom-container">
         <h1 class="page-title">Latest Announcements</h1>
 
-        <!-- ==================== BLOG 2 (TODAY'S OWN - JULY 15) ==================== -->
-        <a href="road-to-keyframe.html" class="article-card">
-            <div class="meta-tag">Official Press Release • July 15, 2026</div>
+        <!-- Clean Blog Links (No .html) -->
+        <a href="road-to-keyframe" class="article-card">
+            <div class="meta-tag">Official Press Release July 15, 2026</div>
             <h2 class="article-title">Road to Keyframe: Pre-Nomination Guide & Selection Process</h2>
             <p class="article-preview">Submissions close on October 30, voting starts on November 4, and the event goes live on January 9. Here is everything you need to know about preparing your video entries and our newly introduced weekly elimination format.</p>
         </a>
 
-        <!-- ==================== BLOG 1 (YESTERDAY'S OWN - JULY 14) ==================== -->
-        <a href="redefining-visual-artistry.html" class="article-card">
-            <div class="meta-tag">Official Press Release • July 14, 2026</div>
+        <a href="redefining-visual-artistry" class="article-card">
+            <div class="meta-tag">Official Press Release July 14, 2026</div>
             <h2 class="article-title">Why The Keyframe Awards Was Created: Redefining Digital Visual Artistry</h2>
             <p class="article-preview">The modern digital era is fundamentally driven by moving imagery. Discover how Keyframe Awards has built a brand-new space to bring editing, motion design, and mobile-focused visual assets into the primary spotlight.</p>
         </a>
-
     </main>
 
-    <!-- Footer -->
     <footer class="press-footer">
         <p class="footer-text">© 2026 The Keyframe Awards Newsroom. For media inquiries, contact support via the primary platform.</p>
     </footer>
-
 </body>
 </html>
