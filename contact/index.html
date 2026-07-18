@@ -77,6 +77,8 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    // Imported Firestore to manage the database routing
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
@@ -89,12 +91,12 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app); // Initialized Firestore
 
     const authActions = document.getElementById('auth-header-actions');
     
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // If logged in, show session status and log out button
         authActions.innerHTML = `
           <span class="user-welcome">Active Account</span>
           <button class="btn-login" id="logout-btn">Log Out</button>
@@ -103,12 +105,39 @@
           signOut(auth).then(() => alert("Logged out!"));
         });
       } else {
-        // If logged out, show ONLY the login button that links back home
         authActions.innerHTML = `
           <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
         `;
       }
     });
+
+    // Form handler logic added right here:
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('contact-name').value;
+        const email = document.getElementById('contact-email').value;
+        const message = document.getElementById('contact-message').value;
+
+        try {
+          // Pushes the message straight to your Firebase Firestore console
+          await addDoc(collection(db, "messages"), {
+            name: name,
+            email: email,
+            message: message,
+            timestamp: serverTimestamp()
+          });
+          
+          alert("Message sent successfully!");
+          contactForm.reset();
+        } catch (error) {
+          console.error("Error sending message: ", error);
+          alert("Something went wrong. Please try again.");
+        }
+      });
+    }
   </script>
 
   <!-- Local Interface Control Scripts -->
