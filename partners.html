@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Offers & Partners | The Keyframe Awards</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --neon-cyan: #00f2fe;
+            --royal-purple: #1e0038;
+            --deep-bg: #0d001a;
+            --accent-glow: rgba(157, 0, 255, 0.3);
+        }
+
+        .offers-container {
+            max-width: 1000px;
+            margin: 120px auto 60px auto;
+            padding: 0 20px;
+            text-align: center;
+            min-height: 75vh;
+        }
+
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .offer-card {
+            background: var(--royal-purple);
+            border: 1px solid rgba(157, 0, 255, 0.4);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .offer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.2);
+        }
+
+        .offer-badge {
+            background: var(--neon-cyan);
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 20px;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            text-transform: uppercase;
+        }
+
+        .offer-title {
+            color: #fff;
+            font-size: 1.3rem;
+            margin: 15px 0 10px 0;
+        }
+
+        .offer-desc {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .btn-action {
+            display: inline-block;
+            background: transparent;
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .btn-action:hover {
+            background: var(--neon-cyan);
+            color: #000;
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        /* Placeholder styles for where banners will load */
+        .ad-banner-placeholder {
+            width: 100%;
+            background: rgba(13, 0, 26, 0.6);
+            border: 1px dashed rgba(0, 242, 254, 0.4);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.85rem;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Keyframe Awards</div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/nominations">Nominations</a>
+            <a href="/vote">Vote</a>
+            <a href="/live">Live Stream</a>
+            <a href="/about">About</a>
+            <div class="auth-buttons" id="auth-header-actions">
+                <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="offers-container">
+        <h2 style="color: var(--neon-cyan); font-size: 2.5rem; margin-bottom: 10px;">Exclusive Partner Offers</h2>
+        <p style="color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto;">
+            Check out premium deals, editing resources, and exclusive tools brought to you by our network partners.
+        </p>
+
+        <!-- PROPELLERADS MULTITAG / NATIVE BANNER ZONE 1 -->
+        <!-- You can paste your main anti-block script or smart tag here later -->
+
+        <div class="offers-grid">
+            <!-- Card 1 -->
+            <div class="offer-card">
+                <span class="offer-badge">Featured</span>
+                <h3 class="offer-title">Premium Assets</h3>
+                <p class="offer-desc">Unlock elite video overlays, transitions, and cinematic sound effects packs tailored for creators.</p>
+                <a href="#" class="btn-action">Claim Access</a>
+                
+                <!-- PLACEHOLDER FOR NATIVE BANNER INSIDE CARD -->
+                <!-- <div class="ad-banner-placeholder">Sponsored Link Context</div> -->
+            </div>
+
+            <!-- Card 2 -->
+            <div class="offer-card">
+                <span class="offer-badge">Trending</span>
+                <h3 class="offer-title">Creator Toolkit</h3>
+                <p class="offer-desc">Get special discounts on cloud rendering tools and elite collaborative plugins for your timeline projects.</p>
+                <a href="#" class="btn-action">Explore Deals</a>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="offer-card">
+                <span class="offer-badge">Partnership</span>
+                <h3 class="offer-title">Join the Network</h3>
+                <p class="offer-desc">Want to showcase your dynamic plugins or visual software right here to thousands of visual editors?</p>
+                <a href="/contact" class="btn-action">Contact Us</a>
+            </div>
+        </div>
+
+        <!-- PROPELLERADS HORIZONTAL BANNER ZONE 2 -->
+        <!-- <div class="ad-banner-placeholder" style="max-width: 728px; margin: 40px auto 0 auto; height: 90px; display: flex; align-items: center; justify-content: center;">Responsive Ad Banner Space</div> -->
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-links">
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+            <a href="/cookies">Cookie Preferences</a>
+            <a href="/contact">Contact Support</a>
+        </div>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/profile.php?id=61591758598232" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/keyframeawards" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.threads.net/@keyframeawards" target="_blank"><i class="fab fa-threads"></i></a>
+            <a href="https://x.com/keyframeawards" target="_blank"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://www.tiktok.com/@keyframeawards" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@KeyframeAwards" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Firebase Auth System Sync Check -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+            authDomain: "keyframe-awards.firebaseapp.com",
+            projectId: "keyframe-awards",
+            storageBucket: "keyframe-awards.firebasestorage.app",
+            messagingSenderId: "882083630221",
+            appId: "1:882083630221:web:629df7642fdf822018a6c4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const authActions = document.getElementById('auth-header-actions');
+        
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                authActions.innerHTML = `
+                    <span class="user-welcome" style="color: white; margin-right: 15px; font-size: 0.9rem;">Active Account</span>
+                    <button class="btn-login" id="logout-btn">Log Out</button>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', () => {
+                    signOut(auth).then(() => alert("Logged out!"));
+                });
+            } else {
+                authActions.innerHTML = `
+                    <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
+                `;
+            }
+        });
+    </script>
+
+    <!-- Mobile Navigation Toggle Script -->
+    <script>
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('is-active');
+        });
+    </script>
+</body>
+</html>
