@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center & FAQ | The Keyframe Awards</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .help-container {
+            max-width: 800px;
+            margin: 120px auto 60px auto;
+            padding: 20px;
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .help-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .help-header h1 {
+            color: var(--neon-cyan);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .help-header p {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+        .faq-section {
+            background: rgba(26, 0, 51, 0.6);
+            border: 1px solid rgba(157, 0, 255, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        .faq-category {
+            margin-bottom: 35px;
+        }
+        .faq-category h2 {
+            color: #00f2fe;
+            font-size: 1.4rem;
+            border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .faq-item {
+            margin-bottom: 25px;
+        }
+        .faq-item h3 {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .faq-item h3 i {
+            color: var(--neon-purple);
+            font-size: 0.9rem;
+        }
+        .faq-item p {
+            color: #ccc;
+            line-height: 1.7;
+            font-size: 0.95rem;
+            margin: 0;
+            padding-left: 20px;
+        }
+        .contact-footer-box {
+            text-align: center;
+            background: rgba(0, 242, 254, 0.05);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            padding: 30px;
+            border-radius: 10px;
+        }
+        .contact-footer-box h3 {
+            margin-top: 0;
+            color: #fff;
+        }
+        .btn-contact {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--neon-purple), #ff007f);
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 15px;
+            box-shadow: 0 0 15px rgba(157, 0, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        .btn-contact:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(255, 0, 127, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo" onclick="window.location.href='/'" style="cursor: pointer;">Keyframe Awards</div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/nominations">Nominations</a>
+            <a href="/vote">Vote</a>
+            <a href="/live">Live Stream</a>
+            <a href="/about">About</a>
+            <div class="auth-buttons" id="auth-header-actions">
+                <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="help-container">
+        <div class="help-header">
+            <h1>Help Center</h1>
+            <p>Find instant answers regarding nominations, voting rules, and platform settings.</p>
+        </div>
+
+        <div class="faq-section">
+            <!-- CATEGORY 1 -->
+            <div class="faq-category">
+                <h2><i class="fas fa-trophy"></i> Nominations & Submissions</h2>
+                
+                <div class="faq-item">
+                    <h3><i class="fas fa-chevron-right"></i> How do I submit my work for nomination?</h3>
+                    <p>To submit your project, navigate to the Nominations tab while logged into a verified account. Provide the direct public link to your content (YouTube, TikTok, Instagram, Behance, or personal portfolio), select the matching creative category, and provide a short overview description. Once submitted, you will receive an automated validation message checking your queue position.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3><i class="fas fa-chevron-right"></i> Can I submit entries on behalf of another creator?</h3>
+                    <p>Yes, external nominations are permitted provided you have explicit, verifiable permission from the original asset holder. If an entry is flagged or disputed by the actual creator, the application will be immediately taken down pending authentication matching.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3><i class="fas fa-chevron-right"></i> What happens to my content rights if I get nominated?</h3>
+                    <p>You retain 100% ownership of your work. By submitting, you simply grant us a royalty-free license to feature snippets or display links to your project on our voting page and live stream so global fans can review your entry.</p>
+                </div>
+            </div>
+
+            <!-- CATEGORY 2 -->
+            <div class="faq-category">
+                <h2><i class="fas fa-vote-yea"></i> Voting System & Safety</h2>
+                
+                <div class="faq-item">
+                    <h3><i class="fas fa-chevron-right"></i> How often can I vote for an entry?</h3>
+                    <p>To ensure fair and integer distribution, our system limits voting intervals per category. Standard accounts can cast one verified vote per category every 24 hours. Automated scripts or multi-tab refreshing will trigger localized system blockades.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3><i class="fas fa-chevron-right"></i> Why was an entry or profile disqualified?</h3>
+                    <p>Our backend systems actively monitor database submission patterns. Any entry showing artificial traffic bursts, bot farms, coordinated scripts, or purchased engagement metrics is automatically flagged and reviewed for immediate disqualification to protect community integrity.</p>
+                </div>
+            </div>
+
+            <!-- CATEGORY 3 -->
+            <div class="faq-category">
+                <h2><i class="fas fa-user-shield"></i> Account & Verification</h2>
+                
+                <div class="faq-item">
+                    <h3><i class="fas fa-chevron-right"></i> Why does my account say "loading..." or block access?</h3>
+                    <p>If your user dashboard displays a persistent loading screen, your internet connectivity might be delaying initialization with our Firebase safety nodes. Clear your browser storage metrics or perform a hardware reset to instantly fix your session token authentication.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3><i class="fas fa-chevron-right"></i> How do I permanently delete my platform records?</h3>
+                    <p>Navigate directly to your Account settings dashboard and scroll to the bottom Danger Zone block. Clicking "Delete My Account" will instantly execute a full drop sequence, wiping your auth records and profile variables completely from our systems.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CALL TO ACTION FOR CONTACT PAGE -->
+        <div class="contact-footer-box">
+            <h3>Still can't find what you need?</h3>
+            <p style="color: #aaa; margin-bottom: 5px;">If your issue requires direct engineering assistance or custom review, drop a ticket to our team.</p>
+            <a href="/contact" class="btn-contact">Open a Support Ticket</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+            <a href="/cookies">Cookie Preferences</a>
+            <a href="/contact">Contact Support</a>
+        </div>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/profile.php?id=61591758598232" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/keyframeawards" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.threads.net/@keyframeawards" target="_blank"><i class="fab fa-threads"></i></a>
+            <a href="https://x.com/keyframeawards" target="_blank"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://www.tiktok.com/@keyframeawards" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@KeyframeAwards" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+            authDomain: "keyframe-awards.firebaseapp.com",
+            projectId: "keyframe-awards",
+            storageBucket: "keyframe-awards.firebasestorage.app",
+            messagingSenderId: "882083630221",
+            appId: "1:882083630221:web:629df7642fdf822018a6c4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const authActions = document.getElementById('auth-header-actions');
+        
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                authActions.innerHTML = `
+                    <span class="user-welcome" style="color: #00f2fe; margin-right: 10px; font-weight: bold; font-size: 0.9rem;">Active Account</span>
+                    <button class="btn-login" id="logout-btn">Log Out</button>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', () => {
+                    signOut(auth).then(() => alert("Logged out!"));
+                });
+            } else {
+                authActions.innerHTML = `
+                    <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
+                `;
+            }
+        });
+    </script>
+
+    <script>
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('is-active');
+        });
+    </script>
+</body>
+</html>
