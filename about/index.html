@@ -144,41 +144,7 @@
         </div>
     </footer>
 
-    <!-- Firebase System Module Script -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
-            authDomain: "keyframe-awards.firebaseapp.com",
-            projectId: "keyframe-awards",
-            storageBucket: "keyframe-awards.firebasestorage.app",
-            messagingSenderId: "882083630221",
-            appId: "1:882083630221:web:629df7642fdf822018a6c4"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        const authActions = document.getElementById('auth-header-actions');
-        
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                authActions.innerHTML = `
-                    <span class="user-welcome">Active Account</span>
-                    <button class="btn-login" id="logout-btn">Log Out</button>
-                `;
-                document.getElementById('logout-btn').addEventListener('click', () => {
-                    signOut(auth).then(() => alert("Logged out!"));
-                });
-            } else {
-                authActions.innerHTML = `
-                    <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
-                `;
-            }
-        });
-    </script>
+    <script type="module" src="/auth-status.js"></script>
 
     <!-- Local Interface Control Scripts -->
     <script>
