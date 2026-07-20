@@ -121,27 +121,17 @@
 </head>
 <body>
     <header class="navbar">
-        <div class="logo">Keyframe Awards</div>
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-        <nav class="nav-links">
-            <a href="/">Home</a>
-            <a href="/nominations">Nominations</a>
-            <a href="/vote">Vote</a>
-            <a href="/live">Live Stream</a>
-            <a href="/about">About</a>
+        <div class="logo" onclick="window.location.href='/'" style="cursor: pointer;">Keyframe Awards</div>
+        <nav class="nav-links" style="display: flex; align-items: center; gap: 20px;">
+            <a href="/" style="color: #fff; text-decoration: none; font-weight: bold;">Return Home</a>
             <div class="auth-buttons" id="auth-header-actions">
-                <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
+                <button class="btn-login" id="logout-btn">Log Out</button>
             </div>
         </nav>
     </header>
 
     <div class="account-container">
         <div class="profile-header">
-            <!-- Uses default user image placeholder, will automatically show Google picture if available -->
             <img src="https://www.w3schools.com/howto/img_avatar.png" id="user-avatar" class="profile-pic" alt="Avatar">
             <div class="profile-info">
                 <h3 id="welcome-name">Hello, User</h3>
@@ -149,20 +139,17 @@
             </div>
         </div>
 
-        <!-- Form to change Display Name -->
         <div class="form-group">
             <label for="display-name-input">Edit Account Display Name</label>
             <input type="text" id="display-name-input" placeholder="Enter new name">
         </div>
         <button class="btn-save" id="save-name-btn">Update Name</button>
 
-        <!-- Simple Contact Support Shortcut -->
         <div class="support-box">
             <span>Need assistance with your submissions?</span>
             <a href="/contact">Contact Support</a>
         </div>
 
-        <!-- Danger Zone: Delete Account Option -->
         <div class="danger-zone">
             <h4>Danger Zone</h4>
             <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 15px;">Deleting your account permanently wipes your user profile record from our platform records. This cannot be undone.</p>
@@ -172,74 +159,69 @@
 
     <footer>
         <div class="footer-links">
-            <a href="/privacy">Privacy Policy</a>[cite: 1, 2, 3]
-            <a href="/terms">Terms of Service</a>[cite: 1, 2, 3]
-            <a href="/cookies">Cookie Preferences</a>[cite: 1, 2, 3]
-            <a href="/contact">Contact Support</a>[cite: 1, 2, 3]
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+            <a href="/cookies">Cookie Preferences</a>
+            <a href="/contact">Contact Support</a>
         </div>
         <div class="social-icons">
-            <a href="https://www.facebook.com/profile.php?id=61591758598232" target="_blank"><i class="fab fa-facebook"></i></a>[cite: 1, 2, 3]
-            <a href="https://www.instagram.com/keyframeawards" target="_blank"><i class="fab fa-instagram"></i></a>[cite: 1, 2, 3]
-            <a href="https://www.threads.net/@keyframeawards" target="_blank"><i class="fab fa-threads"></i></a>[cite: 1, 2, 3]
-            <a href="https://x.com/keyframeawards" target="_blank"><i class="fab fa-x-twitter"></i></a>[cite: 1, 2, 3]
-            <a href="https://www.tiktok.com/@keyframeawards" target="_blank"><i class="fab fa-tiktok"></i></a>[cite: 1, 2, 3]
-            <a href="https://www.youtube.com/@KeyframeAwards" target="_blank"><i class="fab fa-youtube"></i></a>[cite: 1, 2, 3]
+            <a href="https://www.facebook.com/profile.php?id=61591758598232" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/keyframeawards" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.threads.net/@keyframeawards" target="_blank"><i class="fab fa-threads"></i></a>
+            <a href="https://x.com/keyframeawards" target="_blank"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://www.tiktok.com/@keyframeawards" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@KeyframeAwards" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
         <div class="copyright">
-            <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>[cite: 1, 2, 3]
+            <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Firebase Code Logic -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";[cite: 1, 2, 3]
-        import { getAuth, onAuthStateChanged, signOut, updateProfile, deleteUser } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";[cite: 1, 2, 3]
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut, updateProfile, deleteUser } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",[cite: 1, 2, 3]
-            authDomain: "keyframe-awards.firebaseapp.com",[cite: 1, 2, 3]
-            projectId: "keyframe-awards",[cite: 1, 2, 3]
-            storageBucket: "keyframe-awards.firebasestorage.app",[cite: 1, 2, 3]
-            messagingSenderId: "882083630221",[cite: 1, 2, 3]
-            appId: "1:882083630221:web:629df7642fdf822018a6c4"[cite: 1, 2, 3]
+            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+            authDomain: "keyframe-awards.firebaseapp.com",
+            projectId: "keyframe-awards",
+            storageBucket: "keyframe-awards.firebasestorage.app",
+            messagingSenderId: "882083630221",
+            appId: "1:882083630221:web:629df7642fdf822018a6c4"
         };
 
-        const app = initializeApp(firebaseConfig);[cite: 1, 2, 3]
-        const auth = getAuth(app);[cite: 1, 2, 3]
-        const authActions = document.getElementById('auth-header-actions');[cite: 1, 2, 3]
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
         
         let currentUser = null;
 
-        onAuthStateChanged(auth, (user) => {[cite: 1, 2, 3]
+        onAuthStateChanged(auth, (user) => {
             if (user) {
                 currentUser = user;
-                // Pull user info from Firebase safely
                 document.getElementById('welcome-name').innerText = `Hello, ${user.displayName || 'User'}`;
                 document.getElementById('user-email').innerText = user.email;
                 document.getElementById('display-name-input').value = user.displayName || '';
                 
-                // If they have a Google profile picture, display it for free
                 if(user.photoURL) {
                     document.getElementById('user-avatar').src = user.photoURL;
                 }
-
-                // Header log out setup
-                authActions.innerHTML = `
-                    <button class="btn-login" id="logout-btn">Log Out</button>[cite: 1, 2, 3]
-                `;
-                document.getElementById('logout-btn').addEventListener('click', () => {
-                    signOut(auth).then(() => {[cite: 1, 2, 3]
-                        alert("Logged out!");[cite: 1, 2, 3]
-                        window.location.href = "/";
-                    });
-                });
             } else {
-                // If not logged in, boot them back to home page
-                window.location.href = "/?action=login";
+                // Delayed redirection to make sure Firebase registers the session on reload
+                setTimeout(() => {
+                    if(!auth.currentUser) {
+                        window.location.href = "/?action=login";
+                    }
+                }, 1500);
             }
         });
 
-        // Handle updating the display name
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            signOut(auth).then(() => {
+                alert("Logged out!");
+                window.location.href = "/";
+            });
+        });
+
         document.getElementById('save-name-btn').addEventListener('click', () => {
             const newName = document.getElementById('display-name-input').value;
             if(currentUser && newName.trim() !== "") {
@@ -254,7 +236,6 @@
             }
         });
 
-        // Handle deleting the account
         document.getElementById('delete-account-btn').addEventListener('click', () => {
             if(currentUser) {
                 const confirmDelete = confirm("Are you absolutely sure you want to delete your account? This action cannot be reversed.");
@@ -267,16 +248,6 @@
                     });
                 }
             }
-        });
-    </script>
-
-    <script>
-        const menuToggle = document.getElementById('mobile-menu');[cite: 1, 2, 3]
-        const navLinks = document.querySelector('.nav-links');[cite: 1, 2, 3]
-        
-        menuToggle.addEventListener('click', () => {[cite: 1, 2, 3]
-            navLinks.classList.toggle('active');[cite: 1, 2, 3]
-            menuToggle.classList.toggle('is-active');[cite: 1, 2, 3]
         });
     </script>
 </body>
