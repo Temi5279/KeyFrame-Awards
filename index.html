@@ -299,7 +299,7 @@
                         dateOfBirth: "Not Provided (Google Login)",
                         email: user.email,
                         registeredAt: new Date().toISOString()
-});
+                   });
                 }
                 alert("Authenticated successfully with Google!");
                 document.getElementById('auth-modal').classList.remove('open');
@@ -369,7 +369,7 @@
             });
         });
 
-        // LIVE AUTH STATE LISTENER (PULLS NAME & AVATAR AND LINKS TO /DASHBOARD)
+        // LIVE AUTH STATE LISTENER (PULLS NAME & AVATAR AND LINKS TO /ACCOUNT)
         const authActions = document.getElementById('auth-header-actions');
         onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -393,7 +393,7 @@
                 }
 
                 authActions.innerHTML = `
-                    <a href="/dashboard" style="display: flex; align-items: center; gap: 8px; text-decoration: none; margin-right: 15px;">
+                    <a href="/account" style="display: flex; align-items: center; gap: 8px; text-decoration: none; margin-right: 15px;">
                         <img src="${printPic}" alt="Avatar" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1.5px solid #00f2fe;">
                         <span class="user-welcome" style="color: #fff; font-weight: bold; font-size: 0.9rem;">Hello, ${printName}</span>
                     </a>
@@ -506,4 +506,3 @@
     </script>
 </body>
 </html>
-                   
