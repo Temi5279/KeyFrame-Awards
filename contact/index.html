@@ -98,6 +98,23 @@
             border-top: 1px solid rgba(255, 255, 255, 0.05);
             padding-top: 20px;
         }
+        /* Custom User Profile Badge styling */
+        .user-profile-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #fff;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        .user-profile-badge img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-cyan);
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -195,8 +212,14 @@
         
         onAuthStateChanged(auth, (user) => {
             if (user) {
+                const displayName = user.displayName || "User Account";
+                const photoURL = user.photoURL || "https://i.ibb.co/5G78k5y/default-avatar.png";
+                
                 authActions.innerHTML = `
-                    <span class="user-welcome">Active Account</span>
+                    <a href="/account" class="user-profile-badge">
+                        <img src="${photoURL}" alt="${displayName}">
+                        <span class="user-welcome">${displayName}</span>
+                    </a>
                     <button class="btn-login" id="logout-btn">Log Out</button>
                 `;
                 document.getElementById('logout-btn').addEventListener('click', () => {
