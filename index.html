@@ -159,7 +159,7 @@
     <!-- INFO SECTION -->
     <section class="info-section">
         <h2>About The Event</h2>
-        <p>Welcome to the ultimate stage where creators, streamers, gamers, movie addicts, football fans,music lovers, and editors get their flowers. The Keyframe Awards honors the best of the best pushing the boundaries of frame-by-frame masterpieces.</p>
+        <p>Welcome to the ultimate stage where visual creators, motion designers, and editors get their flowers. The Keyframe Awards honors the best of the best pushing the boundaries of frame-by-frame masterpieces.</p>
     </section>
 
     <!-- CATEGORIES TEASER SECTION -->
@@ -286,26 +286,22 @@
         const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // GOOGLE SIGN IN / SIGN UP
+        // GOOGLE SIGN IN
         function handleGoogleAuth() {
             signInWithPopup(auth, googleProvider)
             .then(async (result) => {
                 const user = result.user;
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
-                
                 if (!docSnap.exists()) {
                     await setDoc(docRef, {
                         fullName: user.displayName || "Google User",
                         dateOfBirth: "Not Provided (Google Login)",
                         email: user.email,
                         registeredAt: new Date().toISOString()
-                    });
-                    alert("Sign up successful! Welcome to the Keyframe Awards community!");
-                } else {
-                    alert(`Welcome back, ${user.displayName || 'User'}! Sign in successful.`);
+});
                 }
-                
+                alert("Authenticated successfully with Google!");
                 document.getElementById('auth-modal').classList.remove('open');
             })
             .catch((error) => {
@@ -335,7 +331,7 @@
                 });
             })
             .then(() => {
-                alert("Sign up successful! Welcome to the Keyframe Awards community!");
+                alert("Account registered successfully!");
                 document.getElementById('auth-modal').classList.remove('open');
             })
             .catch((error) => {
@@ -350,8 +346,8 @@
             const password = document.getElementById('login-password').value;
 
             signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                alert("Welcome back! Sign in successful.");
+            .then(() => {
+                alert("Logged in successfully!");
                 document.getElementById('auth-modal').classList.remove('open');
             })
             .catch((error) => {
@@ -373,18 +369,39 @@
             });
         });
 
-        // LIVE AUTH STATE LISTENER
+        // LIVE AUTH STATE LISTENER (PULLS NAME & AVATAR AND LINKS TO /DASHBOARD)
         const authActions = document.getElementById('auth-header-actions');
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
+                // Default placeholders while checking Firestore
+                let printName = "Creator";
+                let printPic = user.photoURL || "https://ui-avatars.com/api/?name=User&background=00f2fe&color=0d001a";
+
+                // Check Firestore if user signed up with email/password to grab their submitted name
+                try {
+                    const docSnap = await getDoc(doc(db, "users", user.uid));
+                    if (docSnap.exists() && docSnap.data().fullName) {
+                        printName = docSnap.data().fullName.split(' ')[0]; // Grabs just their first name
+                        if (!user.photoURL) {
+                            printPic = `https://ui-avatars.com/api/?name=${encodeURIComponent(printName)}&background=ff007f&color=fff`;
+                        }
+                    } else if (user.displayName) {
+                        printName = user.displayName.split(' ')[0];
+                    }
+                } catch (err) {
+                    console.log("Profile read handled silently.", err);
+                }
+
                 authActions.innerHTML = `
-                    <span class="user-welcome">Active Account</span>
-                    <button class="btn-login" id="logout-btn">Log Out</button>
+                    <a href="/dashboard" style="display: flex; align-items: center; gap: 8px; text-decoration: none; margin-right: 15px;">
+                        <img src="${printPic}" alt="Avatar" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1.5px solid #00f2fe;">
+                        <span class="user-welcome" style="color: #fff; font-weight: bold; font-size: 0.9rem;">Hello, ${printName}</span>
+                    </a>
+                    <button class="btn-login" id="logout-btn" style="padding: 6px 12px; font-size: 0.8rem;">Log Out</button>
                 `;
+                
                 document.getElementById('logout-btn').addEventListener('click', () => {
-                    signOut(auth).then(() => {
-                        alert("Log out successful!");
-                    });
+                    signOut(auth).then(() => alert("Logged out!"));
                 });
             } else {
                 authActions.innerHTML = `
@@ -489,3 +506,4 @@
     </script>
 </body>
 </html>
+                   
