@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help Center & FAQ | The Keyframe Awards</title>
+    <title>Help Vault & Knowledge Base | The Keyframe Awards</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .help-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 120px auto 60px auto;
             padding: 20px;
             color: #fff;
@@ -16,7 +16,7 @@
         }
         .help-header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
         .help-header h1 {
             color: var(--neon-cyan);
@@ -25,63 +25,133 @@
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-        .help-header p {
-            color: #aaa;
+        
+        /* Search System Styling */
+        .search-wrapper {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 50px auto;
+        }
+        .search-bar {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            background: rgba(13, 0, 26, 0.7);
+            border: 2px solid rgba(157, 0, 255, 0.4);
+            border-radius: 50px;
+            color: #fff;
             font-size: 1.1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
         }
-        .faq-section {
-            background: rgba(26, 0, 51, 0.6);
-            border: 1px solid rgba(157, 0, 255, 0.2);
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 40px;
+        .search-bar:focus {
+            border-color: #00f2fe;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
         }
-        .faq-category {
-            margin-bottom: 35px;
+        .search-wrapper i {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            font-size: 1.2rem;
         }
-        .faq-category h2 {
+
+        /* Category Framework */
+        .help-category-block {
+            margin-bottom: 45px;
+        }
+        .help-category-block h2 {
             color: #00f2fe;
             font-size: 1.4rem;
             border-bottom: 1px solid rgba(0, 242, 254, 0.2);
             padding-bottom: 10px;
             margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .faq-item {
-            margin-bottom: 25px;
+
+        /* Collapsible Accordion Core */
+        .faq-accordion {
+            background: rgba(26, 0, 51, 0.4);
+            border: 1px solid rgba(157, 0, 255, 0.15);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
-        .faq-item h3 {
+        .faq-trigger {
+            padding: 18px 20px;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
             color: #fff;
-            font-size: 1.1rem;
-            margin-bottom: 8px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
         }
-        .faq-item h3 i {
-            color: var(--neon-purple);
-            font-size: 0.9rem;
+        .faq-trigger:hover {
+            background: rgba(157, 0, 255, 0.1);
         }
-        .faq-item p {
+        .faq-trigger i {
+            color: #ff007f;
+            transition: transform 0.3s ease;
+        }
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background: rgba(0, 0, 0, 0.2);
             color: #ccc;
-            line-height: 1.7;
             font-size: 0.95rem;
-            margin: 0;
-            padding-left: 20px;
+            line-height: 1.7;
         }
+        .faq-content p {
+            margin: 0;
+            padding: 0 20px 20px 20px;
+        }
+
+        /* Active State Changes via JS */
+        .faq-accordion.active {
+            border-color: #ff007f;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.15);
+        }
+        .faq-accordion.active .faq-content {
+            max-height: 300px; /* Big enough to clear text bounds */
+        }
+        .faq-accordion.active .faq-trigger i {
+            transform: rotate(180deg);
+        }
+
+        /* No Results Fallback Layout */
+        #search-empty-state {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            background: rgba(26, 0, 51, 0.5);
+            border: 1px dashed #ff007f;
+            border-radius: 12px;
+            margin-bottom: 40px;
+        }
+        #search-empty-state h3 { color: #ff007f; font-size: 1.4rem; margin-bottom: 10px; }
+        #search-empty-state p { color: #aaa; margin: 0; }
+
         .contact-footer-box {
             text-align: center;
             background: rgba(0, 242, 254, 0.05);
             border: 1px solid rgba(0, 242, 254, 0.2);
             padding: 30px;
             border-radius: 10px;
-        }
-        .contact-footer-box h3 {
-            margin-top: 0;
-            color: #fff;
+            margin-top: 50px;
         }
         .btn-contact {
             display: inline-block;
-            background: linear-gradient(135deg, var(--neon-purple), #ff007f);
+            background: linear-gradient(135deg, #9d00ff, #ff007f);
             color: white;
             text-decoration: none;
             padding: 12px 30px;
@@ -90,10 +160,6 @@
             margin-top: 15px;
             box-shadow: 0 0 15px rgba(157, 0, 255, 0.4);
             transition: all 0.3s ease;
-        }
-        .btn-contact:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 25px rgba(255, 0, 127, 0.6);
         }
     </style>
 </head>
@@ -119,66 +185,221 @@
 
     <div class="help-container">
         <div class="help-header">
-            <h1>Help Center</h1>
-            <p>Find instant answers regarding nominations, voting rules, and platform settings.</p>
+            <h1>Help Vault</h1>
+            <p>Search topics or browse categories to find structural answers immediately.</p>
         </div>
 
-        <div class="faq-section">
-            <!-- CATEGORY 1 -->
-            <div class="faq-category">
-                <h2><i class="fas fa-trophy"></i> Nominations & Submissions</h2>
-                
-                <div class="faq-item">
-                    <h3><i class="fas fa-chevron-right"></i> How do I submit my work for nomination?</h3>
-                    <p>To submit your project, navigate to the Nominations tab while logged into a verified account. Provide the direct public link to your content (YouTube, TikTok, Instagram, Behance, or personal portfolio), select the matching creative category, and provide a short overview description. Once submitted, you will receive an automated validation message checking your queue position.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3><i class="fas fa-chevron-right"></i> Can I submit entries on behalf of another creator?</h3>
-                    <p>Yes, external nominations are permitted provided you have explicit, verifiable permission from the original asset holder. If an entry is flagged or disputed by the actual creator, the application will be immediately taken down pending authentication matching.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3><i class="fas fa-chevron-right"></i> What happens to my content rights if I get nominated?</h3>
-                    <p>You retain 100% ownership of your work. By submitting, you simply grant us a royalty-free license to feature snippets or display links to your project on our voting page and live stream so global fans can review your entry.</p>
-                </div>
-            </div>
-
-            <!-- CATEGORY 2 -->
-            <div class="faq-category">
-                <h2><i class="fas fa-vote-yea"></i> Voting System & Safety</h2>
-                
-                <div class="faq-item">
-                    <h3><i class="fas fa-chevron-right"></i> How often can I vote for an entry?</h3>
-                    <p>To ensure fair and integer distribution, our system limits voting intervals per category. Standard accounts can cast one verified vote per category every 24 hours. Automated scripts or multi-tab refreshing will trigger localized system blockades.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3><i class="fas fa-chevron-right"></i> Why was an entry or profile disqualified?</h3>
-                    <p>Our backend systems actively monitor database submission patterns. Any entry showing artificial traffic bursts, bot farms, coordinated scripts, or purchased engagement metrics is automatically flagged and reviewed for immediate disqualification to protect community integrity.</p>
-                </div>
-            </div>
-
-            <!-- CATEGORY 3 -->
-            <div class="faq-category">
-                <h2><i class="fas fa-user-shield"></i> Account & Verification</h2>
-                
-                <div class="faq-item">
-                    <h3><i class="fas fa-chevron-right"></i> Why does my account say "loading..." or block access?</h3>
-                    <p>If your user dashboard displays a persistent loading screen, your internet connectivity might be delaying initialization with our Firebase safety nodes. Clear your browser storage metrics or perform a hardware reset to instantly fix your session token authentication.</p>
-                </div>
-
-                <div class="faq-item">
-                    <h3><i class="fas fa-chevron-right"></i> How do I permanently delete my platform records?</h3>
-                    <p>Navigate directly to your Account settings dashboard and scroll to the bottom Danger Zone block. Clicking "Delete My Account" will instantly execute a full drop sequence, wiping your auth records and profile variables completely from our systems.</p>
-                </div>
-            </div>
+        <!-- SEARCH CONTAINER BOX -->
+        <div class="search-wrapper">
+            <input type="text" id="help-search-input" class="search-bar" placeholder="Search keywords (e.g., voting, email, login, dates)...">
+            <i class="fas fa-search"></i>
         </div>
 
-        <!-- CALL TO ACTION FOR CONTACT PAGE -->
+        <!-- OOPS ERROR NOTIFICATION STATE -->
+        <div id="search-empty-state">
+            <h3><i class="fas fa-exclamation-triangle"></i> Frame Lookup Error</h3>
+            <p>Oops! No matches found for that specific search term. Try checking your spelling or search for another keyword.</p>
+        </div>
+
+        <!-- KNOWLEDGE LOG GROUPS -->
+        <div id="knowledge-base-wrapper">
+
+            <!-- MODULE 1: ACCOUNT ACTIONS -->
+            <div class="help-category-block">
+                <h2>Account & Terminal Access</h2>
+                
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>How do I modify my profile screen name?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Head over to the account.html profile parameters view while logged in to switch up your user name fields safely.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Can I adjust or upload a custom profile avatar?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Currently, our dashboard pulls your social platform photo index links cleanly for free to preserve system database bandwidth speeds.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Why does my session say "Active Account" permanently?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>This means your security session state matches safely with our Google verification nodes without dropping connections.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>How do I delete my registered user history records?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>You can execute a full drop and deletion block layout sequence directly inside your profile options panel.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>What should I do if my login window completely freezes?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Perform a complete hardware device reboot sequence rather than resetting app elements to reload your encryption keys.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Can I create multiple profiles with one social account?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>No, our database permits exactly one single unique authentication index map allocation per email configuration address.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Is my login information monitored or visible to admins?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>No, passwords and direct provider tokens are fully cryptographically hashed and guarded directly behind isolated Firebase layers.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Can I swap my linked social email address later?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Email alterations require strict confirmation protocols. Reach out to our direct help desks if you get locked out.</p></div>
+                </div>
+            </div>
+
+            <!-- MODULE 2: NOMINATIONS LAWS -->
+            <div class="help-category-block">
+                <h2>Nominations & Media Processing</h2>
+                
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Where do I submit my creative portfolio links?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Drop your public assets cleanly inside the Nominations tab form box after matching your login credentials.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>What format links are accepted by submission queues?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>We accept valid URLs from YouTube, TikTok, Instagram, Behance, or direct web portfolios for curation runs.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Can I modify an entry after clicking submit?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Once a link enters our parsing system queue logs, it locks down permanently to avoid manipulation runs during review cycles.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Can I nominate other content creators anonymously?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Yes, community submissions are highly encouraged as long as the content remains public and verifiable across social indexing platforms.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>How do I know if my entry gets approved?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Approved shortlists will update directly inside the main categories index tables on our interface pages.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Why was my nomination submission flagged or removed?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Entries containing broken paths, invalid ownership tokens, or corrupted files automatically drop from processing queues.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Is there an application fee for standard creators?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Submitting works to our platform categories line remains completely free of charge for the global creative community.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>How many distinct categories can I enter at once?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>You can enter up to 3 separate target category blocks with completely different media projects per tracking season.</p></div>
+                </div>
+            </div>
+
+            <!-- MODULE 3: VOTING POLICIES -->
+            <div class="help-category-block">
+                <h2>Voting Security & Matrix</h2>
+                
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>How many times can I cast votes for an entry?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Our system maintains a strict limit of exactly one vote selection per profile category every 24 hours.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Can I clear or reverse a vote I cast by accident?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>No, votes write immediately to immutable server nodes to prevent ledger spam and cannot be undone.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>What triggers an automated profile disqualification block?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Coordinated script setups, browser extensions, or bot configurations trigger automated IP bans to secure fan tallies.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Are voting results updated in real-time for public view?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Public summaries render periodically to maintain high competition excitement until the final closing sequence dates.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Can fans outside my territory vote on entries?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Yes, our database runs across global zones, allowing fans worldwide to submit votes from any region.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Does using a VPN block my ability to vote?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Shared public VPN routes might sometimes conflict with our anti-bot filters. Use standard networks if issues persist.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>When do the voting windows officially close?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Closing dates show clearly at the top of category pages. All timers adapt to match your local timezone settings.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>How are tie-breaker scenarios calculated?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>If tallies match exactly at closing, our jury panel runs secondary quality metrics to break the tie cleanly.</p></div>
+                </div>
+            </div>
+
+            <!-- MODULE 4: STREAMING CHANNELS -->
+            <div class="help-category-block">
+                <h2>Live Broadcast & Feeds</h2>
+                
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Where can I stream the live broadcast events?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Tune in directly inside our Live Stream layout view page when the main event timers hit zero.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Is the video stream completely open and free?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Yes, standard fan streams require zero paid tiers or subscription credentials to enjoy the ceremony.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Why does the broadcast player load a black screen?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Ensure your browser isn't blocking autoplay policies. Giving media tracking scripts permission will restore the video feed.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Can I mirror or restream the show onto my profile?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Co-streaming is permitted for reaction content if you retain active link attributes to our primary domain name.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Will there be live interaction chat frameworks available?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Yes, verified account log holders can access the live event discussion boxes to back nominees in real-time.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>What happens if the stream lags or drop-frames trigger?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Our engine automatically handles variable bitrates. Try refreshing your setup if resolution scales drop heavily.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Are recorded playback show files saved after the event?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Full VOD playbacks and highlight sections post directly to our YouTube channel shortly after the show finishes.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Can I cast the live broadcast player to smart TVs?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Yes, our built-in video system supports standard Chromecast and AirPlay protocols automatically.</p></div>
+                </div>
+            </div>
+
+            <!-- MODULE 5: TICKETS & GENERAL -->
+            <div class="help-category-block">
+                <h2>Support Tickets & Guidelines</h2>
+                
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>How long does ticket processing take to complete?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Our team audits incoming records daily. Critical security log errors take high processing priority.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Where do I track answers to filed help tickets?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Check your email inbox for manual responses if our team requires secondary detail matching for your request.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Can I cancel an active open ticket from my dashboard?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>No, duplicate files drop or clear automatically during standard daily system clearing sweeps.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Where is the official platform administrative center?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Our operational infrastructure layers deploy centrally from the federal capital territory territory nodes in Abuja.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Are there rules against copy-pasting code or assets?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>All design blueprints and styles are protected under platform terms. Misuse of our intellectual material drops your access rights.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>How do I report general platform bugs?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>File a support ticket with a clear description of the issue so our engineering team can isolate and fix the error.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Can I submit tickets without listing an email address?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>No, your contact email is required so our system can safely map the inquiry token to your user session logs.</p></div>
+                </div>
+                <div class="faq-accordion">
+                    <button class="faq-trigger"><span>Is the platform fully responsive on older mobile phones?</span><i class="fas fa-chevron-down"></i></button>
+                    <div class="faq-content"><p>Yes, our style structures scale smoothly from compact mobile views up to massive desktop screens.</p></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- FOOTER TICKET REDIRECT -->
         <div class="contact-footer-box">
             <h3>Still can't find what you need?</h3>
-            <p style="color: #aaa; margin-bottom: 5px;">If your issue requires direct engineering assistance or custom review, drop a ticket to our team.</p>
+            <p style="color: #aaa; margin-bottom: 5px;">If your issue requires direct manual engineer review, open a ticket.</p>
             <a href="/contact" class="btn-contact">Open a Support Ticket</a>
         </div>
     </div>
@@ -203,44 +424,64 @@
         </div>
     </footer>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    <!-- INTERFACE LOGIC SCRIPT (NO CODING KNOWLEDGE NEEDED) -->
+    <script>
+        // 1. Accordion Toggle System
+        const triggers = document.querySelectorAll('.faq-trigger');
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const parent = trigger.parentElement;
+                parent.classList.toggle('active');
+            });
+        });
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
-            authDomain: "keyframe-awards.firebaseapp.com",
-            projectId: "keyframe-awards",
-            storageBucket: "keyframe-awards.firebasestorage.app",
-            messagingSenderId: "882083630221",
-            appId: "1:882083630221:web:629df7642fdf822018a6c4"
-        };
+        // 2. Real-Time Smart Search Engine Logic
+        const searchInput = document.getElementById('help-search-input');
+        const accordions = document.querySelectorAll('.faq-accordion');
+        const categories = document.querySelectorAll('.help-category-block');
+        const emptyState = document.getElementById('search-empty-state');
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const authActions = document.getElementById('auth-header-actions');
-        
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                authActions.innerHTML = `
-                    <span class="user-welcome" style="color: #00f2fe; margin-right: 10px; font-weight: bold; font-size: 0.9rem;">Active Account</span>
-                    <button class="btn-login" id="logout-btn">Log Out</button>
-                `;
-                document.getElementById('logout-btn').addEventListener('click', () => {
-                    signOut(auth).then(() => alert("Logged out!"));
-                });
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase().trim();
+            let totalMatches = 0;
+
+            accordions.forEach(acc => {
+                const text = acc.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    acc.style.display = 'block';
+                    totalMatches++;
+                } else {
+                    acc.style.display = 'none';
+                    acc.classList.remove('active'); // Collapse hidden elements
+                }
+            });
+
+            // Clean visible grouping modules
+            categories.forEach(cat => {
+                const visibleChild = cat.querySelectorAll('.faq-accordion[style="display: block;"]').length;
+                const totalChild = cat.querySelectorAll('.faq-accordion').length;
+                
+                // If query is empty, show everything default
+                if(query === "") {
+                    cat.style.display = 'block';
+                } else if (visibleChild === 0) {
+                    cat.style.display = 'none';
+                } else {
+                    cat.style.display = 'block';
+                }
+            });
+
+            // Toggle "Oops" state block display
+            if (totalMatches === 0 && query !== "") {
+                emptyState.style.display = 'block';
             } else {
-                authActions.innerHTML = `
-                    <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
-                `;
+                emptyState.style.display = 'none';
             }
         });
-    </script>
 
-    <script>
+        // Mobile Nav System
         const menuToggle = document.getElementById('mobile-menu');
         const navLinks = document.querySelector('.nav-links');
-        
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             menuToggle.classList.toggle('is-active');
