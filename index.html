@@ -159,7 +159,7 @@
     <!-- INFO SECTION -->
     <section class="info-section">
         <h2>About The Event</h2>
-        <p>Welcome to the ultimate stage where visual creators, motion designers, and editors get their flowers. The Keyframe Awards honors the best of the best pushing the boundaries of frame-by-frame masterpieces.</p>
+        <p>Welcome to the ultimate stage where creators, streamers, gamers, movie addicts, football fans,music lovers, and editors get their flowers. The Keyframe Awards honors the best of the best pushing the boundaries of frame-by-frame masterpieces.</p>
     </section>
 
     <!-- CATEGORIES TEASER SECTION -->
@@ -286,13 +286,14 @@
         const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // GOOGLE SIGN IN
+        // GOOGLE SIGN IN / SIGN UP
         function handleGoogleAuth() {
             signInWithPopup(auth, googleProvider)
             .then(async (result) => {
                 const user = result.user;
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
+                
                 if (!docSnap.exists()) {
                     await setDoc(docRef, {
                         fullName: user.displayName || "Google User",
@@ -300,8 +301,11 @@
                         email: user.email,
                         registeredAt: new Date().toISOString()
                     });
-   }
-                alert("Authenticated successfully with Google!");
+                    alert("Sign up successful! Welcome to the Keyframe Awards community!");
+                } else {
+                    alert(`Welcome back, ${user.displayName || 'User'}! Sign in successful.`);
+                }
+                
                 document.getElementById('auth-modal').classList.remove('open');
             })
             .catch((error) => {
@@ -331,7 +335,7 @@
                 });
             })
             .then(() => {
-                alert("Account registered successfully!");
+                alert("Sign up successful! Welcome to the Keyframe Awards community!");
                 document.getElementById('auth-modal').classList.remove('open');
             })
             .catch((error) => {
@@ -346,8 +350,8 @@
             const password = document.getElementById('login-password').value;
 
             signInWithEmailAndPassword(auth, email, password)
-            .then(() => {
-                alert("Logged in successfully!");
+            .then((userCredential) => {
+                alert("Welcome back! Sign in successful.");
                 document.getElementById('auth-modal').classList.remove('open');
             })
             .catch((error) => {
@@ -378,7 +382,9 @@
                     <button class="btn-login" id="logout-btn">Log Out</button>
                 `;
                 document.getElementById('logout-btn').addEventListener('click', () => {
-                    signOut(auth).then(() => alert("Logged out!"));
+                    signOut(auth).then(() => {
+                        alert("Log out successful!");
+                    });
                 });
             } else {
                 authActions.innerHTML = `
@@ -483,4 +489,3 @@
     </script>
 </body>
 </html>
-   
