@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | The Keyframe Awards</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .account-container {
+            max-width: 600px;
+            margin: 120px auto 60px auto;
+            padding: 30px;
+            background: rgba(26, 0, 51, 0.6);
+            border: 1px solid rgba(157, 0, 255, 0.3);
+            border-radius: 12px;
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 20px;
+        }
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #00f2fe;
+            object-fit: cover;
+            background: #222;
+        }
+        .profile-info h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #00f2fe;
+        }
+        .profile-info p {
+            margin: 5px 0 0 0;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(157, 0, 255, 0.5);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        .form-group input:focus {
+            border-color: #00f2fe;
+            outline: none;
+        }
+        .btn-save {
+            background: linear-gradient(135deg, #9d00ff, #ff007f);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
+        }
+        .danger-zone {
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 0, 0, 0.3);
+            padding-top: 20px;
+        }
+        .danger-zone h4 {
+            color: #ff3333;
+            margin-top: 0;
+        }
+        .btn-delete {
+            background: #ff3333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-delete:hover {
+            background: #cc0000;
+        }
+        .support-box {
+            margin-top: 20px;
+            background: rgba(0, 242, 254, 0.05);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            padding: 15px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .support-box a {
+            color: #00f2fe;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Keyframe Awards</div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/nominations">Nominations</a>
+            <a href="/vote">Vote</a>
+            <a href="/live">Live Stream</a>
+            <a href="/about">About</a>
+            <div class="auth-buttons" id="auth-header-actions">
+                <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="account-container">
+        <div class="profile-header">
+            <!-- Uses default user image placeholder, will automatically show Google picture if available -->
+            <img src="https://www.w3schools.com/howto/img_avatar.png" id="user-avatar" class="profile-pic" alt="Avatar">
+            <div class="profile-info">
+                <h3 id="welcome-name">Hello, User</h3>
+                <p id="user-email">loading...</p>
+            </div>
+        </div>
+
+        <!-- Form to change Display Name -->
+        <div class="form-group">
+            <label for="display-name-input">Edit Account Display Name</label>
+            <input type="text" id="display-name-input" placeholder="Enter new name">
+        </div>
+        <button class="btn-save" id="save-name-btn">Update Name</button>
+
+        <!-- Simple Contact Support Shortcut -->
+        <div class="support-box">
+            <span>Need assistance with your submissions?</span>
+            <a href="/contact">Contact Support</a>
+        </div>
+
+        <!-- Danger Zone: Delete Account Option -->
+        <div class="danger-zone">
+            <h4>Danger Zone</h4>
+            <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 15px;">Deleting your account permanently wipes your user profile record from our platform records. This cannot be undone.</p>
+            <button class="btn-delete" id="delete-account-btn">Delete My Account</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/privacy">Privacy Policy</a>[cite: 1, 2, 3]
+            <a href="/terms">Terms of Service</a>[cite: 1, 2, 3]
+            <a href="/cookies">Cookie Preferences</a>[cite: 1, 2, 3]
+            <a href="/contact">Contact Support</a>[cite: 1, 2, 3]
+        </div>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/profile.php?id=61591758598232" target="_blank"><i class="fab fa-facebook"></i></a>[cite: 1, 2, 3]
+            <a href="https://www.instagram.com/keyframeawards" target="_blank"><i class="fab fa-instagram"></i></a>[cite: 1, 2, 3]
+            <a href="https://www.threads.net/@keyframeawards" target="_blank"><i class="fab fa-threads"></i></a>[cite: 1, 2, 3]
+            <a href="https://x.com/keyframeawards" target="_blank"><i class="fab fa-x-twitter"></i></a>[cite: 1, 2, 3]
+            <a href="https://www.tiktok.com/@keyframeawards" target="_blank"><i class="fab fa-tiktok"></i></a>[cite: 1, 2, 3]
+            <a href="https://www.youtube.com/@KeyframeAwards" target="_blank"><i class="fab fa-youtube"></i></a>[cite: 1, 2, 3]
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>[cite: 1, 2, 3]
+        </div>
+    </footer>
+
+    <!-- Firebase Code Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";[cite: 1, 2, 3]
+        import { getAuth, onAuthStateChanged, signOut, updateProfile, deleteUser } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";[cite: 1, 2, 3]
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",[cite: 1, 2, 3]
+            authDomain: "keyframe-awards.firebaseapp.com",[cite: 1, 2, 3]
+            projectId: "keyframe-awards",[cite: 1, 2, 3]
+            storageBucket: "keyframe-awards.firebasestorage.app",[cite: 1, 2, 3]
+            messagingSenderId: "882083630221",[cite: 1, 2, 3]
+            appId: "1:882083630221:web:629df7642fdf822018a6c4"[cite: 1, 2, 3]
+        };
+
+        const app = initializeApp(firebaseConfig);[cite: 1, 2, 3]
+        const auth = getAuth(app);[cite: 1, 2, 3]
+        const authActions = document.getElementById('auth-header-actions');[cite: 1, 2, 3]
+        
+        let currentUser = null;
+
+        onAuthStateChanged(auth, (user) => {[cite: 1, 2, 3]
+            if (user) {
+                currentUser = user;
+                // Pull user info from Firebase safely
+                document.getElementById('welcome-name').innerText = `Hello, ${user.displayName || 'User'}`;
+                document.getElementById('user-email').innerText = user.email;
+                document.getElementById('display-name-input').value = user.displayName || '';
+                
+                // If they have a Google profile picture, display it for free
+                if(user.photoURL) {
+                    document.getElementById('user-avatar').src = user.photoURL;
+                }
+
+                // Header log out setup
+                authActions.innerHTML = `
+                    <button class="btn-login" id="logout-btn">Log Out</button>[cite: 1, 2, 3]
+                `;
+                document.getElementById('logout-btn').addEventListener('click', () => {
+                    signOut(auth).then(() => {[cite: 1, 2, 3]
+                        alert("Logged out!");[cite: 1, 2, 3]
+                        window.location.href = "/";
+                    });
+                });
+            } else {
+                // If not logged in, boot them back to home page
+                window.location.href = "/?action=login";
+            }
+        });
+
+        // Handle updating the display name
+        document.getElementById('save-name-btn').addEventListener('click', () => {
+            const newName = document.getElementById('display-name-input').value;
+            if(currentUser && newName.trim() !== "") {
+                updateProfile(currentUser, {
+                    displayName: newName
+                }).then(() => {
+                    alert("Display name updated successfully!");
+                    document.getElementById('welcome-name').innerText = `Hello, ${newName}`;
+                }).catch((error) => {
+                    alert("Error updating name: " + error.message);
+                });
+            }
+        });
+
+        // Handle deleting the account
+        document.getElementById('delete-account-btn').addEventListener('click', () => {
+            if(currentUser) {
+                const confirmDelete = confirm("Are you absolutely sure you want to delete your account? This action cannot be reversed.");
+                if(confirmDelete) {
+                    deleteUser(currentUser).then(() => {
+                        alert("Account completely deleted.");
+                        window.location.href = "/";
+                    }).catch((error) => {
+                        alert("For security reasons, please log out and log back in before deleting your account.");
+                    });
+                }
+            }
+        });
+    </script>
+
+    <script>
+        const menuToggle = document.getElementById('mobile-menu');[cite: 1, 2, 3]
+        const navLinks = document.querySelector('.nav-links');[cite: 1, 2, 3]
+        
+        menuToggle.addEventListener('click', () => {[cite: 1, 2, 3]
+            navLinks.classList.toggle('active');[cite: 1, 2, 3]
+            menuToggle.classList.toggle('is-active');[cite: 1, 2, 3]
+        });
+    </script>
+</body>
+</html>
