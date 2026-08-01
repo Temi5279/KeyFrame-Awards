@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Us | The Keyframe Awards</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom User Profile Badge styling */
+        .user-profile-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: #fff;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+        .user-profile-badge img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-cyan);
+            object-fit: cover;
+        }
+
+        /* Support Page Highlight Styles */
+        .support-cta-container {
+            text-align: center;
+            margin: 40px 0 20px 0;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .support-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--neon-cyan), #0088cc);
+            color: #000;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 16px 36px;
+            border-radius: 30px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+
+        .support-btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.7);
+            color: #000;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .support-card {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 3px solid var(--neon-cyan);
+        }
+
+        .support-card h4 {
+            color: var(--neon-cyan);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo">Keyframe Awards</div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <nav class="nav-links">
+          <a href="/">Home</a>
+          <a href="/nominations">Nominations</a>
+          <a href="/vote">Vote</a>
+          <a href="/live">Live Stream</a>
+          <a href="/about">About</a>
+
+          <!-- Container for dynamic login/logout actions -->
+          <div class="auth-buttons" id="auth-header-actions">
+            <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
+          </div>
+        </nav>
+    </header>
+
+    <section class="info-section" style="margin-top: 100px; min-height: 70vh; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto; padding-top: 50px;">
+        <h2 style="text-align: center; margin-bottom: 10px; color: var(--neon-cyan);">Support The Keyframe Awards</h2>
+        <p style="text-align: center; font-size: 1.1rem; opacity: 0.85; margin-bottom: 40px;">Empowering independent video creators, editors, and visual storytellers.</p>
+
+        <h3 style="color: var(--neon-cyan); margin-top: 30px; margin-bottom: 10px;">Why Your Support Matters</h3>
+        <p style="margin-bottom: 20px; line-height: 1.8;">The Keyframe Awards is built by creators, for creators. Our mission is to recognize, celebrate, and amplify the incredible talent within the video editing and digital creation community. To maintain complete integrity, free voting access, and fair visibility for every nominee, we operate independently.</p>
+        
+        <div class="support-grid">
+            <div class="support-card">
+                <h4><i class="fas fa-server"></i> Platform Infrastructure</h4>
+                <p style="line-height: 1.6; font-size: 0.95rem;">Helps keep our voting servers running smoothly, secure against bots, and fast during peak voting periods.</p>
+            </div>
+            <div class="support-card">
+                <h4><i class="fas fa-tv"></i> Live Stream Broadcasts</h4>
+                <p style="line-height: 1.6; font-size: 0.95rem;">Funds high-quality production, graphic setups, and live broadcasting for our virtual ceremony events.</p>
+            </div>
+            <div class="support-card">
+                <h4><i class="fas fa-trophy"></i> Creator Recognition</h4>
+                <p style="line-height: 1.6; font-size: 0.95rem;">Allows us to expand category awards, feature nominees across global channels, and spotlight talent.</p>
+            </div>
+        </div>
+
+        <!-- CALL TO ACTION / LINK SECTION -->
+        <div class="support-cta-container">
+            <h3 style="color: #fff; margin-bottom: 10px;">Show Love & Keep Us Independent</h3>
+            <p style="line-height: 1.6; max-width: 600px; margin: 0 auto 20px auto; opacity: 0.9;">Whether you're a voter, nominee, or fan of visual storytelling, every contribution directly powers our community setup.</p>
+            
+            <a href="https://selar.com/showlove/keyframeawards" target="_blank" class="support-btn">
+                <i class="fas fa-heart" style="margin-right: 8px;"></i> Support Keyframe Awards
+            </a>
+            
+            <p style="font-size: 0.85rem; opacity: 0.6; margin-top: 15px;">Secure payments processed safely via Selar</p>
+        </div>
+
+        <h3 style="color: var(--neon-cyan); margin-top: 40px; margin-bottom: 10px;">Other Ways to Help</h3>
+        <p style="margin-bottom: 20px; line-height: 1.8;">Financial support isn't the only way to help us grow! You can also back the event by sharing active nomination links with your community, casting your daily votes, tagging us across social media, and subscribing to our official broadcasting channels.</p>
+    </section>
+
+    <!-- FOOTER -->
+  <footer>
+    <div class="footer-links">
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="/cookies">Cookie Preferences</a>
+      <a href="/contact">Contact Support</a>
+    </div>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/profile.php?id=61591758598232" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.instagram.com/keyframeawards" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.threads.net/@keyframeawards" target="_blank"><i class="fab fa-threads"></i></a>
+      <a href="https://x.com/keyframeawards" target="_blank"><i class="fab fa-x-twitter"></i></a>
+      <a href="https://www.tiktok.com/@keyframeawards" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@KeyframeAwards" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Firebase System Module Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+      authDomain: "keyframe-awards.firebaseapp.com",
+      projectId: "keyframe-awards",
+      storageBucket: "keyframe-awards.firebasestorage.app",
+      messagingSenderId: "882083630221",
+      appId: "1:882083630221:web:629df7642fdf822018a6c4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const authActions = document.getElementById('auth-header-actions');
+    
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const displayName = user.displayName || "User Account";
+        const photoURL = user.photoURL || "https://i.ibb.co/5G78k5y/default-avatar.png";
+        
+        authActions.innerHTML = `
+          <a href="/account" class="user-profile-badge">
+              <img src="${photoURL}" alt="${displayName}">
+              <span class="user-welcome">${displayName}</span>
+          </a>
+          <button class="btn-login" id="logout-btn">Log Out</button>
+        `;
+        document.getElementById('logout-btn').addEventListener('click', () => {
+          signOut(auth).then(() => alert("Logged out!"));
+        });
+      } else {
+        authActions.innerHTML = `
+          <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
+        `;
+      }
+    });
+  </script>
+
+  <!-- Local Interface Control Scripts -->
+  <script>
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+    
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      menuToggle.classList.toggle('is-active');
+    });
+  </script>
+</body>
+</html>
