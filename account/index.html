@@ -8,152 +8,143 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         .account-container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 120px auto 60px auto;
             padding: 30px;
             background: rgba(26, 0, 51, 0.6);
             border: 1px solid rgba(157, 0, 255, 0.3);
             border-radius: 12px;
             color: #fff;
-            font-family: 'Segoe UI', sans-serif;
+            box-shadow: 0 0 25px rgba(157, 0, 255, 0.1);
         }
         .profile-header {
             display: flex;
             align-items: center;
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding-bottom: 20px;
         }
         .profile-pic {
-            width: 80px;
-            height: 80px;
+            width: 80px; height: 80px;
             border-radius: 50%;
             border: 2px solid #00f2fe;
             object-fit: cover;
             background: #222;
         }
-        .profile-info h3 {
-            margin: 0;
-            font-size: 1.5rem;
-            color: #00f2fe;
-        }
-        .profile-info p {
-            margin: 5px 0 0 0;
-            color: #aaa;
-            font-size: 0.9rem;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #aaa;
-            font-size: 0.9rem;
-        }
+        .profile-info h3 { margin: 0; font-size: 1.5rem; color: #00f2fe; }
+        .profile-info p { margin: 5px 0 0 0; color: #aaa; font-size: 0.9rem; }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: bold; color: #aaa; font-size: 0.9rem; }
         .form-group input {
-            width: 100%;
-            padding: 12px;
+            width: 100%; padding: 12px;
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(157, 0, 255, 0.5);
-            border-radius: 6px;
-            color: #fff;
-            font-size: 1rem;
+            border-radius: 6px; color: #fff; font-size: 1rem;
             box-sizing: border-box;
-        }
-        .form-group input:focus {
-            border-color: #00f2fe;
-            outline: none;
         }
         .btn-save {
             background: linear-gradient(135deg, #9d00ff, #ff007f);
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            color: white; border: none; padding: 10px 20px;
+            border-radius: 6px; font-weight: bold; cursor: pointer;
         }
-        .btn-save:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.6);
+
+        /* SECTION STYLING */
+        .section-block {
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
         }
         .danger-zone {
-            margin-top: 40px;
+            margin-top: 30px;
             border-top: 1px solid rgba(255, 0, 0, 0.3);
             padding-top: 20px;
         }
-        .danger-zone h4 {
-            color: #ff3333;
-            margin-top: 0;
-        }
         .btn-delete {
-            background: #ff3333;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
+            background: #ff3333; color: white; border: none;
+            padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer;
         }
-        .btn-delete:hover {
-            background: #cc0000;
+
+        /* UNIFIED MODAL STYLES */
+        .custom-modal {
+            display: none; position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(5px);
+            z-index: 10000; justify-content: center; align-items: center;
         }
-        .support-box {
-            margin-top: 20px;
-            background: rgba(0, 242, 254, 0.05);
-            border: 1px solid rgba(0, 242, 254, 0.2);
-            padding: 15px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        .modal-content {
+            background: rgba(26, 0, 51, 0.95);
+            border: 1px solid var(--neon-cyan);
+            padding: 30px; border-radius: 12px;
+            max-width: 420px; width: 90%; text-align: center; color: #fff;
         }
-        .support-box a {
-            color: #00f2fe;
-            text-decoration: none;
-            font-weight: bold;
+        .modal-actions {
+            display: flex; gap: 10px; justify-content: center; margin-top: 20px;
         }
+        .btn-confirm { background: #ff3333; color: white; border: none; padding: 8px 18px; border-radius: 20px; font-weight: bold; cursor: pointer; }
+        .btn-cancel { background: rgba(255, 255, 255, 0.2); color: white; border: none; padding: 8px 18px; border-radius: 20px; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
     <header class="navbar">
         <div class="logo" onclick="window.location.href='/'" style="cursor: pointer;">Keyframe Awards</div>
-        <nav class="account-nav" style="display: flex !important; align-items: center; gap: 15px; visibility: visible !important; opacity: 1 !important;">
-            <a href="/" style="color: #fff; text-decoration: none; font-weight: bold; font-size: 0.9rem; white-space: nowrap;">Return Home</a>
-            <div class="auth-buttons" id="auth-header-actions" style="display: block !important;">
-                <button class="btn-login" id="logout-btn" style="padding: 6px 12px; font-size: 0.85rem;">Log Out</button>
-            </div>
+        <nav class="account-nav" style="display: flex; align-items: center; gap: 15px;">
+            <a href="/" style="color: #fff; text-decoration: none; font-weight: bold; font-size: 0.9rem;">Return Home</a>
+            <button class="btn-login" id="open-logout-modal" style="padding: 6px 12px; font-size: 0.85rem;">Log Out</button>
         </nav>
     </header>
 
     <div class="account-container">
+        <!-- USER PROFILE HEADER -->
         <div class="profile-header">
-            <img src="https://www.w3schools.com/howto/img_avatar.png" id="user-avatar" class="profile-pic" alt="Avatar">
+            <img src="https://i.ibb.co/5G78k5y/default-avatar.png" id="user-avatar" class="profile-pic" alt="Avatar">
             <div class="profile-info">
                 <h3 id="welcome-name">Hello, User</h3>
                 <p id="user-email">loading...</p>
             </div>
         </div>
 
+        <!-- UPDATE NAME FORM -->
         <div class="form-group">
             <label for="display-name-input">Edit Account Display Name</label>
-            <input type="text" id="display-name-input" placeholder="Enter new name">
-        </div>
-        <button class="btn-save" id="save-name-btn">Update Name</button>
-
-        <div class="support-box">
-            <span>Need assistance with your submissions?</span>
-            <a href="/contact">Contact Support</a>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="display-name-input" placeholder="Enter new name">
+                <button class="btn-save" id="save-name-btn">Save</button>
+            </div>
         </div>
 
+        <!-- NOMINATION HISTORY HUB -->
+        <div class="section-block">
+            <h4 style="color: #00f2fe; margin-top: 0; font-size: 1.1rem;"><i class="fa-solid fa-clock-rotate-left"></i> My Nominations History</h4>
+            <div id="nominations-list" style="margin-top: 15px;">Loading history...</div>
+        </div>
+
+        <!-- SECURITY SECTION -->
+        <div class="section-block">
+            <h4 style="color: #fff; margin-top: 0; font-size: 1.1rem;"><i class="fa-solid fa-shield-halved"></i> Security</h4>
+            <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 12px;">Need to update your password? Request a secure link sent to your email.</p>
+            <button id="reset-password-btn" style="background: transparent; border: 1px solid #00f2fe; color: #00f2fe; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer;">Send Reset Password Email</button>
+        </div>
+
+        <!-- DANGER ZONE -->
         <div class="danger-zone">
-            <h4>Danger Zone</h4>
-            <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 15px;">Deleting your account permanently wipes your user profile record from our platform records. This cannot be undone.</p>
-            <button class="btn-delete" id="delete-account-btn">Delete My Account</button>
+            <h4 style="color: #ff3333; margin-top: 0;"><i class="fa-solid fa-triangle-exclamation"></i> Danger Zone</h4>
+            <p style="font-size: 0.85rem; color: #aaa; margin-bottom: 15px;">Permanently wipe your account profile record from our platform records.</p>
+            <button class="btn-delete" id="open-delete-modal">Delete My Account</button>
+        </div>
+    </div>
+
+    <!-- UNIFIED CONFIRMATION MODAL -->
+    <div id="confirm-modal" class="custom-modal">
+        <div class="modal-content">
+            <i id="confirm-icon" class="fa-solid fa-circle-question" style="font-size: 3rem; color: var(--neon-pink); margin-bottom: 15px;"></i>
+            <h3 id="confirm-title">Are you sure?</h3>
+            <p id="confirm-msg" style="color: #ccc; font-size: 0.95rem; line-height: 1.5;"></p>
+            <div class="modal-actions">
+                <button id="confirm-action-btn" class="btn-confirm">Yes</button>
+                <button id="confirm-cancel-btn" class="btn-cancel">Cancel</button>
+            </div>
         </div>
     </div>
 
@@ -165,22 +156,13 @@
             <a href="/cookies">Cookie Preferences</a>
             <a href="/contact">Contact Support</a>
         </div>
-        <div class="social-icons">
-            <a href="https://www.facebook.com/profile.php?id=61591758598232" target="_blank"><i class="fab fa-facebook"></i></a>
-            <a href="https://www.instagram.com/keyframeawards" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.threads.net/@keyframeawards" target="_blank"><i class="fab fa-threads"></i></a>
-            <a href="https://x.com/keyframeawards" target="_blank"><i class="fab fa-x-twitter"></i></a>
-            <a href="https://www.tiktok.com/@keyframeawards" target="_blank"><i class="fab fa-tiktok"></i></a>
-            <a href="https://www.youtube.com/@KeyframeAwards" target="_blank"><i class="fab fa-youtube"></i></a>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
-        </div>
+        <div class="copyright"><p>&copy; 2026 The Keyframe Awards. All rights reserved.</p></div>
     </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut, updateProfile, deleteUser } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAuth, onAuthStateChanged, signOut, updateProfile, deleteUser, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
@@ -193,8 +175,10 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        
+        const db = getFirestore(app);
+
         let currentUser = null;
+        let activeAction = null;
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
@@ -203,52 +187,108 @@
                 document.getElementById('user-email').innerText = user.email;
                 document.getElementById('display-name-input').value = user.displayName || '';
                 
-                if(user.photoURL) {
-                    document.getElementById('user-avatar').src = user.photoURL;
-                }
+                if(user.photoURL) document.getElementById('user-avatar').src = user.photoURL;
+
+                // Load nominations for this user ID
+                loadUserNominations(user.uid);
             } else {
-                // Delayed redirection to make sure Firebase registers the session on reload
                 setTimeout(() => {
-                    if(!auth.currentUser) {
-                        window.location.href = "/?action=login";
-                    }
-                }, 1500);
+                    if (!auth.currentUser) window.location.href = "/?action=login";
+                }, 1000);
             }
         });
 
-        document.getElementById('logout-btn').addEventListener('click', () => {
-            signOut(auth).then(() => {
-                alert("Logged out!");
-                window.location.href = "/";
-            });
-        });
+        // FETCH USER NOMINATIONS
+        async function loadUserNominations(uid) {
+            const list = document.getElementById('nominations-list');
+            try {
+                const q = query(collection(db, "nominations"), where("userId", "==", uid));
+                const snapshot = await getDocs(q);
 
+                if (snapshot.empty) {
+                    list.innerHTML = `<p style="color: #aaa; font-size: 0.85rem;">You haven't submitted any nominations yet.</p>`;
+                    return;
+                }
+
+                let html = '';
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    let badgeColor = "#ffaa00"; // Pending
+                    if (data.status === "approved") badgeColor = "#00ff88";
+                    if (data.status === "declined") badgeColor = "#ff3333";
+
+                    html += `
+                        <div style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); padding: 12px 15px; border-radius: 8px; margin-bottom: 10px; text-align: left;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                                <strong style="color: #fff; font-size: 0.95rem;">${data.nomineeName}</strong>
+                                <span style="background: ${badgeColor}; color: #000; font-weight: bold; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; text-transform: uppercase;">${data.status}</span>
+                            </div>
+                            <p style="margin: 0 0 5px 0; color: #aaa; font-size: 0.8rem;"><strong>Category:</strong> ${data.category}</p>
+                            <p style="margin: 0; color: #00f2fe; font-size: 0.8rem; background: rgba(0,242,254,0.05); padding: 6px; border-radius: 4px;">${data.adminNote}</p>
+                        </div>
+                    `;
+                });
+                list.innerHTML = html;
+            } catch (err) {
+                list.innerHTML = `<p style="color: #ff3333; font-size: 0.85rem;">Error loading history.</p>`;
+            }
+        }
+
+        // UPDATE NAME
         document.getElementById('save-name-btn').addEventListener('click', () => {
-            const newName = document.getElementById('display-name-input').value;
-            if(currentUser && newName.trim() !== "") {
-                updateProfile(currentUser, {
-                    displayName: newName
-                }).then(() => {
-                    alert("Display name updated successfully!");
+            const newName = document.getElementById('display-name-input').value.trim();
+            if (currentUser && newName) {
+                updateProfile(currentUser, { displayName: newName }).then(() => {
                     document.getElementById('welcome-name').innerText = `Hello, ${newName}`;
-                }).catch((error) => {
-                    alert("Error updating name: " + error.message);
+                    alert("Display name updated!");
                 });
             }
         });
 
-        document.getElementById('delete-account-btn').addEventListener('click', () => {
-            if(currentUser) {
-                const confirmDelete = confirm("Are you absolutely sure you want to delete your account? This action cannot be reversed.");
-                if(confirmDelete) {
+        // RESET PASSWORD
+        document.getElementById('reset-password-btn').addEventListener('click', () => {
+            if (currentUser && currentUser.email) {
+                sendPasswordResetEmail(auth, currentUser.email).then(() => {
+                    alert(`Password reset email sent to ${currentUser.email}.`);
+                });
+            }
+        });
+
+        // LOGOUT MODAL
+        document.getElementById('open-logout-modal').addEventListener('click', () => {
+            showConfirm("Are you sure you want to log out?", "You will need to sign back in to view your profile or cast votes.", () => {
+                signOut(auth).then(() => window.location.href = "/");
+            });
+        });
+
+        // DELETE ACCOUNT MODAL
+        document.getElementById('open-delete-modal').addEventListener('click', () => {
+            showConfirm("We're sad to see you go!", "Deleting your account permanently wipes your user profile from our platform records. This cannot be undone.", () => {
+                if (currentUser) {
                     deleteUser(currentUser).then(() => {
-                        alert("Account completely deleted.");
                         window.location.href = "/";
-                    }).catch((error) => {
-                        alert("For security reasons, please log out and log back in before deleting your account.");
+                    }).catch(() => {
+                        alert("For security, please log out and log back in before deleting your account.");
                     });
                 }
-            }
+            });
+        });
+
+        // CONFIRMATION MODAL HELPER
+        function showConfirm(title, msg, onConfirm) {
+            document.getElementById('confirm-title').innerText = title;
+            document.getElementById('confirm-msg').innerText = msg;
+            document.getElementById('confirm-modal').style.display = 'flex';
+            activeAction = onConfirm;
+        }
+
+        document.getElementById('confirm-action-btn').addEventListener('click', () => {
+            document.getElementById('confirm-modal').style.display = 'none';
+            if (activeAction) activeAction();
+        });
+
+        document.getElementById('confirm-cancel-btn').addEventListener('click', () => {
+            document.getElementById('confirm-modal').style.display = 'none';
         });
     </script>
 </body>
