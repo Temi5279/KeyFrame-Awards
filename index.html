@@ -281,7 +281,7 @@
 
         const firebaseConfig = {
             apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
-            authDomain: "keyframe-awards.firebaseapp.com",
+            authDomain: "keyframe-awards.com", // 👈 UPDATED HERE
             projectId: "keyframe-awards",
             storageBucket: "keyframe-awards.firebasestorage.app",
             messagingSenderId: "882083630221",
@@ -421,96 +421,6 @@
                 }
             }
         });
-    </script>
-
-    <!-- Local Interface Control Scripts -->
-    <script>
-        const menuToggle = document.getElementById('mobile-menu');
-        const navLinks = document.querySelector('.nav-links');
-        const modaloverlay = document.getElementById('auth-modal');
-        const loginView = document.getElementById('login-form-view');
-        const signupView = document.getElementById('signup-form-view');
-        const forgotView = document.getElementById('forgot-form-view');
-
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            menuToggle.classList.toggle('is-active');
-        });
-
-        function switchFormView(target) {
-            loginView.classList.add('hidden');
-            signupView.classList.add('hidden');
-            forgotView.classList.add('hidden');
-            if (target === 'login') loginView.classList.remove('hidden');
-            if (target === 'signup') signupView.classList.remove('hidden');
-            if (target === 'forgot') forgotView.classList.remove('hidden');
-        }
-
-        window.attachModalTriggers = function() {
-            const loginBtn = document.getElementById('open-login');
-            const signupBtn = document.getElementById('open-signup');
-            if(loginBtn) {
-                loginBtn.addEventListener('click', () => {
-                    modaloverlay.classList.add('open'); 
-                    switchFormView('login'); 
-                });
-            }
-            if (signupBtn) {
-                signupBtn.addEventListener('click', () => {
-                    modaloverlay.classList.add('open'); 
-                    switchFormView('signup'); 
-                });
-            }
-        };
-
-        document.getElementById('close-modal').addEventListener('click', () => modaloverlay.classList.remove('open'));
-        
-        document.getElementById('switch-to-signup').addEventListener('click', (e) => {
-            e.preventDefault(); 
-            switchFormView('signup'); 
-        });
-        
-        document.getElementById('switch-to-login').addEventListener('click', (e) => {
-            e.preventDefault(); 
-            switchFormView('login'); 
-        });
-        
-        document.getElementById('go-forgot').addEventListener('click', (e) => { 
-            e.preventDefault();
-            switchFormView('forgot'); 
-        });
-        
-        document.getElementById('back-to-login').addEventListener('click', (e) => {
-            e.preventDefault(); 
-            switchFormView('login'); 
-        });
-
-        window.attachModalTriggers();
-
-        // Countdown System
-        function updateCountdown() {
-            const targetDate = new Date("November 4, 2026 00:00:00").getTime();
-            const now = new Date().getTime();
-            const difference = targetDate - now;
-
-            if (difference <= 0) {
-                document.getElementById('countdown').innerHTML = "<h4>Nominations are Open!</h4>";
-                return;
-            }
-
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-            document.getElementById('days').innerText = days < 10 ? '0' + days : days;
-            document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
-            document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
-            document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
-        }
-        
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
     </script>
 </body>
 </html>
