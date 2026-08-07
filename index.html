@@ -38,7 +38,7 @@
 <body>
     <!-- HEADER / NAVIGATION -->
     <header class="navbar">
-        <div class="logo">Keyframe Awards</div>
+        <div class="logo" onclick="window.location.href='/'" style="cursor: pointer;">Keyframe Awards</div>
         <div class="menu-toggle" id="mobile-menu">
             <span class="bar"></span>
             <span class="bar"></span>
@@ -145,7 +145,7 @@
             <h1 class="animated-gradient-text">The Keyframe Awards</h1>
             <p class="hero-subtitle">Celebrating Excellence in Motion & Creativity</p>
             <div class="countdown-container">
-                <h3>Nominations Open In</h3>
+                <h3>Voting Begins In</h3>
                 <div id="countdown">
                     <div class="time-box"><span id="days">00</span><p>Days</p></div>
                     <div class="time-box"><span id="hours">00</span><p>Hours</p></div>
@@ -273,6 +273,98 @@
         </div>
     </footer>
 
+    <!-- UI Standard Controls (Hamburger, Modal & Countdown Timer) -->
+    <script>
+        // 1. HAMBURGER MENU TOGGLE
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                menuToggle.classList.toggle('is-active');
+            });
+        }
+
+        // 2. MODAL CONTROLS & VIEWS
+        const modal = document.getElementById('auth-modal');
+        const closeModal = document.getElementById('close-modal');
+        const loginView = document.getElementById('login-form-view');
+        const signupView = document.getElementById('signup-form-view');
+        const forgotView = document.getElementById('forgot-form-view');
+
+        function switchFormView(target) {
+            loginView.classList.add('hidden');
+            signupView.classList.add('hidden');
+            forgotView.classList.add('hidden');
+            if (target === 'login') loginView.classList.remove('hidden');
+            if (target === 'signup') signupView.classList.remove('hidden');
+            if (target === 'forgot') forgotView.classList.remove('hidden');
+        }
+
+        window.attachModalTriggers = function() {
+            const openLoginBtn = document.getElementById('open-login');
+            const openSignupBtn = document.getElementById('open-signup');
+            if (openLoginBtn) {
+                openLoginBtn.addEventListener('click', () => {
+                    switchFormView('login');
+                    modal.classList.add('open');
+                });
+            }
+            if (openSignupBtn) {
+                openSignupBtn.addEventListener('click', () => {
+                    switchFormView('signup');
+                    modal.classList.add('open');
+                });
+            }
+        };
+
+        window.attachModalTriggers();
+
+        if (closeModal) {
+            closeModal.addEventListener('click', () => modal.classList.remove('open'));
+        }
+
+        document.getElementById('switch-to-signup')?.addEventListener('click', (e) => { e.preventDefault(); switchFormView('signup'); });
+        document.getElementById('switch-to-login')?.addEventListener('click', (e) => { e.preventDefault(); switchFormView('login'); });
+        document.getElementById('go-forgot')?.addEventListener('click', (e) => { e.preventDefault(); switchFormView('forgot'); });
+        document.getElementById('back-to-login')?.addEventListener('click', (e) => { e.preventDefault(); switchFormView('login'); });
+
+        // Auto-open modal if redirected with URL parameter `?action=login`
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('action') === 'login') {
+            switchFormView('login');
+            modal.classList.add('open');
+        }
+
+        // 3. COUNTDOWN TIMER TO NOVEMBER 4, 2026
+        const targetDate = new Date("November 4, 2026 00:00:00").getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = days < 10 ? '0' + days : days;
+                document.getElementById('hours').innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById('minutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById('seconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+            } else {
+                document.getElementById('days').innerText = "00";
+                document.getElementById('hours').innerText = "00";
+                document.getElementById('minutes').innerText = "00";
+                document.getElementById('seconds').innerText = "00";
+            }
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+
     <!-- Firebase SDK (Version 10.8.0) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -281,7 +373,7 @@
 
         const firebaseConfig = {
             apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
-            authDomain: "keyframe-awards.com", // 👈 UPDATED HERE
+            authDomain: "keyframe-awards.com",
             projectId: "keyframe-awards",
             storageBucket: "keyframe-awards.firebasestorage.app",
             messagingSenderId: "882083630221",
@@ -294,7 +386,7 @@
         const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
 
-        const CLOUDFLARE_WORKER_URL = "https://keyframe-email-service.temiloluwa809.workers.dev/"; // PASTE YOUR CLOUDFLARE WORKER URL HERE
+        const CLOUDFLARE_WORKER_URL = "YOUR_WORKER_URL_HERE"; 
 
         async function triggerWelcomeEmail(email, name) {
             if (!CLOUDFLARE_WORKER_URL || CLOUDFLARE_WORKER_URL === "YOUR_WORKER_URL_HERE") return;
@@ -399,15 +491,13 @@
         const authActions = document.getElementById('auth-header-actions');
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                // Default placeholders while checking Firestore
                 let printName = "Creator";
                 let printPic = user.photoURL || "https://ui-avatars.com/api/?name=User&background=00f2fe&color=0d001a";
 
-                // Check Firestore if user signed up with email/password to grab their submitted name
                 try {
                     const docSnap = await getDoc(doc(db, "users", user.uid));
                     if (docSnap.exists() && docSnap.data().fullName) {
-                        printName = docSnap.data().fullName.split(' ')[0]; // Grabs just their first name
+                        printName = docSnap.data().fullName.split(' ')[0];
                         if (!user.photoURL) {
                             printPic = `https://ui-avatars.com/api/?name=${encodeURIComponent(printName)}&background=ff007f&color=fff`;
                         }
