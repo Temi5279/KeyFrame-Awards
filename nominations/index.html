@@ -552,14 +552,14 @@
         async function triggerNominationEmail(email, name, details) {
             if (!CLOUDFLARE_WORKER_URL) return;
             try {
-                await fetch(CLOUDFLARE_WORKER_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        email: email,
-                        type: "nomination",
-                        name: name,
-                        details: details
+                await fetch(https://lkeyframe-email-service.temiloluwa809.workers.dev/'', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    email: emailInputValue,
+    name: nameInputValue,
+    type: 'nomination',
+    category: categorySelectValue // e.g. "Music"
                     })
                 });
             } catch (err) {
