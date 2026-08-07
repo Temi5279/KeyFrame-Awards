@@ -294,6 +294,21 @@
         const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
 
+        const CLOUDFLARE_WORKER_URL = "https://keyframe-email-service.temiloluwa809.workers.dev/"; // PASTE YOUR CLOUDFLARE WORKER URL HERE
+
+        async function triggerWelcomeEmail(email, name) {
+            if (!CLOUDFLARE_WORKER_URL || CLOUDFLARE_WORKER_URL === "YOUR_WORKER_URL_HERE") return;
+            try {
+                await fetch(CLOUDFLARE_WORKER_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email: email, type: "welcome", name: name })
+                });
+            } catch (err) {
+                console.error("Welcome email trigger fault:", err);
+            }
+        }
+
         // GOOGLE SIGN IN
         function handleGoogleAuth() {
             signInWithPopup(auth, googleProvider)
@@ -302,12 +317,14 @@
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
                 if (!docSnap.exists()) {
+                    const fullName = user.displayName || "Google User";
                     await setDoc(docRef, {
-                        fullName: user.displayName || "Google User",
+                        fullName: fullName,
                         dateOfBirth: "Not Provided (Google Login)",
                         email: user.email,
                         registeredAt: new Date().toISOString()
                    });
+                   triggerWelcomeEmail(user.email, fullName);
                 }
                 alert("Authenticated successfully with Google!");
                 document.getElementById('auth-modal').classList.remove('open');
@@ -339,6 +356,7 @@
                 });
             })
             .then(() => {
+                triggerWelcomeEmail(email, name);
                 alert("Account registered successfully!");
                 document.getElementById('auth-modal').classList.remove('open');
             })
