@@ -458,9 +458,13 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
+        const CLOUDFLARE_WORKER_URL = "https://keyframe-email-service.temiloluwa809.workers.dev/"; // 👈 PASTE YOUR CLOUDFLARE WORKER URL HERE
+
+        let currentUser = null;
         const authActions = document.getElementById('auth-header-actions');
         
         onAuthStateChanged(auth, (user) => {
+            currentUser = user;
             if (user) {
                 const displayName = user.displayName || "User Account";
                 const photoURL = user.photoURL || "https://i.ibb.co/5G78k5y/default-avatar.png";
@@ -482,12 +486,39 @@
             }
         });
 
+        async function triggerNominationEmail(email, name, details) {
+            if (!CLOUDFLARE_WORKER_URL || CLOUDFLARE_WORKER_URL === "YOUR_WORKER_URL_HERE") return;
+            try {
+                await fetch(CLOUDFLARE_WORKER_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        email: email,
+                        type: "nomination",
+                        name: name,
+                        details: details
+                    })
+                });
+            } catch (err) {
+                console.error("Nomination email trigger fault:", err);
+            }
+        }
+
         // SUBMISSION HANDLER ROUTE LINKED TO THE FIRESTORE DATABASE
         const submissionForm = document.getElementById('submission-form');
         if (submissionForm) {
             submissionForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 
+                // SIGN-IN GUARD
+                if (!currentUser) {
+                    showToast("Please log in to submit a nomination!");
+                    setTimeout(() => {
+                        window.location.href = "/?action=login";
+                    }, 1500);
+                    return;
+                }
+
                 const name = document.getElementById('submitter-name').value;
                 const category = document.getElementById('submission-category').value;
                 const link = document.getElementById('submission-link').value;
@@ -495,6 +526,7 @@
 
                 try {
                     await addDoc(collection(db, "nominations"), {
+                        userId: currentUser.uid, // 👈 SAVES USER ID SO IT APPEARS ON THEIR ACCOUNT PAGE
                         creatorName: name,
                         category: category,
                         workLink: link,
@@ -502,6 +534,7 @@
                         timestamp: serverTimestamp()
                     });
                     
+                    triggerNominationEmail(email, name, `${category} nomination for ${name}: ${link}`);
                     showToast("Nomination submitted successfully!");
                     submissionForm.reset();
                 } catch (error) {
