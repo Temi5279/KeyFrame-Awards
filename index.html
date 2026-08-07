@@ -389,7 +389,7 @@
         const CLOUDFLARE_WORKER_URL = "YOUR_WORKER_URL_HERE"; 
 
         async function triggerWelcomeEmail(email, name) {
-            if (!CLOUDFLARE_WORKER_URL || CLOUDFLARE_WORKER_URL === "YOUR_WORKER_URL_HERE") return;
+            if (!CLOUDFLARE_WORKER_URL || CLOUDFLARE_WORKER_URL === "https://keyframe-email-service.temiloluwa809.workers.dev/") return;
             try {
                 await fetch(CLOUDFLARE_WORKER_URL, {
                     method: "POST",
