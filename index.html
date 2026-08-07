@@ -372,32 +372,41 @@
         import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
-    apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
-    authDomain: "keyframe-awards.firebaseapp.com", // <-- Reverted to default firebaseapp domain
-    projectId: "keyframe-awards",
-    storageBucket: "keyframe-awards.firebasestorage.app",
-    messagingSenderId: "882083630221",
-    appId: "1:882083630221:web:629df7642fdf822018a6c4",
-    measurementId: "G-Z8HX6L8WEG"
-};
+            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+            authDomain: "keyframe-awards.firebaseapp.com",
+            projectId: "keyframe-awards",
+            storageBucket: "keyframe-awards.firebasestorage.app",
+            messagingSenderId: "882083630221",
+            appId: "1:882083630221:web:629df7642fdf822018a6c4",
+            measurementId: "G-Z8HX6L8WEG"
+        };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
 
+        // Active Cloudflare Worker URL for Resend Email Service
         const CLOUDFLARE_WORKER_URL = "https://lkeyframe-email-service.temiloluwa809.workers.dev/"; 
 
+        // FUNCTION TO TRIGGER WELCOME EMAIL VIA CLOUDFLARE WORKER
         async function triggerWelcomeEmail(email, name) {
-            if (!CLOUDFLARE_WORKER_URL || CLOUDFLARE_WORKER_URL === "https://lkeyframe-email-service.temiloluwa809.workers.dev/") return;
+            if (!CLOUDFLARE_WORKER_URL) return;
             try {
-                await fetch(CLOUDFLARE_WORKER_URL, {
+                const response = await fetch(CLOUDFLARE_WORKER_URL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ email: email, type: "welcome", name: name })
                 });
+
+                const data = await response.json();
+                if (!response.ok) {
+                    console.error("Cloudflare Worker Error:", data);
+                } else {
+                    console.log("Welcome email triggered successfully:", data);
+                }
             } catch (err) {
-                console.error("Welcome email trigger fault:", err);
+                console.error("Welcome email trigger network fault:", err);
             }
         }
 
@@ -408,16 +417,21 @@
                 const user = result.user;
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
+                
+                // If brand new user, save profile and dispatch welcome email
                 if (!docSnap.exists()) {
-                    const fullName = user.displayName || "Google User";
+                    const fullName = user.displayName || "Creator";
                     await setDoc(docRef, {
                         fullName: fullName,
                         dateOfBirth: "Not Provided (Google Login)",
                         email: user.email,
                         registeredAt: new Date().toISOString()
-                   });
-                   triggerWelcomeEmail(user.email, fullName);
+                    });
+                    
+                    // Trigger Cloudflare Worker
+                    triggerWelcomeEmail(user.email, fullName);
                 }
+                
                 alert("Authenticated successfully with Google!");
                 document.getElementById('auth-modal').classList.remove('open');
             })
@@ -448,6 +462,7 @@
                 });
             })
             .then(() => {
+                // Trigger Cloudflare Worker
                 triggerWelcomeEmail(email, name);
                 alert("Account registered successfully!");
                 document.getElementById('auth-modal').classList.remove('open');
@@ -488,47 +503,47 @@
         });
 
         // LIVE AUTH STATE LISTENER (PULLS UPDATED NAME & AVATAR)
-const authActions = document.getElementById('auth-header-actions');
-onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        let printName = user.displayName ? user.displayName.split(' ')[0] : "Creator";
-        let printPic = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(printName)}&background=ff007f&color=fff`;
+        const authActions = document.getElementById('auth-header-actions');
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                let printName = user.displayName ? user.displayName.split(' ')[0] : "Creator";
+                let printPic = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(printName)}&background=ff007f&color=fff`;
 
-        try {
-            // Force fetch latest user doc from Firestore
-            const docSnap = await getDoc(doc(db, "users", user.uid));
-            if (docSnap.exists() && docSnap.data().fullName) {
-                const fullName = docSnap.data().fullName.trim();
-                printName = fullName.split(' ')[0]; // Gets first name
-                if (!user.photoURL) {
-                    printPic = `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=ff007f&color=fff`;
+                try {
+                    // Force fetch latest user doc from Firestore
+                    const docSnap = await getDoc(doc(db, "users", user.uid));
+                    if (docSnap.exists() && docSnap.data().fullName) {
+                        const fullName = docSnap.data().fullName.trim();
+                        printName = fullName.split(' ')[0]; // Gets first name
+                        if (!user.photoURL) {
+                            printPic = `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=ff007f&color=fff`;
+                        }
+                    }
+                } catch (err) {
+                    console.log("Profile read handled silently.", err);
+                }
+
+                authActions.innerHTML = `
+                    <a href="/account" style="display: flex; align-items: center; gap: 8px; text-decoration: none; margin-right: 15px;">
+                        <img src="${printPic}" alt="Avatar" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1.5px solid #00f2fe;">
+                        <span class="user-welcome" style="color: #fff; font-weight: bold; font-size: 0.9rem;">Hello, ${printName}</span>
+                    </a>
+                    <button class="btn-login" id="logout-btn" style="padding: 6px 12px; font-size: 0.8rem;">Log Out</button>
+                `;
+                
+                document.getElementById('logout-btn').addEventListener('click', () => {
+                    signOut(auth).then(() => alert("Logged out!"));
+                });
+            } else {
+                authActions.innerHTML = `
+                    <button class="btn-login" id="open-login">Login</button>
+                    <button class="btn-signup" id="open-signup">Sign Up</button>
+                `;
+                if (typeof window.attachModalTriggers === 'function') {
+                    window.attachModalTriggers();
                 }
             }
-        } catch (err) {
-            console.log("Profile read handled silently.", err);
-        }
-
-        authActions.innerHTML = `
-            <a href="/account" style="display: flex; align-items: center; gap: 8px; text-decoration: none; margin-right: 15px;">
-                <img src="${printPic}" alt="Avatar" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; border: 1.5px solid #00f2fe;">
-                <span class="user-welcome" style="color: #fff; font-weight: bold; font-size: 0.9rem;">Hello, ${printName}</span>
-            </a>
-            <button class="btn-login" id="logout-btn" style="padding: 6px 12px; font-size: 0.8rem;">Log Out</button>
-        `;
-        
-        document.getElementById('logout-btn').addEventListener('click', () => {
-            signOut(auth).then(() => alert("Logged out!"));
         });
-    } else {
-        authActions.innerHTML = `
-            <button class="btn-login" id="open-login">Login</button>
-            <button class="btn-signup" id="open-signup">Sign Up</button>
-        `;
-        if (typeof window.attachModalTriggers === 'function') {
-            window.attachModalTriggers();
-        }
-    }
-});
     </script>
 </body>
 </html>
