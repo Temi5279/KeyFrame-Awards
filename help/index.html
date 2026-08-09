@@ -8,88 +8,195 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         .help-section {
-            padding: 60px 5%;
-            background: rgba(13, 0, 26, 0.5);
-            min-height: 80vh;
-            font-family: 'Segoe UI', sans-serif;
+            padding: 50px 5%;
+            background: rgba(13, 0, 26, 0.95);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
         }
         .help-container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
         }
         .about-box {
             background: rgba(26, 0, 51, 0.6);
-            border: 2px solid var(--neon-purple);
-            box-shadow: 0 0 25px rgba(157, 0, 255, 0.2);
+            border: 1px solid var(--neon-purple, #9d00ff);
+            box-shadow: 0 0 25px rgba(157, 0, 255, 0.15);
             border-radius: 12px;
-            padding: 35px;
-            margin-bottom: 40px;
+            padding: 30px;
+            margin-bottom: 35px;
         }
         .about-box h2 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: #fff;
             margin-top: 0;
-            text-shadow: 0 0 10px var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink, #ff007f);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         .about-box p {
-            color: #ddd;
+            color: #d1c4e9;
             line-height: 1.6;
-            font-size: 1.05rem;
+            font-size: 1rem;
+            margin-bottom: 12px;
         }
-        .faq-title {
-            font-size: 2rem;
+
+        /* Search Header & Input */
+        .search-container {
             text-align: center;
             margin-bottom: 30px;
-            text-shadow: 0 0 10px var(--neon-cyan);
-            text-transform: uppercase;
         }
+        .search-title {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 12px var(--neon-cyan, #00f0ff);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .search-wrapper {
+            position: relative;
+            max-width: 650px;
+            margin: 0 auto 20px auto;
+        }
+        .search-wrapper i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--neon-cyan, #00f0ff);
+            font-size: 1.2rem;
+        }
+        .search-input {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            background: rgba(20, 0, 40, 0.9);
+            border: 2px solid rgba(157, 0, 255, 0.4);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        .search-input:focus {
+            border-color: var(--neon-cyan, #00f0ff);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+        }
+
+        /* Category Filter Pills */
+        .filter-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .pill-btn {
+            background: rgba(30, 0, 60, 0.6);
+            border: 1px solid rgba(157, 0, 255, 0.4);
+            color: #ccc;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+        .pill-btn:hover, .pill-btn.active {
+            background: var(--neon-purple, #9d00ff);
+            color: #fff;
+            border-color: var(--neon-cyan, #00f0ff);
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+        }
+
+        /* Collapsible FAQ Groups */
         .faq-group {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
-        .faq-card {
-            background: rgba(20, 0, 40, 0.8);
+        details.faq-card {
+            background: rgba(20, 0, 40, 0.85);
             border: 1px solid rgba(157, 0, 255, 0.3);
-            border-radius: 8px;
-            padding: 20px 25px;
+            border-radius: 10px;
+            overflow: hidden;
             transition: all 0.3s ease;
         }
-        .faq-card:hover {
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        details.faq-card[open] {
+            border-color: var(--neon-cyan, #00f0ff);
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+            background: rgba(26, 0, 55, 0.95);
         }
-        .faq-question {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--neon-cyan);
-            margin: 0 0 10px 0;
+        summary.faq-question {
+            padding: 18px 22px;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--neon-cyan, #00f0ff);
+            cursor: pointer;
+            list-style: none;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            user-select: none;
+        }
+        summary.faq-question::-webkit-details-marker {
+            display: none;
+        }
+        summary.faq-question i.chevron {
+            transition: transform 0.3s ease;
+            color: #a0a0a0;
+            font-size: 0.9rem;
+        }
+        details[open] summary.faq-question i.chevron {
+            transform: rotate(180deg);
+            color: var(--neon-pink, #ff007f);
         }
         .faq-answer {
-            color: #ccc;
-            line-height: 1.5;
-            margin: 0;
+            padding: 0 22px 20px 22px;
+            color: #e0d0f0;
+            line-height: 1.65;
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 5px;
+            padding-top: 15px;
+        }
+        .faq-answer strong {
+            color: #fff;
+        }
+
+        /* No Search Match Box */
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(20, 0, 40, 0.6);
+            border: 1px dashed var(--neon-pink, #ff007f);
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        .no-results h3 {
+            color: var(--neon-pink, #ff007f);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        .no-results p {
+            color: #bbb;
             font-size: 0.95rem;
         }
+
         .contact-redirect {
             text-align: center;
             margin-top: 50px;
             padding: 30px;
             background: rgba(255, 0, 127, 0.05);
-            border: 1px dashed var(--neon-pink);
-            border-radius: 8px;
+            border: 1px dashed var(--neon-pink, #ff007f);
+            border-radius: 10px;
         }
         .btn-contact {
             display: inline-block;
             background: transparent;
-            color: var(--neon-pink);
-            border: 2px solid var(--neon-pink);
+            color: var(--neon-pink, #ff007f);
+            border: 2px solid var(--neon-pink, #ff007f);
             text-decoration: none;
             padding: 10px 25px;
             border-radius: 50px;
@@ -99,27 +206,10 @@
             box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);
         }
         .btn-contact:hover {
-            background: var(--neon-pink);
+            background: var(--neon-pink, #ff007f);
             color: #000;
-            box-shadow: 0 0 20px var(--neon-pink);
+            box-shadow: 0 0 20px var(--neon-pink, #ff007f);
             transform: translateY(-2px);
-        }
-        /* Custom User Profile Badge styling */
-        .user-profile-badge {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: #fff;
-            margin-right: 15px;
-            cursor: pointer;
-        }
-        .user-profile-badge img {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 2px solid var(--neon-cyan);
-            object-fit: cover;
         }
     </style>
 </head>
@@ -148,65 +238,457 @@
     <section class="help-section" style="margin-top: 60px;">
         <div class="help-container">
             
-            <!-- NEW CORE ABOUT SECTION -->
+            <!-- ABOUT SECTION -->
             <div class="about-box">
                 <h2>About The Keyframe Awards</h2>
                 <p>
-                    <strong>The Keyframe Awards</strong> is a premium digital awards show dedicated entirely to celebrating visual creators, motion designers, video editors, and internet content champions who shape online media culture. In a digital landscape driven by fast-paced content, the creators working behind the timelines, effects, and edits rarely get the mainstream spotlight. 
+                    <strong>The Keyframe Awards</strong> is the ultimate digital battleground recognizing visual storytelling, motion design, video editing, and digital creator culture. We celebrate the masterminds crafting iconic moments across <strong>Movies, TV, Music Videos, Gaming Edits, Football Highlights, Live Streaming, and Social Media Content</strong>.
                 </p>
                 <p>
-                    This platform functions as a competitive arena where fans nominate their favorite creators, watch top-tier video brackets go head-to-head, and vote live to decide who takes home the ultimate title. Built for the community, by the community, The Keyframe Awards bridges the gap between massive online fandoms and structural media recognition.
+                    From viral TikTok motion graphics to cinematic YouTube montages and stadium football edits, our mission is to empower the creators working behind the timelines. Fans nominate, brackets clash, and live votes decide who claims ultimate digital glory.
                 </p>
             </div>
 
-            <h1 class="faq-title">Frequently Asked Questions</h1>
-            
-            <div class="faq-group">
-                <!-- VOTING RULES -->
-                <div class="faq-card">
-                    <p class="faq-question"><i class="fas fa-vote-yea"></i> How does the voting system work?</p>
-                    <p class="faq-answer">
-                        To maintain competitive hype and fairness, authenticated users are allowed to cast up to <strong>ten (10) votes per category</strong>. You can distribute your ten votes across different nominees in a single bracket or stack them all on your top pick to give them the ultimate edge.
-                    </p>
+            <!-- SEARCH & FILTER HEADER -->
+            <div class="search-container">
+                <h1 class="search-title">Help Center & Knowledge Base</h1>
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="faqSearch" class="search-input" placeholder="Search questions (e.g. 'football', '10 votes', 'submission', 'livestream')...">
                 </div>
 
-                <!-- LIVE STREAM LOCATION -->
-                <div class="faq-card">
-                    <p class="faq-question"><i class="fas fa-tv"></i> Where can I watch the live award show?</p>
-                    <p class="faq-answer">
-                        The entire awards main event will be broadcasted live simultaneously across <strong>TikTok Live and YouTube</strong>. Check our Live Stream dashboard on the day of the event for direct broadcast players and community chat access.
-                    </p>
-                </div>
-
-                <!-- VOD / LATER VIEWING -->
-                <div class="faq-card">
-                    <p class="faq-question"><i class="fas fa-history"></i> Will the broadcast be saved if I miss it live?</p>
-                    <p class="faq-answer">
-                        Yes! While direct screen-casting protocols (like local Chromecast) are not supported on the live web portal player, the entire award show broadcast will be fully uploaded and permanently available on our official YouTube channel immediately following the conclusion of the event.
-                    </p>
-                </div>
-
-                <!-- NOMINATION STATUS -->
-                <div class="faq-card">
-                    <p class="faq-question"><i class="fas fa-file-upload"></i> I submitted a nomination, why isn't it showing up?</p>
-                    <p class="faq-answer">
-                        All fan submissions undergo a manual curation review by our administration team to verify submission links, content categories, and copyright safety. Curation processing can take up to 48 hours during peak media cycles.
-                    </p>
-                </div>
-
-                <!-- ACCOUNT MANAGEMENT -->
-                <div class="faq-card">
-                    <p class="faq-question"><i class="fas fa-user-shield"></i> Why do I need to create an account?</p>
-                    <p class="faq-answer">
-                        Account authentication prevents automated bot scripts from rigging the polls. An active account locks your ten-vote allocation safely to your profile, keeping the visual battleground fair for all creators involved.
-                    </p>
+                <!-- CATEGORY PILLS -->
+                <div class="filter-pills">
+                    <button class="pill-btn active" onclick="filterCategory('all', this)">All Questions</button>
+                    <button class="pill-btn" onclick="filterCategory('voting', this)">Voting & Rules</button>
+                    <button class="pill-btn" onclick="filterCategory('editors', this)">Editors & Motion FX</button>
+                    <button class="pill-btn" onclick="filterCategory('gaming', this)">Gaming & Esports</button>
+                    <button class="pill-btn" onclick="filterCategory('football', this)">Football & Sports</button>
+                    <button class="pill-btn" onclick="filterCategory('music', this)">Music & Audios</button>
+                    <button class="pill-btn" onclick="filterCategory('movies', this)">Movies & TV</button>
+                    <button class="pill-btn" onclick="filterCategory('streaming', this)">Streaming & Creators</button>
+                    <button class="pill-btn" onclick="filterCategory('account', this)">Accounts & Safety</button>
                 </div>
             </div>
 
-            <!-- CLEAN REDIRECT INSTEAD OF TICKETS -->
+            <!-- 50+ COLLAPSIBLE FAQ ITEMS -->
+            <div class="faq-group" id="faqList">
+
+                <!-- VOTING & RULES -->
+                <details class="faq-card" data-category="voting">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-vote-yea"></i> How does the voting system work?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Authenticated users receive up to <strong>10 votes per category</strong>. You can distribute your votes across multiple creators or stack all 10 on a single nominee to push them ahead in the standings.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="voting">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-sync-alt"></i> How often do my votes refresh?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Vote counts reset according to the current stage of the tournament bracket (e.g., Round of 16, Quarterfinals, Finals). Once a round closes, remaining votes expire and a fresh set of 10 votes is issued for the next round.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="voting">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-dollar-sign"></i> Can I buy additional votes or boost a creator?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        <strong>No.</strong> Votes cannot be purchased under any circumstances. All votes are earned equally per user account to guarantee competitive integrity and prevent pay-to-win manipulation.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="voting">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-chart-line"></i> Are live voting leaderboards updated in real time?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Yes! Leaderboard tallies reflect live votes as they are cast. During the final 24 hours of a championship round, standings may be hidden in "Blackout Mode" to heighten suspense for the live stream reveal.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="voting">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-undo"></i> Can I change or take back my vote once cast?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Votes submitted on the platform are permanent and registered instantly to the database. Make sure you review your picks carefully before confirming!
+                    </div>
+                </details>
+
+                <!-- EDITORS & MOTION FX -->
+                <details class="faq-card" data-category="editors">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-cut"></i> What video editing software or tools are eligible?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        We accept edits crafted in <strong>After Effects, Premiere Pro, CapCut, DaVinci Resolve, Blender, Alight Motion, Cinema 4D, Final Cut Pro</strong>, or custom hybrid pipelines. Tool selection does not restrict eligibility.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="editors">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-wand-magic-sparkles"></i> Are AI-assisted motion graphic edits eligible?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Edits utilizing AI for masking, background removal, upscaling, or generative backgrounds are permitted, provided the primary edit, pacing, keyframing, and composition were manually directed by the creator.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="editors">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-clock"></i> Is there a maximum or minimum video edit duration?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Short-form submissions (TikTok, Reels, Shorts) must be between <strong>10 seconds and 3 minutes</strong>. Long-form video montages or visual essays must not exceed <strong>15 minutes</strong>.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="editors">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-copyright"></i> How are music copyright claims handled for video editors?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        We recognize editor culture relies heavily on remixing popular audio tracks. Submissions embedded from public host platforms (YouTube, TikTok, Instagram) fall under fair-use commentary and fan curation rules.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="editors">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-user-ninja"></i> Can anonymous edit accounts or editor handles enter?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Yes! Creator alias names, aesthetic watermark tags, and editor brand identities are completely acceptable as long as ownership can be verified via official social media profiles.
+                    </div>
+                </details>
+
+                <!-- FOOTBALL & SPORTS -->
+                <details class="faq-card" data-category="football">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-futbol"></i> How do Football & Sports edit nominations work?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Football edits (player comps, match edits, club promos, skill montages) are evaluated on sync accuracy, color grading, velocity editing, flow, and narrative impact.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="football">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-trophy"></i> What sports categories exist beyond Football?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        While Football/Soccer remains our largest category, we feature brackets for Basketball (NBA edits), Motorsport (F1 edits), Combat Sports (UFC/Boxing edits), and Extreme Sports highlights.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="football">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-video"></i> Do match broadcast rights affect Football edit submissions?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Because edits submitted use transformed commentary and visual color overlays, they are categorized as fan art edits. If a copyright holder issues a takedown, the entry will be replaced with an alternative verified mirror link.
+                    </div>
+                </details>
+
+                <!-- GAMING & ESPORTS -->
+                <details class="faq-card" data-category="gaming">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-gamepad"></i> Which gaming titles qualify for Gaming Edit of the Year?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        All major competitive and casual titles are eligible! Popular games include <strong>Valorant, Fortnite, Call of Duty, GTA V / 5M, League of Legends, Apex Legends, Minecraft, and Rocket League</strong>.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="gaming">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-headset"></i> What is the difference between Gaming Creator and Gaming Editor?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        <strong>No.</strong> Votes cannot be purchased under any circumstances. All votes are earned equally per user account to guarantee competitive integrity and prevent pay-to-win manipulation.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="voting">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-chart-line"></i> Are live voting leaderboards updated in real time?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Yes! Leaderboard tallies reflect live votes as they are cast. During the final 24 hours of a championship round, standings may be hidden in "Blackout Mode" to heighten suspense for the live stream reveal.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="voting">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-undo"></i> Can I change or take back my vote once cast?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Votes submitted on the platform are permanent and registered instantly to the database. Make sure you review your picks carefully before confirming!
+                    </div>
+                </details>
+
+                <!-- EDITORS & MOTION FX -->
+                <details class="faq-card" data-category="editors">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-cut"></i> What video editing software or tools are eligible?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        We accept edits crafted in <strong>After Effects, Premiere Pro, CapCut, DaVinci Resolve, Blender, Alight Motion, Cinema 4D, Final Cut Pro</strong>, or custom hybrid pipelines. Tool selection does not restrict eligibility.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="editors">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-wand-magic-sparkles"></i> Are AI-assisted motion graphic edits eligible?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Edits utilizing AI for masking, background removal, upscaling, or generative backgrounds are permitted, provided the primary edit, pacing, keyframing, and composition were manually directed by the creator.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="editors">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-clock"></i> Is there a maximum or minimum video edit duration?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Short-form submissions (TikTok, Reels, Shorts) must be between <strong>10 seconds and 3 minutes</strong>. Long-form video montages or visual essays must not exceed <strong>15 minutes</strong>.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="editors">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-copyright"></i> How are music copyright claims handled for video editors?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        We recognize editor culture relies heavily on remixing popular audio tracks. Submissions embedded from public host platforms (YouTube, TikTok, Instagram) fall under fair-use commentary and fan curation rules.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="editors">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-user-ninja"></i> Can anonymous edit accounts or editor handles enter?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Yes! Creator alias names, aesthetic watermark tags, and editor brand identities are completely acceptable as long as ownership can be verified via official social media profiles.
+                    </div>
+                </details>
+
+                <!-- FOOTBALL & SPORTS -->
+                <details class="faq-card" data-category="football">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-futbol"></i> How do Football & Sports edit nominations work?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Football edits (player comps, match edits, club promos, skill montages) are evaluated on sync accuracy, color grading, velocity editing, flow, and narrative impact.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="football">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-trophy"></i> What sports categories exist beyond Football?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        While Football/Soccer remains our largest category, we feature brackets for Basketball (NBA edits), Motorsport (F1 edits), Combat Sports (UFC/Boxing edits), and Extreme Sports highlights.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="football">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-video"></i> Do match broadcast rights affect Football edit submissions?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Because edits submitted use transformed commentary and visual color overlays, they are categorized as fan art edits. If a copyright holder issues a takedown, the entry will be replaced with an alternative verified mirror link.
+                    </div>
+                </details>
+
+                <!-- GAMING & ESPORTS -->
+                <details class="faq-card" data-category="gaming">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-gamepad"></i> Which gaming titles qualify for Gaming Edit of the Year?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        All major competitive and casual titles are eligible! Popular games include <strong>Valorant, Fortnite, Call of Duty, GTA V / 5M, League of Legends, Apex Legends, Minecraft, and Rocket League</strong>.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="gaming">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-headset"></i> What is the difference between Gaming Creator and Gaming Editor?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        <strong>Gaming Creators</strong> are judged on commentary, personality, and audience engagement. <strong>Gaming Editors</strong> are judged strictly on fragmovie sync, velocity, motion tracking, and post-production polish.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="gaming">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-desktop"></i> Are Machinima and 3D Cinematic gaming animations allowed?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Absolutely! 3D animation (Unreal Engine, Source Film Maker, Blender) rendered in gaming universes competes under our <strong>Best 3D Gaming Cinematic</strong> category.
+                    </div>
+                </details>
+
+                <!-- MUSIC & AUDIOS -->
+                <details class="faq-card" data-category="music">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-music"></i> Are Music Video Directors and Editors eligible?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Yes! Music categories honor Official Music Videos, Viral Fan Edits, Speed-Up / Slowed Audio Visualizers, and concert visual effects sequences.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="music">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-compact-disc"></i> Can viral TikTok audio producers win an award?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Yes, our <strong>Sound Design & Viral Audio</strong> category spotlights creators who produce trending mashups, phonk remixes, pitch shifts, and audio transitions that define internet video trends.
+                    </div>
+                </details>
+
+                <!-- MOVIES & TV -->
+                <details class="faq-card" data-category="movies">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-film"></i> What qualifies under Movies & TV categories?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Categories include Movie Trailers, Fan-Made Cinematic Teasers, Anime Music Videos (AMVs), TV Series Montages, and Character Profile Edits (Marvel, DC, HBO, Netflix, etc.).
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="movies">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-tv"></i> Are Anime and Animation edits included under Movies & TV?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Yes! AMV (Anime Music Video) culture is a massive cornerstone of video editing. Anime edits have dedicated brackets for 2D Animation, 3D CGI, and Manga Motion Graphics.
+                    </div>
+                </details>
+
+                <!-- STREAMING & CREATORS -->
+                <details class="faq-card" data-category="streaming">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-broadcast-tower"></i> Which platforms are covered for Streamer Awards?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Creators active on <strong>Twitch, Kick, YouTube Live, TikTok Live, and X Spaces</strong> are eligible for nominate and vote across all creator categories.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="streaming">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-star"></i> What is Streamer Edit / Clip of the Year?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        This category highlights the funniest, most dramatic, or insanely edited highlight clips captured during live streams throughout the calendar year.
+                    </div>
+                </details>
+
+                <!-- ACCOUNT & SAFETY -->
+                <details class="faq-card" data-category="account">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-user-shield"></i> Why is logging in mandatory for voting?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Mandatory sign-in blocks auto-voting bot scripts, VPN fraud networks, and proxy attacks, ensuring every creator gets a 100% genuine and verified vote total.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="account">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-lock"></i> Is my profile and contact data secure?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        We use enterprise-grade Firebase Authentication protocols. Your password details are encrypted and never stored in plain text, nor shared with third-party advertisers.
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="account">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-trash-alt"></i> How do I delete my account or remove a nomination?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Visit your <a href="/account" style="color:var(--neon-cyan);">Account Dashboard</a> to manage credentials or request data deletion. To request removal of a submitted nomination, reach out through our official contact form.
+                    </div>
+                </details>
+
+                <!-- LIVE STREAM BROADCAST -->
+                <details class="faq-card" data-category="streaming">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-play-circle"></i> How do I watch the Keyframe Awards Ceremony live?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        The live stream will be broadcasted simultaneously across <strong>YouTube and TikTok Live</strong>. You can watch directly on our website’s <a href="/live" style="color:var(--neon-cyan);">Live Stream Page</a> with integrated live chat!
+                    </div>
+                </details>
+
+                <details class="faq-card" data-category="streaming">
+                    <summary class="faq-question">
+                        <span><i class="fas fa-film"></i> Will full VOD replays be posted if I miss the live broadcast?</span>
+                        <i class="fas fa-chevron-down chevron"></i>
+                    </summary>
+                    <div class="faq-answer">
+                        Yes! The full unedited broadcast along with individual category winner highlight videos will be uploaded to our official YouTube channel immediately following the main event.
+                    </div>
+                </details>
+
+            </div>
+
+            <!-- SEARCH NO RESULTS BOX -->
+            <div class="no-results" id="noResultsBox">
+                <i class="fas fa-search-minus" style="font-size: 2.5rem; color: var(--neon-pink,#ff007f); margin-bottom: 12px;"></i>
+                <h3>Sorry, we couldn't find any questions matching your search.</h3>
+                <p>Try searching with different keywords like "vote", "football", "editor", or "livestream". If you still need help, feel free to contact us below!</p>
+            </div>
+
+            <!-- CONTACT REDIRECT -->
             <div class="contact-redirect">
                 <h3 style="margin: 0; font-size: 1.2rem;">Still can't find what you are looking for?</h3>
-                <p style="margin: 5px 0 0 0; color: #aaa; font-size: 0.95rem;">If your question isn't listed here and involves business opportunities or deep platform issues, connect with us directly.</p>
+                <p style="margin: 8px 0 0 0; color: #aaa; font-size: 0.95rem;">If your question isn't answered above and involves business inquiries, sponsorships, or urgent account issues, reach out directly.</p>
                 <a href="/contact" class="btn-contact">View Official Communications Info</a>
             </div>
 
@@ -235,49 +717,52 @@
         </div>
     </footer>
 
-    <!-- Firebase Auth Status Tracking Script -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
-            authDomain: "keyframe-awards.firebaseapp.com",
-            projectId: "keyframe-awards",
-            storageBucket: "keyframe-awards.firebasestorage.app",
-            messagingSenderId: "882083630221",
-            appId: "1:882083630221:web:629df7642fdf822018a6c4"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const authActions = document.getElementById('auth-header-actions');
-        
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const displayName = user.displayName || "User Account";
-                const photoURL = user.photoURL || "https://i.ibb.co/5G78k5y/default-avatar.png";
-                
-                authActions.innerHTML = `
-                    <a href="/account" class="user-profile-badge">
-                        <img src="${photoURL}" alt="${displayName}">
-                        <span class="user-welcome">${displayName}</span>
-                    </a>
-                    <button class="btn-login" id="logout-btn">Log Out</button>
-                `;
-                document.getElementById('logout-btn').addEventListener('click', () => {
-                    signOut(auth).then(() => location.reload());
-                });
-            } else {
-                authActions.innerHTML = `
-                    <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
-                `;
-            }
-        });
-    </script>
-
-    <!-- Local Interface Control Scripts -->
+    <!-- INTERACTIVE SEARCH & CATEGORY FILTER SCRIPT -->
     <script>
+        const searchInput = document.getElementById('faqSearch');
+        const faqCards = document.querySelectorAll('.faq-card');
+        const noResultsBox = document.getElementById('noResultsBox');
+        let currentCategory = 'all';
+
+        // Realtime Search Filter
+        searchInput.addEventListener('input', runFilters);
+
+        function filterCategory(cat, btn) {
+            currentCategory = cat;
+            document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            runFilters();
+        }
+
+        function runFilters() {
+            const query = searchInput.value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            faqCards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                const category = card.getAttribute('data-category');
+
+                const matchesQuery = text.includes(query);
+                const matchesCategory = (currentCategory === 'all' || category === currentCategory);
+
+                if (matchesQuery && matchesCategory) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                    card.removeAttribute('open'); // Close accordion if hidden
+                }
+            });
+
+            // Show "Sorry, couldn't find" box if zero matches
+            if (visibleCount === 0) {
+                noResultsBox.style.display = 'block';
+          } else {
+                noResultsBox.style.display = 'none';
+            }
+        }
+
+        // Mobile Nav Toggle
         const menuToggle = document.getElementById('mobile-menu');
         const navLinks = document.querySelector('.nav-links');
         menuToggle.addEventListener('click', () => {
