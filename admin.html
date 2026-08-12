@@ -7,12 +7,17 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * { box-sizing: border-box; }
         body {
             background-color: #050010;
             margin: 0;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
+            display: flex;
+            min-height: 100vh;
         }
+
+        /* SECURE GATEKEEPER LOADING */
         #gatekeeper-loading {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -33,102 +38,205 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .admin-wrapper {
-            max-width: 1200px;
-            margin: 100px auto 60px auto;
-            padding: 20px;
+        /* DASHBOARD LAYOUT */
+        .admin-layout {
+            display: flex;
+            width: 100vw;
+            min-height: 100vh;
+        }
+
+        /* SIDEBAR NAVIGATION */
+        .sidebar {
+            width: 260px;
+            background: rgba(15, 5, 30, 0.95);
+            border-right: 1px solid rgba(157, 0, 255, 0.2);
+            padding: 25px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: fixed;
+            top: 0; bottom: 0; left: 0;
+            z-index: 100;
+        }
+        .sidebar-brand {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #00f2fe;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-left: 10px;
+        }
+        .nav-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .nav-item {
+            padding: 12px 16px;
+            border-radius: 8px;
+            color: #aaa;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover, .nav-item.active {
+            background: linear-gradient(90deg, rgba(157, 0, 255, 0.3), rgba(0, 242, 254, 0.1));
+            color: #fff;
+            border-left: 3px solid #00f2fe;
+        }
+        .nav-item i { width: 20px; text-align: center; }
+
+        /* MAIN CONTENT AREA */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 40px;
+            max-width: 1300px;
         }
         .admin-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(157, 0, 255, 0.3);
+            border-bottom: 1px solid rgba(157, 0, 255, 0.2);
             padding-bottom: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         .admin-header h1 {
-            color: #00f2fe;
+            color: #fff;
             margin: 0;
-            font-size: 2rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
         }
+        .admin-user-tag {
+            color: #ff007f;
+            font-weight: bold;
+            font-family: monospace;
+            background: rgba(255, 0, 127, 0.1);
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 0, 127, 0.3);
+        }
+
+        /* METRICS TILES */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         .stat-card {
             background: rgba(26, 0, 51, 0.6);
             border: 1px solid rgba(157, 0, 255, 0.2);
-            padding: 25px;
-            border-radius: 10px;
+            padding: 22px;
+            border-radius: 12px;
             position: relative;
             overflow: hidden;
         }
         .stat-card h3 {
             margin: 0;
             color: #aaa;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
         .stat-card .number {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: bold;
-            margin: 15px 0 5px 0;
+            margin: 12px 0 5px 0;
             color: #fff;
         }
-        .stat-card .subtext {
-            font-size: 0.8rem;
-            color: #00f2fe;
-        }
+        .stat-card .subtext { font-size: 0.8rem; color: #00f2fe; }
         .stat-card i {
             position: absolute;
-            right: 20px;
-            bottom: 20px;
-            font-size: 3rem;
+            right: 15px;
+            bottom: 15px;
+            font-size: 2.8rem;
             color: rgba(157, 0, 255, 0.15);
         }
-        .data-table-section {
+
+        /* TAB SECTIONS CONTAINER */
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        .data-card {
             background: rgba(26, 0, 51, 0.4);
             border: 1px solid rgba(157, 0, 255, 0.2);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 25px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
-        .data-table-section h2 {
-            color: #ff007f;
+        .data-card h2 {
+            color: #00f2fe;
             margin-top: 0;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             margin-bottom: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             padding-bottom: 10px;
-        }
-        .ticket-list, .nomination-list {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            align-items: center;
+            gap: 10px;
         }
+
+        /* DATA ROW SYSTEM */
+        .data-list { display: flex; flex-direction: column; gap: 12px; }
         .data-row {
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 6px;
+            padding: 16px 20px;
+            border-radius: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 15px;
+            transition: border-color 0.2s ease;
         }
-        .data-meta h4 { margin: 0 0 5px 0; color: #fff; }
-        .data-meta p { margin: 0; color: #aaa; font-size: 0.85rem; }
+        .data-row:hover { border-color: rgba(0, 242, 254, 0.3); }
+        .data-meta h4 { margin: 0 0 6px 0; color: #fff; font-size: 1rem; }
+        .data-meta p { margin: 0; color: #aaa; font-size: 0.85rem; line-height: 1.4; }
+
+        /* ACTION BUTTONS & BADGES */
+        .action-group { display: flex; align-items: center; gap: 8px; }
+        .btn-action {
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: none;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .btn-action:hover { transform: scale(1.05); }
+        .btn-approve { background: #00c853; color: #fff; }
+        .btn-reject { background: #ff1744; color: #fff; }
+        .btn-resolve { background: #00f2fe; color: #050010; }
+
         .status-badge {
-            padding: 4px 12px;
+            padding: 4px 10px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: bold;
-            background: rgba(0, 242, 254, 0.2);
-            color: #00f2fe;
+            text-transform: uppercase;
+        }
+        .badge-pending { background: rgba(255, 170, 0, 0.2); color: #ffaa00; border: 1px solid #ffaa00; }
+        .badge-approved { background: rgba(0, 200, 83, 0.2); color: #00c853; border: 1px solid #00c853; }
+        .badge-rejected { background: rgba(255, 23, 68, 0.2); color: #ff1744; border: 1px solid #ff1744; }
+        .badge-resolved { background: rgba(0, 242, 254, 0.2); color: #00f2fe; border: 1px solid #00f2fe; }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 900px) {
+            .admin-layout { flex-direction: column; }
+            .sidebar { width: 100%; position: relative; height: auto; }
+            .main-content { margin-left: 0; padding: 20px; }
         }
     </style>
 </head>
@@ -137,72 +245,118 @@
     <!-- SECURE GATEKEEPER SCREEN -->
     <div id="gatekeeper-loading">
         <div class="spinner"></div>
-        <p style="margin-top: 20px; color: #00f2fe; letter-spacing: 2px; font-family: monospace;">AUTHENTICATING ADMIN ACCESS...</p>
+        <p style="margin-top: 20px; color: #00f2fe; letter-spacing: 2px; font-family: monospace;">AUTHENTICATING MASTER ACCESS...</p>
     </div>
 
-    <header class="navbar">
-        <div class="logo">Keyframe Admin</div>
-        <nav class="nav-links">
-            <a href="/">Return Home</a>
-            <button class="btn-login" id="admin-logout">Exit Session</button>
-        </nav>
-    </header>
+    <div class="admin-layout">
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar">
+            <div>
+                <div class="sidebar-brand">
+                    <i class="fas fa-shield-halved"></i> Keyframe Admin
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item active" onclick="switchTab('overview', this)">
+                        <i class="fas fa-chart-line"></i> Overview
+                    </li>
+                    <li class="nav-item" onclick="switchTab('nominations', this)">
+                        <i class="fas fa-trophy"></i> Nominations
+                    </li>
+                    <li class="nav-item" onclick="switchTab('tickets', this)">
+                        <i class="fas fa-headset"></i> Support Tickets
+                    </li>
+                    <li class="nav-item" onclick="switchTab('users', this)">
+                        <i class="fas fa-users-gear"></i> User Base
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <button class="btn-action btn-reject" id="admin-logout" style="width: 100%; padding: 12px;">
+                    <i class="fas fa-right-from-bracket"></i> Exit Session
+                </button>
+            </div>
+        </aside>
 
-    <div class="admin-wrapper">
-        <div class="admin-header">
-            <h1>Platform Overview</h1>
-            <div id="admin-profile-tag" style="color: #ff007f; font-weight: bold; font-family: monospace;">ADMIN: temiloluwa809@gmail.com</div>
-        </div>
+        <!-- MAIN DASHBOARD CONTENT -->
+        <main class="main-content">
+            <div class="admin-header">
+                <h1 id="tab-title">Platform Overview</h1>
+                <div id="admin-profile-tag" class="admin-user-tag">ADMIN: temiloluwa809@gmail.com</div>
+            </div>
 
-        <!-- METRICS TILES -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <h3>Total Signups</h3>
-                <div class="number" id="metric-total-users">0</div>
-                <div class="subtext">All-time active users</div>
-                <i class="fas fa-users"></i>
+            <!-- METRICS TILES (ALWAYS VISIBLE) -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Users</h3>
+                    <div class="number" id="metric-total-users">0</div>
+                    <div class="subtext">Registered Accounts</div>
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-card">
+                    <h3>Today Signups</h3>
+                    <div class="number" id="metric-today-users">0</div>
+                    <div class="subtext">New registrations</div>
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <div class="stat-card">
+                    <h3>Nominations</h3>
+                    <div class="number" id="metric-total-nominations">0</div>
+                    <div class="subtext">Submitted Content</div>
+                    <i class="fas fa-file-video"></i>
+                </div>
+                <div class="stat-card">
+                    <h3>Open Tickets</h3>
+                    <div class="number" id="metric-total-tickets">0</div>
+                    <div class="subtext">Pending Requests</div>
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
             </div>
-            <div class="stat-card">
-                <h3>Registered Today</h3>
-                <div class="number" id="metric-today-users">0</div>
-                <div class="subtext">New registrations today</div>
-                <i class="fas fa-user-plus"></i>
-            </div>
-            <div class="stat-card">
-                <h3>Nominations Submitted</h3>
-                <div class="number" id="metric-total-nominations">0</div>
-                <div class="subtext">Total content files verified</div>
-                <i class="fas fa-file-video"></i>
-            </div>
-            <div class="stat-card">
-                <h3>Support Tickets</h3>
-                <div class="number" id="metric-total-tickets">0</div>
-                <div class="subtext">Pending client messages</div>
-                <i class="fas fa-ticket-alt"></i>
-            </div>
-        </div>
 
-        <!-- ACTION RESPONSES TILES -->
-        <div class="data-table-section">
-            <h2>Active Support Tickets Queue</h2>
-            <div class="ticket-list" id="admin-tickets-container">
-                <p style="color:#aaa;">Listening to incoming tickets stream...</p>
-            </div>
-        </div>
+            <!-- TAB 1: OVERVIEW -->
+            <section id="tab-overview" class="tab-panel active">
+                <div class="data-card">
+                    <h2><i class="fas fa-clock-rotate-left"></i> System Activity Stream</h2>
+                    <p style="color:#aaa;">Welcome to the Keyframe Awards Command Hub. Select any section from the left navigation sidebar to perform moderations or review submissions.</p>
+                </div>
+            </section>
 
-        <div class="data-table-section">
-            <h2>Recent Submissions Log</h2>
-            <div class="nomination-list" id="admin-nominations-container">
-                <p style="color:#aaa;">Listening to submission records...</p>
-            </div>
-        </div>
+            <!-- TAB 2: NOMINATIONS MODERATION -->
+            <section id="tab-nominations" class="tab-panel">
+                <div class="data-card">
+                    <h2><i class="fas fa-trophy"></i> Nominations Pipeline</h2>
+                    <div class="data-list" id="admin-nominations-container">
+                        <p style="color:#aaa;">Loading nomination entries...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: SUPPORT TICKETS -->
+            <section id="tab-tickets" class="tab-panel">
+                <div class="data-card">
+                    <h2><i class="fas fa-headset"></i> Support Tickets Queue</h2>
+                    <div class="data-list" id="admin-tickets-container">
+                        <p style="color:#aaa;">Loading tickets queue...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: USER BASE MANAGEMENT -->
+            <section id="tab-users" class="tab-panel">
+                <div class="data-card">
+                    <h2><i class="fas fa-users"></i> Account Profiles</h2>
+                    <div class="data-list" id="admin-users-container">
+                        <p style="color:#aaa;">Loading registered user records...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 
-    <!-- Firebase Real-time Engineering Scripts -->
+    <!-- Firebase System Modules Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
@@ -217,87 +371,147 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // STALWART EMAIL GATEKEEPER
+        // SECURE MASTER EMAIL GATEKEEPER
         onAuthStateChanged(auth, (user) => {
             if (user && user.email === "temiloluwa809@gmail.com") {
-                // Access approved. Dissolve loading filter screens
                 document.getElementById('gatekeeper-loading').style.display = 'none';
                 initializeDashboardStreams();
             } else {
-                // Unauthorized profile detected. Kick out instantly
-                alert("ACCESS VIOLATION: This terminal requires master administrator credential matching.");
+                alert("ACCESS VIOLATION: Unauthorized Administrator Access Attempt.");
                 window.location.href = "/";
             }
         });
 
-        function initializeDashboardStreams() {
-            // 1. Stream Support Tickets
-            onSnapshot(collection(db, "tickets"), (snapshot) => {
-                document.getElementById('metric-total-tickets').innerText = snapshot.size;
-                const container = document.getElementById('admin-tickets-container');
-                container.innerHTML = "";
-                
-                if(snapshot.empty) {
-                    container.innerHTML = `<p style="color:#555;">No active support inquiries filed.</p>`;
-                }
-                
-                snapshot.forEach((doc) => {
-                    const ticket = doc.data();
-                    container.innerHTML += `
-                        <div class="data-row">
-                            <div class="data-meta">
-                                <h4>${ticket.subject || 'Support Request'}</h4>
-                                <p>From: ${ticket.email || 'Anonymous'} | Message: ${ticket.message || ''}</p>
-                            </div>
-                            <span class="status-badge">OPEN</span>
-                        </div>
-                    `;
-                });
-            });
+        // TAB SWITCHER FUNCTIONALITY
+        window.switchTab = function(tabName, element) {
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            element.classList.add('active');
+            
+            const titles = {
+                'overview': 'Platform Overview',
+                'nominations': 'Nomination Submissions',
+                'tickets': 'Support Center Queue',
+                'users': 'Registered User Database'
+            };
+            document.getElementById('tab-title').innerText = titles[tabName];
+        };
 
-            // 2. Stream Nomination Submissions
+        // REAL-TIME FIRESTORE DATA STREAMS
+        function initializeDashboardStreams() {
+            // 1. Stream Nominations Pipeline
             onSnapshot(collection(db, "nominations"), (snapshot) => {
                 document.getElementById('metric-total-nominations').innerText = snapshot.size;
                 const container = document.getElementById('admin-nominations-container');
                 container.innerHTML = "";
                 
-                if(snapshot.empty) {
-                    container.innerHTML = `<p style="color:#555;">No nomination records submitted yet.</p>`;
+                if (snapshot.empty) {
+                    container.innerHTML = `<p style="color:#666;">No nominations registered in system database.</p>`;
+                    return;
                 }
 
-                snapshot.forEach((doc) => {
-                    const nomination = doc.data();
+                snapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const id = docSnap.id;
+                    const status = data.status || 'PENDING';
+                    
+                    let badgeClass = 'badge-pending';
+                    if (status === 'APPROVED') badgeClass = 'badge-approved';
+                    if (status === 'REJECTED') badgeClass = 'badge-rejected';
+
                     container.innerHTML += `
                         <div class="data-row">
                             <div class="data-meta">
-                                <h4>Category: ${nomination.category || 'General'}</h4>
-                                <p>Link: <a href="${nomination.link}" target="_blank" style="color:#00f2fe;">${nomination.link || 'No URL'}</a></p>
+                                <h4>Category: ${data.category || 'Uncategorized'}</h4>
+                                <p><strong>Submitted by:</strong> ${data.email || 'Anonymous'}</p>
+                                <p><strong>Link:</strong> <a href="${data.link}" target="_blank" style="color:#00f2fe; text-decoration: underline;">${data.link || 'No URL'}</a></p>
                             </div>
-                            <span class="status-badge" style="background:rgba(255,0,127,0.2); color:#ff007f;">QUEUE</span>
+                            <div class="action-group">
+                                <span class="status-badge ${badgeClass}">${status}</span>
+                                <button class="btn-action btn-approve" onclick="updateStatus('nominations', '${id}', 'APPROVED')">Approve</button>
+                                <button class="btn-action btn-reject" onclick="updateStatus('nominations', '${id}', 'REJECTED')">Reject</button>
+                            </div>
                         </div>
                     `;
                 });
             });
 
-            // 3. Track Profiles Infrastructure Counter Metrics
+            // 2. Stream Support Tickets
+            onSnapshot(collection(db, "tickets"), (snapshot) => {
+                let openCount = 0;
+                const container = document.getElementById('admin-tickets-container');
+                container.innerHTML = "";
+
+                if (snapshot.empty) {
+                    container.innerHTML = `<p style="color:#666;">No active support tickets found.</p>`;
+                }
+
+                snapshot.forEach((docSnap) => {
+                    const ticket = docSnap.data();
+                    const id = docSnap.id;
+                    const status = ticket.status || 'OPEN';
+                    if (status === 'OPEN') openCount++;
+
+                    let badgeClass = status === 'RESOLVED' ? 'badge-resolved' : 'badge-pending';
+
+                    container.innerHTML += `
+                        <div class="data-row">
+                            <div class="data-meta">
+                                <h4>Subject: ${ticket.subject || 'Support Request'}</h4>
+                                <p><strong>From:</strong> ${ticket.email || 'Anonymous'}</p>
+                                <p><strong>Message:</strong> ${ticket.message || 'No details'}</p>
+                            </div>
+                            <div class="action-group">
+                                <span class="status-badge ${badgeClass}">${status}</span>
+                                ${status === 'OPEN' ? `<button class="btn-action btn-resolve" onclick="updateStatus('tickets', '${id}', 'RESOLVED')">Mark Resolved</button>` : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+                document.getElementById('metric-total-tickets').innerText = openCount;
+            });
+
+            // 3. Stream Registered Users
             onSnapshot(collection(db, "users"), (snapshot) => {
                 document.getElementById('metric-total-users').innerText = snapshot.size;
-                
-                // Track configurations added today
+                const container = document.getElementById('admin-users-container');
+                container.innerHTML = "";
+
                 const startOfToday = new Date();
                 startOfToday.setHours(0,0,0,0);
-                
                 let todayCount = 0;
-                snapshot.forEach((doc) => {
-                    const userData = doc.data();
-                    if (userData.createdAt && userData.createdAt.toDate() >= startOfToday) {
-                        todayCount++;
-                    }
+
+                snapshot.forEach((docSnap) => {
+                    const user = docSnap.data();
+                    if (user.createdAt && user.createdAt.toDate() >= startOfToday) todayCount++;
+
+                    container.innerHTML += `
+                        <div class="data-row">
+                            <div class="data-meta">
+                                <h4>${user.displayName || 'User Profile'}</h4>
+                                <p><strong>Email:</strong> ${user.email || 'No email attached'}</p>
+                            </div>
+                            <span class="status-badge badge-resolved">VERIFIED</span>
+                        </div>
+                    `;
                 });
                 document.getElementById('metric-today-users').innerText = todayCount;
             });
         }
 
+        // GLOBAL STATUS UPDATE METHOD FOR ADMIN
+        window.updateStatus = async function(col, docId, newStatus) {
+            try {
+                const docRef = doc(db, col, docId);
+                await updateDoc(docRef, { status: newStatus });
+            } catch (err) {
+                alert("Error updating document: " + err.message);
+            }
+        };
+
+        // LOGOUT SESSION
         document.getElementById('admin-logout').addEventListener('click', () => {
             signOut(auth).then(() => window.location.href = "/");
         });
