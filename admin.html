@@ -17,7 +17,6 @@
             min-height: 100vh;
         }
 
-        /* SECURE GATEKEEPER LOADING */
         #gatekeeper-loading {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -38,14 +37,12 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* DASHBOARD LAYOUT */
         .admin-layout {
             display: flex;
             width: 100vw;
             min-height: 100vh;
         }
 
-        /* SIDEBAR NAVIGATION */
         .sidebar {
             width: 260px;
             background: rgba(15, 5, 30, 0.95);
@@ -59,10 +56,10 @@
             z-index: 100;
         }
         .sidebar-brand {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
             color: #00f2fe;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 30px;
             display: flex;
@@ -96,7 +93,6 @@
         }
         .nav-item i { width: 20px; text-align: center; }
 
-        /* MAIN CONTENT AREA */
         .main-content {
             margin-left: 260px;
             flex: 1;
@@ -111,12 +107,7 @@
             padding-bottom: 20px;
             margin-bottom: 30px;
         }
-        .admin-header h1 {
-            color: #fff;
-            margin: 0;
-            font-size: 1.8rem;
-            letter-spacing: 1px;
-        }
+        .admin-header h1 { color: #fff; margin: 0; font-size: 1.8rem; }
         .admin-user-tag {
             color: #ff007f;
             font-weight: bold;
@@ -127,10 +118,9 @@
             border: 1px solid rgba(255, 0, 127, 0.3);
         }
 
-        /* METRICS TILES */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
@@ -147,7 +137,6 @@
             color: #aaa;
             font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
         .stat-card .number {
             font-size: 2.2rem;
@@ -164,7 +153,6 @@
             color: rgba(157, 0, 255, 0.15);
         }
 
-        /* TAB SECTIONS CONTAINER */
         .tab-panel { display: none; }
         .tab-panel.active { display: block; }
 
@@ -187,7 +175,6 @@
             gap: 10px;
         }
 
-        /* DATA ROW SYSTEM */
         .data-list { display: flex; flex-direction: column; gap: 12px; }
         .data-row {
             background: rgba(0, 0, 0, 0.3);
@@ -198,27 +185,22 @@
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-            transition: border-color 0.2s ease;
+            flex-wrap: wrap;
         }
-        .data-row:hover { border-color: rgba(0, 242, 254, 0.3); }
         .data-meta h4 { margin: 0 0 6px 0; color: #fff; font-size: 1rem; }
-        .data-meta p { margin: 0; color: #aaa; font-size: 0.85rem; line-height: 1.4; }
+        .data-meta p { margin: 0 0 4px 0; color: #aaa; font-size: 0.85rem; }
 
-        /* ACTION BUTTONS & BADGES */
         .action-group { display: flex; align-items: center; gap: 8px; }
         .btn-action {
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 6px;
             border: none;
             font-size: 0.8rem;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s ease;
         }
-        .btn-action:hover { transform: scale(1.05); }
         .btn-approve { background: #00c853; color: #fff; }
         .btn-reject { background: #ff1744; color: #fff; }
-        .btn-resolve { background: #00f2fe; color: #050010; }
 
         .status-badge {
             padding: 4px 10px;
@@ -230,9 +212,7 @@
         .badge-pending { background: rgba(255, 170, 0, 0.2); color: #ffaa00; border: 1px solid #ffaa00; }
         .badge-approved { background: rgba(0, 200, 83, 0.2); color: #00c853; border: 1px solid #00c853; }
         .badge-rejected { background: rgba(255, 23, 68, 0.2); color: #ff1744; border: 1px solid #ff1744; }
-        .badge-resolved { background: rgba(0, 242, 254, 0.2); color: #00f2fe; border: 1px solid #00f2fe; }
 
-        /* RESPONSIVE DESIGN */
         @media (max-width: 900px) {
             .admin-layout { flex-direction: column; }
             .sidebar { width: 100%; position: relative; height: auto; }
@@ -242,31 +222,29 @@
 </head>
 <body>
 
-    <!-- SECURE GATEKEEPER SCREEN -->
     <div id="gatekeeper-loading">
         <div class="spinner"></div>
         <p style="margin-top: 20px; color: #00f2fe; letter-spacing: 2px; font-family: monospace;">AUTHENTICATING MASTER ACCESS...</p>
     </div>
 
     <div class="admin-layout">
-        <!-- SIDEBAR NAVIGATION -->
         <aside class="sidebar">
             <div>
                 <div class="sidebar-brand">
-                    <i class="fas fa-shield-halved"></i> Keyframe Admin
+                    <i class="fas fa-trophy"></i> Keyframe Admin
                 </div>
                 <ul class="nav-menu">
                     <li class="nav-item active" onclick="switchTab('overview', this)">
                         <i class="fas fa-chart-line"></i> Overview
                     </li>
                     <li class="nav-item" onclick="switchTab('nominations', this)">
-                        <i class="fas fa-trophy"></i> Nominations
+                        <i class="fas fa-file-video"></i> Nominations
                     </li>
-                    <li class="nav-item" onclick="switchTab('tickets', this)">
-                        <i class="fas fa-headset"></i> Support Tickets
+                    <li class="nav-item" onclick="switchTab('messages', this)">
+                        <i class="fas fa-envelope"></i> Messages
                     </li>
                     <li class="nav-item" onclick="switchTab('users', this)">
-                        <i class="fas fa-users-gear"></i> User Base
+                        <i class="fas fa-users"></i> Users Database
                     </li>
                 </ul>
             </div>
@@ -277,14 +255,13 @@
             </div>
         </aside>
 
-        <!-- MAIN DASHBOARD CONTENT -->
         <main class="main-content">
             <div class="admin-header">
                 <h1 id="tab-title">Platform Overview</h1>
-                <div id="admin-profile-tag" class="admin-user-tag">ADMIN: temiloluwa809@gmail.com</div>
+                <div id="admin-profile-tag" class="admin-user-tag">ADMIN CONTROL</div>
             </div>
 
-            <!-- METRICS TILES (ALWAYS VISIBLE) -->
+            <!-- METRIC TILES -->
             <div class="stats-grid">
                 <div class="stat-card">
                     <h3>Total Users</h3>
@@ -293,49 +270,49 @@
                     <i class="fas fa-users"></i>
                 </div>
                 <div class="stat-card">
-                    <h3>Today Signups</h3>
-                    <div class="number" id="metric-today-users">0</div>
-                    <div class="subtext">New registrations</div>
-                    <i class="fas fa-user-plus"></i>
-                </div>
-                <div class="stat-card">
                     <h3>Nominations</h3>
                     <div class="number" id="metric-total-nominations">0</div>
-                    <div class="subtext">Submitted Content</div>
+                    <div class="subtext">Submissions Logged</div>
                     <i class="fas fa-file-video"></i>
                 </div>
                 <div class="stat-card">
-                    <h3>Open Tickets</h3>
-                    <div class="number" id="metric-total-tickets">0</div>
-                    <div class="subtext">Pending Requests</div>
-                    <i class="fas fa-ticket-alt"></i>
+                    <h3>Messages</h3>
+                    <div class="number" id="metric-total-messages">0</div>
+                    <div class="subtext">Incoming Inquiries</div>
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Votes</h3>
+                    <div class="number" id="metric-total-votes">0</div>
+                    <div class="subtext">User Votes Cast</div>
+                    <i class="fas fa-check-to-slot"></i>
                 </div>
             </div>
 
             <!-- TAB 1: OVERVIEW -->
             <section id="tab-overview" class="tab-panel active">
                 <div class="data-card">
-                    <h2><i class="fas fa-clock-rotate-left"></i> System Activity Stream</h2>
-                    <p style="color:#aaa;">Welcome to the Keyframe Awards Command Hub. Select any section from the left navigation sidebar to perform moderations or review submissions.</p>
+                    <h2><i class="fas fa-trophy"></i> Keyframe Awards Command Center</h2>
+                    <p style="color:#aaa;">Real-time sync connected with Firestore collections: <code>messages</code>, <code>nominations</code>, <code>tally</code>, <code>user_votes</code>, and <code>users</code>.</p>
                 </div>
             </section>
 
             <!-- TAB 2: NOMINATIONS MODERATION -->
             <section id="tab-nominations" class="tab-panel">
                 <div class="data-card">
-                    <h2><i class="fas fa-trophy"></i> Nominations Pipeline</h2>
+                    <h2><i class="fas fa-file-video"></i> Nomination Entries</h2>
                     <div class="data-list" id="admin-nominations-container">
-                        <p style="color:#aaa;">Loading nomination entries...</p>
+                        <p style="color:#aaa;">Loading nominations...</p>
                     </div>
                 </div>
             </section>
 
-            <!-- TAB 3: SUPPORT TICKETS -->
-            <section id="tab-tickets" class="tab-panel">
+            <!-- TAB 3: MESSAGES LOG -->
+            <section id="tab-messages" class="tab-panel">
                 <div class="data-card">
-                    <h2><i class="fas fa-headset"></i> Support Tickets Queue</h2>
-                    <div class="data-list" id="admin-tickets-container">
-                        <p style="color:#aaa;">Loading tickets queue...</p>
+                    <h2><i class="fas fa-envelope"></i> Direct Messages</h2>
+                    <div class="data-list" id="admin-messages-container">
+                        <p style="color:#aaa;">Loading user messages...</p>
                     </div>
                 </div>
             </section>
@@ -345,14 +322,13 @@
                 <div class="data-card">
                     <h2><i class="fas fa-users"></i> Account Profiles</h2>
                     <div class="data-list" id="admin-users-container">
-                        <p style="color:#aaa;">Loading registered user records...</p>
+                        <p style="color:#aaa;">Loading user database...</p>
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Firebase System Modules Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -371,18 +347,16 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // SECURE MASTER EMAIL GATEKEEPER
         onAuthStateChanged(auth, (user) => {
             if (user && user.email === "temiloluwa809@gmail.com") {
                 document.getElementById('gatekeeper-loading').style.display = 'none';
                 initializeDashboardStreams();
             } else {
-                alert("ACCESS VIOLATION: Unauthorized Administrator Access Attempt.");
+                alert("ACCESS VIOLATION: Master Email Required.");
                 window.location.href = "/";
             }
         });
 
-        // TAB SWITCHER FUNCTIONALITY
         window.switchTab = function(tabName, element) {
             document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
@@ -393,22 +367,21 @@
             const titles = {
                 'overview': 'Platform Overview',
                 'nominations': 'Nomination Submissions',
-                'tickets': 'Support Center Queue',
-                'users': 'Registered User Database'
+                'messages': 'User Direct Messages',
+                'users': 'Registered Users Database'
             };
             document.getElementById('tab-title').innerText = titles[tabName];
         };
 
-        // REAL-TIME FIRESTORE DATA STREAMS
         function initializeDashboardStreams() {
-            // 1. Stream Nominations Pipeline
+            // 1. Stream Nominations Collection
             onSnapshot(collection(db, "nominations"), (snapshot) => {
                 document.getElementById('metric-total-nominations').innerText = snapshot.size;
                 const container = document.getElementById('admin-nominations-container');
                 container.innerHTML = "";
-                
+
                 if (snapshot.empty) {
-                    container.innerHTML = `<p style="color:#666;">No nominations registered in system database.</p>`;
+                    container.innerHTML = `<p style="color:#666;">No nominations registered yet.</p>`;
                     return;
                 }
 
@@ -416,6 +389,9 @@
                     const data = docSnap.data();
                     const id = docSnap.id;
                     const status = data.status || 'PENDING';
+
+                    const contentUrl = data.link || data.url || data.nomineeUrl || data.videoUrl;
+                    const urlDisplay = contentUrl ? `<a href="${contentUrl}" target="_blank" style="color:#00f2fe; text-decoration: underline;">${contentUrl}</a>` : `<span style="color:#666;">No URL attached</span>`;
                     
                     let badgeClass = 'badge-pending';
                     if (status === 'APPROVED') badgeClass = 'badge-approved';
@@ -424,9 +400,10 @@
                     container.innerHTML += `
                         <div class="data-row">
                             <div class="data-meta">
-                                <h4>Category: ${data.category || 'Uncategorized'}</h4>
-                                <p><strong>Submitted by:</strong> ${data.email || 'Anonymous'}</p>
-                                <p><strong>Link:</strong> <a href="${data.link}" target="_blank" style="color:#00f2fe; text-decoration: underline;">${data.link || 'No URL'}</a></p>
+                                <h4>Category: ${data.category || 'General'}</h4>
+                                <p><strong>Nominee/Creator:</strong> ${data.nominee || data.title || 'N/A'}</p>
+                                <p><strong>Submitted By:</strong> ${data.email || data.userEmail || 'Anonymous'}</p>
+                                <p><strong>Link:</strong> ${urlDisplay}</p>
                             </div>
                             <div class="action-group">
                                 <span class="status-badge ${badgeClass}">${status}</span>
@@ -438,70 +415,62 @@
                 });
             });
 
-            // 2. Stream Support Tickets
-            onSnapshot(collection(db, "tickets"), (snapshot) => {
-                let openCount = 0;
-                const container = document.getElementById('admin-tickets-container');
+            // 2. Stream Messages Collection
+            onSnapshot(collection(db, "messages"), (snapshot) => {
+                document.getElementById('metric-total-messages').innerText = snapshot.size;
+                const container = document.getElementById('admin-messages-container');
                 container.innerHTML = "";
 
                 if (snapshot.empty) {
-                    container.innerHTML = `<p style="color:#666;">No active support tickets found.</p>`;
+                    container.innerHTML = `<p style="color:#666;">No incoming messages received.</p>`;
+                    return;
                 }
 
                 snapshot.forEach((docSnap) => {
-                    const ticket = docSnap.data();
-                    const id = docSnap.id;
-                    const status = ticket.status || 'OPEN';
-                    if (status === 'OPEN') openCount++;
-
-                    let badgeClass = status === 'RESOLVED' ? 'badge-resolved' : 'badge-pending';
-
+                    const msg = docSnap.data();
                     container.innerHTML += `
                         <div class="data-row">
                             <div class="data-meta">
-                                <h4>Subject: ${ticket.subject || 'Support Request'}</h4>
-                                <p><strong>From:</strong> ${ticket.email || 'Anonymous'}</p>
-                                <p><strong>Message:</strong> ${ticket.message || 'No details'}</p>
+                                <h4>From: ${msg.name || 'Anonymous'} (${msg.email || 'No email'})</h4>
+                                <p><strong>Message:</strong> ${msg.message || ''}</p>
                             </div>
-                            <div class="action-group">
-                                <span class="status-badge ${badgeClass}">${status}</span>
-                                ${status === 'OPEN' ? `<button class="btn-action btn-resolve" onclick="updateStatus('tickets', '${id}', 'RESOLVED')">Mark Resolved</button>` : ''}
-                            </div>
+                            <span class="status-badge badge-approved">RECEIVED</span>
                         </div>
                     `;
                 });
-                document.getElementById('metric-total-tickets').innerText = openCount;
             });
 
-            // 3. Stream Registered Users
+            // 3. Stream Users Collection
             onSnapshot(collection(db, "users"), (snapshot) => {
                 document.getElementById('metric-total-users').innerText = snapshot.size;
                 const container = document.getElementById('admin-users-container');
                 container.innerHTML = "";
 
-                const startOfToday = new Date();
-                startOfToday.setHours(0,0,0,0);
-                let todayCount = 0;
+                if (snapshot.empty) {
+                    container.innerHTML = `<p style="color:#666;">No user records created yet.</p>`;
+                    return;
+                }
 
                 snapshot.forEach((docSnap) => {
                     const user = docSnap.data();
-                    if (user.createdAt && user.createdAt.toDate() >= startOfToday) todayCount++;
-
                     container.innerHTML += `
                         <div class="data-row">
                             <div class="data-meta">
-                                <h4>${user.displayName || 'User Profile'}</h4>
+                                <h4>${user.displayName || user.name || 'User Profile'}</h4>
                                 <p><strong>Email:</strong> ${user.email || 'No email attached'}</p>
                             </div>
-                            <span class="status-badge badge-resolved">VERIFIED</span>
+                            <span class="status-badge badge-approved">VERIFIED</span>
                         </div>
                     `;
                 });
-                document.getElementById('metric-today-users').innerText = todayCount;
+            });
+
+            // 4. Stream User Votes Collection
+            onSnapshot(collection(db, "user_votes"), (snapshot) => {
+                document.getElementById('metric-total-votes').innerText = snapshot.size;
             });
         }
 
-        // GLOBAL STATUS UPDATE METHOD FOR ADMIN
         window.updateStatus = async function(col, docId, newStatus) {
             try {
                 const docRef = doc(db, col, docId);
@@ -511,7 +480,6 @@
             }
         };
 
-        // LOGOUT SESSION
         document.getElementById('admin-logout').addEventListener('click', () => {
             signOut(auth).then(() => window.location.href = "/");
         });
