@@ -144,24 +144,47 @@
         </div>
     </div>
 
-    <!-- HERO SECTION WITH VIDEO BACKGROUND -->
-    <section class="hero">
-        <video autoplay loop muted playsinline class="video-bg">
+    <!-- HERO SECTION WITH BRIGHTENED VIDEO BACKGROUND -->
+    <section class="hero" style="position: relative; overflow: hidden;">
+        <video autoplay loop muted playsinline class="video-bg" style="filter: brightness(0.85) contrast(1.1);">
             <source src="keyframe award video.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <div class="video-overlay"></div>
-        <div class="hero-content">
-            <h1 class="animated-gradient-text">The Keyframe Awards</h1>
-            <p class="hero-subtitle">Celebrating Excellence in Motion & Creativity</p>
-            <div class="countdown-container">
-                <h3>Voting Begins In</h3>
+        <!-- Softened, high-vibrancy overlay -->
+        <div class="video-overlay" style="background: radial-gradient(circle, rgba(0, 240, 255, 0.12) 0%, rgba(5, 0, 16, 0.45) 100%); mix-blend-mode: overlay;"></div>
+        <div class="hero-content" style="text-shadow: 0 0 20px rgba(0,0,0,0.8);">
+            <h1 class="animated-gradient-text" style="filter: drop-shadow(0 0 15px rgba(0,240,255,0.4));">The Keyframe Awards</h1>
+            <p class="hero-subtitle" style="color: #fff; text-shadow: 0 0 10px rgba(255,0,127,0.5);">Celebrating Excellence in Motion & Creativity</p>
+            <div class="countdown-container" style="background: rgba(13, 0, 26, 0.55); border: 1px solid rgba(0, 240, 255, 0.3); backdrop-filter: blur(8px); box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);">
+                <h3 style="color: var(--neon-cyan); letter-spacing: 2px;">Voting Begins In</h3>
                 <div id="countdown">
-                    <div class="time-box"><span id="days">00</span><p>Days</p></div>
-                    <div class="time-box"><span id="hours">00</span><p>Hours</p></div>
-                    <div class="time-box"><span id="minutes">00</span><p>Minutes</p></div>
-                    <div class="time-box"><span id="seconds">00</span><p>Seconds</p></div>
+                    <div class="time-box" style="border: 1px solid var(--neon-pink); box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);"><span id="days">00</span><p>Days</p></div>
+                    <div class="time-box" style="border: 1px solid var(--neon-cyan); box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);"><span id="hours">00</span><p>Hours</p></div>
+                    <div class="time-box" style="border: 1px solid var(--neon-pink); box-shadow: 0 0 10px rgba(255, 0, 127, 0.3);"><span id="minutes">00</span><p>Minutes</p></div>
+                    <div class="time-box" style="border: 1px solid var(--neon-cyan); box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);"><span id="seconds">00</span><p>Seconds</p></div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- METRICS & IMPACT STATS BANNER -->
+    <section style="background: linear-gradient(90deg, rgba(26,0,51,0.9), rgba(13,0,26,0.95)); border-y: 1px solid rgba(0, 240, 255, 0.2); padding: 35px 5%;">
+        <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center;">
+            <div>
+                <h3 style="color: var(--neon-cyan); font-size: 2.2rem; margin: 0; text-shadow: 0 0 10px var(--neon-cyan);">10</h3>
+                <p style="color: #bbb; margin: 5px 0 0 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Major Categories</p>
+            </div>
+            <div>
+                <h3 style="color: var(--neon-pink); font-size: 2.2rem; margin: 0; text-shadow: 0 0 10px var(--neon-pink);">60+</h3>
+                <p style="color: #bbb; margin: 5px 0 0 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Unique Trophies</p>
+            </div>
+            <div>
+                <h3 style="color: #ffe600; font-size: 2.2rem; margin: 0; text-shadow: 0 0 10px #ffe600;">100%</h3>
+                <p style="color: #bbb; margin: 5px 0 0 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Community Driven</p>
+            </div>
+            <div>
+                <h3 style="color: #00ff66; font-size: 2.2rem; margin: 0; text-shadow: 0 0 10px #00ff66;">GLOBAL</h3>
+                <p style="color: #bbb; margin: 5px 0 0 0; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px;">Live Broadcast Stream</p>
             </div>
         </div>
     </section>
@@ -176,6 +199,32 @@
     <section style="max-width: 900px; margin: 0 auto; padding: 0 5%;">
         <div class="video-container">
             <iframe width="560" height="315" src="https://www.youtube.com/embed/8Sdl7ZQuOa4?si=vM0QFkeyTfUoxd4P" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS (ROADMAP SECTION) -->
+    <section style="padding: 60px 5%; background: rgba(5, 0, 16, 0.8); text-align: center;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <span style="color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 10px;">Simple & Transparent</span>
+            <h2 style="font-size: 2.2rem; color: var(--text-white); margin-top: 0; margin-bottom: 40px; text-shadow: 0 0 10px var(--neon-purple);">How Keyframe Works</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px;">
+                <div style="background: rgba(26, 0, 51, 0.5); border: 1px solid rgba(0, 240, 255, 0.2); padding: 30px 20px; border-radius: 12px; text-align: left;">
+                    <span style="background: var(--neon-pink); color: #fff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 15px;">1</span>
+                    <h3 style="color: var(--neon-cyan); margin-top: 0; font-size: 1.2rem;">Nominate Entries</h3>
+                    <p style="color: #aaa; font-size: 0.9rem; line-height: 1.6;">Submit your favorite edits or your own work across 10 official categories during open submissions.</p>
+                </div>
+                <div style="background: rgba(26, 0, 51, 0.5); border: 1px solid rgba(0, 240, 255, 0.2); padding: 30px 20px; border-radius: 12px; text-align: left;">
+                    <span style="background: var(--neon-cyan); color: #000; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 15px;">2</span>
+                    <h3 style="color: var(--neon-pink); margin-top: 0; font-size: 1.2rem;">Cast Your Vote</h3>
+                    <p style="color: #aaa; font-size: 0.9rem; line-height: 1.6;">Log into your verified Keyframe account to vote for nominees in each bracket.</p>
+                </div>
+                <div style="background: rgba(26, 0, 51, 0.5); border: 1px solid rgba(0, 240, 255, 0.2); padding: 30px 20px; border-radius: 12px; text-align: left;">
+                    <span style="background: #ffe600; color: #000; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 15px;">3</span>
+                    <h3 style="color: #ffe600; margin-top: 0; font-size: 1.2rem;">Watch Live Broadcast</h3>
+                    <p style="color: #aaa; font-size: 0.9rem; line-height: 1.6;">Tune in live to see winner reveals, breakdown features, and community crowning.</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -209,7 +258,33 @@
         </div>
     </section>
 
-    <!-- SWIPEABLE BLOG PREVIEW SECTION -->
+    <!-- OFFICIAL TIMELINE GRAPH -->
+    <section style="padding: 50px 5%; background: rgba(13, 0, 26, 0.6); text-align: center;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <span style="color: var(--neon-pink); text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; font-weight: bold; display: block; margin-bottom: 10px;">Roadmap to Honors</span>
+            <h2 style="font-size: 2rem; color: #fff; margin-top: 0; margin-bottom: 30px;">Keyframe Schedule</h2>
+            
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+                <div style="background: rgba(0,0,0,0.4); border-left: 4px solid var(--neon-cyan); padding: 15px 20px; text-align: left; min-width: 200px; flex: 1;">
+                    <strong style="color: var(--neon-cyan); display: block; font-size: 0.85rem; text-transform: uppercase;">Stage 1</strong>
+                    <span style="color: #fff; font-weight: bold;">Submissions Open</span>
+                    <p style="color: #888; margin: 5px 0 0 0; font-size: 0.8rem;">Open Through October</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.4); border-left: 4px solid var(--neon-pink); padding: 15px 20px; text-align: left; min-width: 200px; flex: 1;">
+                    <strong style="color: var(--neon-pink); display: block; font-size: 0.85rem; text-transform: uppercase;">Stage 2</strong>
+                    <span style="color: #fff; font-weight: bold;">Official Voting</span>
+                    <p style="color: #888; margin: 5px 0 0 0; font-size: 0.8rem;">Begins November 4</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.4); border-left: 4px solid #ffe600; padding: 15px 20px; text-align: left; min-width: 200px; flex: 1;">
+                    <strong style="color: #ffe600; display: block; font-size: 0.85rem; text-transform: uppercase;">Stage 3</strong>
+                    <span style="color: #fff; font-weight: bold;">Awards Night</span>
+                    <p style="color: #888; margin: 5px 0 0 0; font-size: 0.8rem;">January Virtual Broadcast</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SWIPEABLE BLOG PREVIEW SECTION (SWAPPED PRESS CARDS) -->
     <section class="blog-preview-section" style="padding: 60px 0 80px 0; background: rgba(13, 0, 26, 0.4); border-top: 1px solid rgba(157, 0, 255, 0.2); overflow: hidden;">
         <div style="max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center;">
             <span style="color: var(--neon-pink); text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; font-weight: bold; margin-bottom: 10px; display: block;">
@@ -219,18 +294,40 @@
                 Behind the Frames
             </h2>
             <div class="blog-swipe-container" style="display: flex; gap: 20px; width: 100%; overflow-x: auto; padding: 20px 10px 30px 10px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;">
-                <!-- CARD 1 -->
+
+               <!-- CARD 1 (UPDATED TO "Why The Keyframe Awards Was Created") -->
                 <div class="blog-card-item" style="flex: 0 0 90%; max-width: 800px; margin: 0 auto; scroll-snap-align: center; background: rgba(26, 0, 51, 0.6); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 12px; padding: 40px; text-align: left; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;"
                     onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--neon-cyan)'; this.style.boxShadow='0 8px 25px rgba(0, 240, 255, 0.15)';"
                     onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 240, 255, 0.2)'; this.style.boxShadow='0 5px 15px rgba(0, 0, 0, 0.3)';">
-                    <span style="font-size: 0.85rem; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 12px;">Official Editorial July 15</span>
+                    <span style="font-size: 0.85rem; color: var(--neon-cyan); text-transform: uppercase; display: block; margin-bottom: 12px; font-weight: bold;">
+                        <i class="fa-solid fa-bullhorn" style="margin-right: 6px;"></i> Official Editorial
+                    </span>
                     <h3 style="font-size: 1.6rem; color: var(--neon-cyan); margin-bottom: 15px;">
                         Why The Keyframe Awards Was Created: Redefining Digital Visual Artistry
                     </h3>
                     <p style="color: #ccc; font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
                         For decades, traditional media has isolated post-production appreciation. Discover how we are building a premium, transparent platform to give digital editors, animators, and visual technicians their definitive industry honors.
                     </p>
-                    <!-- Clean URL Link to Blog Index -->
+                    <a href="https://press.keyframe-awards.com" style="display: inline-block; background: transparent; border: 2px solid var(--neon-pink); color: var(--text-white); padding: 10px 24px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s, box-shadow 0.3s; box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);"
+                        onmouseover="this.style.background='var(--neon-pink)'; this.style.boxShadow='0 0 20px var(--neon-pink)';"
+                        onmouseout="this.style.background='transparent'; this.style.boxShadow='0 0 10px rgba(255, 0, 127, 0.2)';">
+                        Read Full Press Release &rarr;
+                    </a>
+                </div>
+                
+                <!-- CARD 2 (UPDATED TO "Road to Keyframe") -->
+                <div class="blog-card-item" style="flex: 0 0 90%; max-width: 800px; margin: 0 auto; scroll-snap-align: center; background: rgba(26, 0, 51, 0.6); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 12px; padding: 40px; text-align: left; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;"
+                    onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--neon-cyan)'; this.style.boxShadow='0 8px 25px rgba(0, 240, 255, 0.15)';"
+                    onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 240, 255, 0.2)'; this.style.boxShadow='0 5px 15px rgba(0, 0, 0, 0.3)';">
+                    <span style="font-size: 0.85rem; color: var(--neon-pink); text-transform: uppercase; display: block; margin-bottom: 12px; font-weight: bold;">
+                        <i class="fa-solid fa-newspaper" style="margin-right: 6px;"></i> Official Release
+                    </span>
+                    <h3 style="font-size: 1.6rem; color: var(--neon-cyan); margin-bottom: 15px;">
+                        Road to Keyframe: Nominations, Voting & Timeline Launch Guide
+                    </h3>
+                    <p style="color: #ccc; font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
+                        We're mapping out the road to honors! Submissions run through October, official voting begins in November, and the dynamic award night event rolls out in January. See how to secure your bracket positions.
+                    </p>
                     <a href="https://press.keyframe-awards.com" style="display: inline-block; background: transparent; border: 2px solid var(--neon-pink); color: var(--text-white); padding: 10px 24px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s, box-shadow 0.3s; box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);"
                         onmouseover="this.style.background='var(--neon-pink)'; this.style.boxShadow='0 0 20px var(--neon-pink)';"
                         onmouseout="this.style.background='transparent'; this.style.boxShadow='0 0 10px rgba(255, 0, 127, 0.2)';">
@@ -238,24 +335,6 @@
                     </a>
                 </div>
 
-                <!-- CARD 2 -->
-                <div class="blog-card-item" style="flex: 0 0 90%; max-width: 800px; margin: 0 auto; scroll-snap-align: center; background: rgba(26, 0, 51, 0.6); border: 1px solid rgba(0, 240, 255, 0.2); border-radius: 12px; padding: 40px; text-align: left; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;"
-                    onmouseover="this.style.transform='translateY(-5px)'; this.style.borderColor='var(--neon-cyan)'; this.style.boxShadow='0 8px 25px rgba(0, 240, 255, 0.15)';"
-                    onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='rgba(0, 240, 255, 0.2)'; this.style.boxShadow='0 5px 15px rgba(0, 0, 0, 0.3)';">
-                    <span style="font-size: 0.85rem; color: #aaa; text-transform: uppercase; display: block; margin-bottom: 12px;">Official Editorial July 14</span>
-                    <h3 style="font-size: 1.6rem; color: var(--neon-cyan); margin-bottom: 15px;">
-                        Road to Keyframe: Nominations, Voting & Timeline Launch Guide
-                    </h3>
-                    <p style="color: #ccc; font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
-                        We're mapping out the road to honors! Submissions run through October, official voting begins in November, and the dynamic award night event rolls out in January. See how to secure your bracket positions.
-                    </p>
-                    <!-- Clean URL Link to Blog Index -->
-                    <a href="https://press.keyframe-awards.com" style="display: inline-block; background: transparent; border: 2px solid var(--neon-pink); color: var(--text-white); padding: 10px 24px; border-radius: 30px; text-decoration: none; font-weight: bold; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; transition: background 0.3s, box-shadow 0.3s; box-shadow: 0 0 10px rgba(255, 0, 127, 0.2);"
-                        onmouseover="this.style.background='var(--neon-pink)'; this.style.boxShadow='0 0 20px var(--neon-pink)';"
-                        onmouseout="this.style.background='transparent'; this.style.boxShadow='0 0 10px rgba(255, 0, 127, 0.2)';">
-                        Read Full Press Release &rarr;
-                    </a>
-                </div>
             </div>
             <p class="blog-swipe-hint" style="color: #666; font-size: 0.85rem; margin-top: 15px; display: none;"> Swipe sideways to see other releases →</p>
         </div>
@@ -396,10 +475,8 @@
         const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
 
-        // Active Cloudflare Worker URL for Resend Email Service
         const CLOUDFLARE_WORKER_URL = "https://lkeyframe-email-service.temiloluwa809.workers.dev/"; 
 
-        // FUNCTION TO TRIGGER WELCOME EMAIL VIA CLOUDFLARE WORKER
         async function triggerWelcomeEmail(email, name) {
             if (!CLOUDFLARE_WORKER_URL) return;
             try {
@@ -420,7 +497,6 @@
             }
         }
 
-        // GOOGLE SIGN IN
         function handleGoogleAuth() {
             signInWithPopup(auth, googleProvider)
             .then(async (result) => {
@@ -428,7 +504,6 @@
                 const docRef = doc(db, "users", user.uid);
                 const docSnap = await getDoc(docRef);
                 
-                // If brand new user, save profile and dispatch welcome email
                 if (!docSnap.exists()) {
                     const fullName = user.displayName || "Creator";
                     await setDoc(docRef, {
@@ -438,7 +513,6 @@
                         registeredAt: new Date().toISOString()
                     });
                     
-                    // Trigger Cloudflare Worker
                     triggerWelcomeEmail(user.email, fullName);
                 }
                 
@@ -453,7 +527,6 @@
         document.getElementById('google-login-btn').addEventListener('click', handleGoogleAuth);
         document.getElementById('google-signup-btn').addEventListener('click', handleGoogleAuth);
 
-        // EMAIL SIGN UP
         document.getElementById('signup-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const name = document.getElementById('signup-name').value;
@@ -472,7 +545,6 @@
                 });
             })
             .then(() => {
-                // Trigger Cloudflare Worker
                 triggerWelcomeEmail(email, name);
                 alert("Account registered successfully!");
                 document.getElementById('auth-modal').classList.remove('open');
@@ -482,7 +554,6 @@
             });
         });
 
-        // EMAIL LOGIN
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
@@ -498,7 +569,6 @@
             });
         });
 
-        // FORGOT PASSWORD
         document.getElementById('forgot-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('forgot-email').value;
@@ -512,7 +582,6 @@
             });
         });
 
-        // LIVE AUTH STATE LISTENER (PULLS UPDATED NAME & AVATAR)
         const authActions = document.getElementById('auth-header-actions');
         onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -520,11 +589,10 @@
                 let printPic = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(printName)}&background=ff007f&color=fff`;
 
                 try {
-                    // Force fetch latest user doc from Firestore
                     const docSnap = await getDoc(doc(db, "users", user.uid));
                     if (docSnap.exists() && docSnap.data().fullName) {
                         const fullName = docSnap.data().fullName.trim();
-                        printName = fullName.split(' ')[0]; // Gets first name
+                        printName = fullName.split(' ')[0];
                         if (!user.photoURL) {
                             printPic = `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=ff007f&color=fff`;
                         }
