@@ -250,29 +250,30 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // AUTO-SEED 20 CODES IN FIRESTORE
-        async function autoSeedJudgeCodes() {
+        // AUTO-GENERATOR FOR JuDg001 TO JuDg020
+        async function autoGenerateCodes() {
             try {
                 for (let i = 1; i <= 20; i++) {
                     const codeNum = String(i).padStart(3, '0');
                     const codeId = `JuDg${codeNum}`;
                     const codeRef = doc(db, "judge_codes", codeId);
-                    const snap = await getDoc(codeRef);
                     
-                    if (!snap.exists()) {
-                        await setDoc(codeRef, {
-                            code: codeId,
-                            assignedTo: `Judge ${i}`,
-                            active: true,
-                            createdAt: new Date()
-                        });
-                    }
+                    // Creates code if it doesn't already exist
+                    await setDoc(codeRef, {
+                        code: codeId,
+                        assignedTo: `Judge ${i}`,
+                        active: true,
+                        createdAt: new Date()
+                    }, { merge: true });
                 }
+                console.log("All 20 judge codes generated in Firestore!");
             } catch(e) {
-                console.error("Auto-seed status:", e);
+                console.error("Auto-generate error:", e);
             }
         }
-        autoSeedJudgeCodes();
+        
+        // Runs automatically when you open the page
+        autoGenerateCodes();
 
         // DOM ELEMENTS
         const unlockBtn = document.getElementById('unlock-btn');
