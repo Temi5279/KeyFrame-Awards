@@ -29,11 +29,12 @@
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         .portal-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .portal-header h1 {
@@ -47,7 +48,7 @@
 
         .panel-container {
             width: 100%;
-            max-width: 500px;
+            max-width: 520px;
         }
 
         .auth-card {
@@ -114,7 +115,7 @@
             display: none;
         }
 
-        /* Form Area Hidden by Default */
+        /* Form & Notice Areas */
         #ballot-area {
             display: none;
             background: rgba(255, 255, 255, 0.03);
@@ -123,6 +124,32 @@
             border-radius: 12px;
             padding: 30px 20px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .deadline-banner {
+            background: rgba(0, 240, 255, 0.08);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.82rem;
+            color: var(--neon-cyan, #00f0ff);
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .progress-badge {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 6px 14px;
+            font-size: 0.82rem;
+            color: #fff;
+            display: inline-block;
+            margin-bottom: 15px;
         }
 
         .form-group {
@@ -149,6 +176,20 @@
             outline: none;
         }
 
+        /* Confirmation Card */
+        #success-card {
+            display: none;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .success-icon {
+            font-size: 3rem;
+            color: #00ff88;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+        }
+
         .portal-support {
             margin-top: 35px;
             text-align: center;
@@ -160,10 +201,6 @@
             color: var(--neon-cyan, #00f0ff);
             text-decoration: underline;
             font-weight: 600;
-        }
-
-        .portal-support a:hover {
-            opacity: 1;
         }
     </style>
 </head>
@@ -188,10 +225,23 @@
 
         <!-- PROTECTED JUDGING BALLOT -->
         <div id="ballot-area">
-            <h2 style="color: var(--neon-cyan, #00f0ff); text-align: center; margin-bottom: 5px;">Panel Nomination Form</h2>
-            <p style="text-align: center; opacity: 0.8; font-size: 0.9rem; margin-bottom: 20px;">Logged in under Passcode: <span id="active-judge-id" style="color: #fff; font-weight: 700;"></span></p>
-            <p style="text-align: center; color: var(--neon-cyan, #00f0ff); font-weight: 600; font-size: 0.95rem; margin-bottom: 25px;">Assigned Division: <span id="assigned-division-title" style="color: #fff;"></span></p>
+            <!-- DEADLINE BANNER -->
+            <div class="deadline-banner">
+                <i class="fa-solid fa-clock"></i>
+                <span><strong>Panel Window Open:</strong> Submit selections before the cutoff date.</span>
+            </div>
 
+            <div style="text-align: center;">
+                <div class="progress-badge">
+                    Submissions completed: <strong id="submission-count" style="color: #00f0ff;">0</strong>
+                </div>
+            </div>
+
+            <h2 style="color: var(--neon-cyan, #00f0ff); text-align: center; margin-bottom: 5px;">Panel Nomination Form</h2>
+            <p style="text-align: center; opacity: 0.8; font-size: 0.88rem; margin-bottom: 5px;">Logged in under Passcode: <span id="active-judge-id" style="color: #fff; font-weight: 700;"></span></p>
+            <p style="text-align: center; color: var(--neon-cyan, #00f0ff); font-weight: 600; font-size: 0.92rem; margin-bottom: 25px;">Assigned Division: <span id="assigned-division-title" style="color: #fff;"></span></p>
+
+            <!-- FORM -->
             <form id="judging-form">
                 <div class="form-group">
                     <label for="category-select">Sub-Category Selection</label>
@@ -216,12 +266,25 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="sample-link">Sample Work / Proof Link (Optional)</label>
+                    <input type="url" id="sample-link" placeholder="https://youtube.com/watch?v=... or TikTok link">
+                </div>
+
+                <div class="form-group">
                     <label for="rationale">Brief Rationale / Justification (Optional)</label>
                     <textarea id="rationale" rows="3" placeholder="Why do these creators deserve a spot on the official ballot?"></textarea>
                 </div>
 
                 <button type="submit" class="verify-btn">Submit Official Recommendations</button>
             </form>
+
+            <!-- DYNAMIC CONFIRMATION CARD -->
+            <div id="success-card">
+                <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                <h3 style="color: #fff; margin-bottom: 8px;">Submission Received!</h3>
+                <p style="opacity: 0.8; font-size: 0.9rem; margin-bottom: 25px;">Your official recommendations for <span id="last-submitted-sub" style="color: #00f0ff; font-weight: 700;"></span> have been logged.</p>
+                <button type="button" class="verify-btn" id="next-nomination-btn">Nominate for Another Sub-Category</button>
+            </div>
         </div>
 
         <!-- FOOTER SUPPORT LINK -->
@@ -233,7 +296,7 @@
     <!-- Firebase System Module Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, getDoc, setDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
           apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
@@ -308,6 +371,8 @@
             ]
         };
 
+        let sessionSubmissions = 0;
+
         // DOM ELEMENTS
         const unlockBtn = document.getElementById('unlock-btn');
         const codeInput = document.getElementById('access-code');
@@ -317,6 +382,11 @@
         const activeJudgeId = document.getElementById('active-judge-id');
         const assignedDivisionTitle = document.getElementById('assigned-division-title');
         const categorySelect = document.getElementById('category-select');
+        const judgingForm = document.getElementById('judging-form');
+        const successCard = document.getElementById('success-card');
+        const nextNominationBtn = document.getElementById('next-nomination-btn');
+        const submissionCountElem = document.getElementById('submission-count');
+        const lastSubmittedSubElem = document.getElementById('last-submitted-sub');
 
         // VERIFY CODE FUNCTION
         async function verifyPasscode() {
@@ -374,10 +444,10 @@
         });
 
         // FORM SUBMISSION TO FIRESTORE
-        const judgingForm = document.getElementById('judging-form');
         judgingForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const submitBtn = judgingForm.querySelector('button[type="submit"]');
+            const subCategoryVal = categorySelect.value;
             submitBtn.textContent = "Submitting...";
             submitBtn.disabled = true;
 
@@ -385,19 +455,28 @@
                 const payload = {
                     judgeCode: activeJudgeId.textContent,
                     division: assignedDivisionTitle.textContent,
-                    subCategory: categorySelect.value,
+                    subCategory: subCategoryVal,
                     nominees: [
                         document.getElementById('nominee-1').value,
                         document.getElementById('nominee-2').value,
                         document.getElementById('nominee-3').value
                     ],
-                    rationale: document.getElementById('rationale').value,
+                    sampleLink: document.getElementById('sample-link').value || "",
+                    rationale: document.getElementById('rationale').value || "",
                     submittedAt: new Date()
                 };
 
                 await addDoc(collection(db, "panel_submissions"), payload);
-                alert("Recommendations submitted successfully!");
+                
+                // UPDATE COUNTER & DISPLAY CONFIRMATION
+                sessionSubmissions++;
+                submissionCountElem.textContent = sessionSubmissions;
+                lastSubmittedSubElem.textContent = subCategoryVal;
+
                 judgingForm.reset();
+                judgingForm.style.display = 'none';
+                successCard.style.display = 'block';
+
             } catch (err) {
                 alert("Error submitting form. Please try again.");
                 console.error(err);
@@ -405,6 +484,13 @@
                 submitBtn.textContent = "Submit Official Recommendations";
                 submitBtn.disabled = false;
             }
+        });
+
+        // RESET FORM FOR NEXT SUB-CATEGORY
+        nextNominationBtn.addEventListener('click', () => {
+            successCard.style.display = 'none';
+            judgingForm.style.display = 'block';
+            categorySelect.value = "";
         });
     </script>
 </body>
