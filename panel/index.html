@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Official Panel Portal | The Keyframe Awards</title>
+    <title>Official Panel Portal | Keyframe Awards</title>
 
     <!-- Google Analytics Tag -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8HX6L8WEG"></script>
@@ -18,26 +18,50 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <style>
+        body {
+            background-color: #0d0814;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .portal-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .portal-header h1 {
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(180, 0, 255, 0.5);
+        }
+
         .panel-container {
-            margin-top: 100px;
-            min-height: 70vh;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 30px 20px;
+            width: 100%;
+            max-width: 500px;
         }
 
         .auth-card {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 40px 25px;
             text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
         }
 
         .code-input-group {
-            margin: 25px 0;
+            margin: 25px 0 15px 0;
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -46,16 +70,16 @@
 
         .code-input {
             width: 100%;
-            max-width: 320px;
-            padding: 14px 20px;
-            font-size: 1.2rem;
+            padding: 16px 20px;
+            font-size: 1.1rem;
             text-align: center;
             letter-spacing: 2px;
-            border-radius: 8px;
-            border: 1px solid var(--neon-cyan);
-            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border: 1px solid var(--neon-cyan, #00f0ff);
+            background: rgba(0, 0, 0, 0.6);
             color: #fff;
             outline: none;
+            box-sizing: border-box;
             transition: all 0.3s ease;
         }
 
@@ -64,16 +88,17 @@
         }
 
         .verify-btn {
-            background: linear-gradient(135deg, var(--neon-cyan), #0088cc);
+            width: 100%;
+            background: linear-gradient(135deg, var(--neon-cyan, #00f0ff), #0088cc);
             color: #000;
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1rem;
-            padding: 14px 32px;
+            padding: 16px 32px;
             border-radius: 30px;
             border: none;
             cursor: pointer;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             transition: all 0.3s ease;
         }
 
@@ -84,19 +109,20 @@
 
         .error-msg {
             color: #ff4d4d;
-            font-size: 0.9rem;
-            margin-top: 10px;
+            font-size: 0.88rem;
+            margin-top: 15px;
             display: none;
         }
 
         /* Form Area Hidden by Default */
         #ballot-area {
             display: none;
-            background: rgba(255, 255, 255, 0.02);
-            border-left: 3px solid var(--neon-cyan);
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--neon-cyan, #00f0ff);
+            border-radius: 12px;
             padding: 30px 20px;
-            margin-top: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         }
 
         .form-group {
@@ -106,76 +132,64 @@
 
         .form-group label {
             display: block;
-            color: var(--neon-cyan);
+            color: var(--neon-cyan, #00f0ff);
             margin-bottom: 8px;
             font-weight: 600;
+            font-size: 0.95rem;
         }
 
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.4);
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 6px;
+            border-radius: 8px;
             color: #fff;
             box-sizing: border-box;
+            outline: none;
         }
 
-        .user-profile-badge {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: #fff;
-            margin-right: 15px;
-            cursor: pointer;
+        .portal-support {
+            margin-top: 35px;
+            text-align: center;
+            font-size: 0.85rem;
+            opacity: 0.75;
         }
-        .user-profile-badge img {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 2px solid var(--neon-cyan);
-            object-fit: cover;
+
+        .portal-support a {
+            color: var(--neon-cyan, #00f0ff);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .portal-support a:hover {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-    <header class="navbar">
-        <div class="logo">Keyframe Awards</div>
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-        <nav class="nav-links">
-          <a href="/">Home</a>
-          <a href="/nominations">Nominations</a>
-          <a href="/vote">Vote</a>
-          <a href="/live">Live Stream</a>
-          <a href="/about">About</a>
-          <div class="auth-buttons" id="auth-header-actions">
-            <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
-          </div>
-        </nav>
-    </header>
+
+    <div class="portal-header">
+        <h1>KEYFRAME AWARDS</h1>
+    </div>
 
     <section class="panel-container">
         <!-- PASSCODE GATE -->
         <div class="auth-card" id="gate-area">
-            <h2 style="color: var(--neon-cyan); margin-bottom: 10px;">Official Selection Panel</h2>
-            <p style="opacity: 0.85; font-size: 0.95rem;">Enter your confidential access pass to unlock the nomination submission portal.</p>
+            <h2 style="color: var(--neon-cyan, #00f0ff); margin-bottom: 10px; font-size: 1.5rem;">Official Selection Panel</h2>
+            <p style="opacity: 0.85; font-size: 0.95rem; line-height: 1.5;">Enter the confidential access passcode sent to your email address.</p>
             
             <div class="code-input-group">
-                <input type="text" id="access-code" class="code-input" placeholder="e.g. JuDg001" autocomplete="off">
+                <input type="text" id="access-code" class="code-input" placeholder="Enter Access Passcode" autocomplete="off">
                 <button class="verify-btn" id="unlock-btn">Verify Access</button>
             </div>
-            <p class="error-msg" id="auth-error">Invalid or inactive access code. Check spelling and try again.</p>
+            <p class="error-msg" id="auth-error">Invalid access passcode. Please check your email and try again.</p>
         </div>
 
         <!-- PROTECTED JUDGING BALLOT -->
         <div id="ballot-area">
-            <h2 style="color: var(--neon-cyan); text-align: center; margin-bottom: 5px;">Panel Nomination Form</h2>
-            <p style="text-align: center; opacity: 0.8; font-size: 0.9rem; margin-bottom: 30px;">Logged in under Judge ID: <span id="active-judge-id" style="color: #fff; font-weight: 700;"></span></p>
+            <h2 style="color: var(--neon-cyan, #00f0ff); text-align: center; margin-bottom: 5px;">Panel Nomination Form</h2>
+            <p style="text-align: center; opacity: 0.8; font-size: 0.9rem; margin-bottom: 30px;">Logged in under Passcode: <span id="active-judge-id" style="color: #fff; font-weight: 700;"></span></p>
 
             <form id="judging-form">
                 <div class="form-group">
@@ -209,37 +223,19 @@
                     <textarea id="rationale" rows="3" placeholder="Why do these creators deserve a spot on the official ballot?"></textarea>
                 </div>
 
-                <button type="submit" class="verify-btn" style="width: 100%;">Submit Official Recommendations</button>
+                <button type="submit" class="verify-btn">Submit Official Recommendations</button>
             </form>
+        </div>
+
+        <!-- FOOTER SUPPORT LINK -->
+        <div class="portal-support">
+            Having an issue? <a href="mailto:support@keyframe-awards.com?subject=Panel%20Access%20Issue">Send an email</a>
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-links">
-          <a href="/privacy">Privacy Policy</a>
-          <a href="/terms">Terms of Service</a>
-          <a href="/support">Support Us</a>
-          <a href="/cookies">Cookie Preferences</a>
-          <a href="/contact">Contact Support</a>
-        </div>
-        <div class="social-icons">
-          <a href="https://www.facebook.com/profile.php?id=61591758598232" target="_blank"><i class="fab fa-facebook"></i></a>
-          <a href="https://www.instagram.com/keyframeawards" target="_blank"><i class="fab fa-instagram"></i></a>
-          <a href="https://www.threads.net/@keyframeawards" target="_blank"><i class="fab fa-threads"></i></a>
-          <a href="https://x.com/keyframeawards" target="_blank"><i class="fab fa-x-twitter"></i></a>
-          <a href="https://www.tiktok.com/@keyframeawards" target="_blank"><i class="fab fa-tiktok"></i></a>
-          <a href="https://www.youtube.com/@KeyframeAwards" target="_blank"><i class="fab fa-youtube"></i></a>
-        </div>
-        <div class="copyright">
-          <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Firebase Script -->
+    <!-- Firebase System Module Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -252,30 +248,33 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
         const db = getFirestore(app);
 
         // AUTO-SEED 20 CODES IN FIRESTORE
         async function autoSeedJudgeCodes() {
-            for (let i = 1; i <= 20; i++) {
-                const codeNum = String(i).padStart(3, '0');
-                const codeId = `JuDg${codeNum}`;
-                const codeRef = doc(db, "judge_codes", codeId);
-                const snap = await getDoc(codeRef);
-                
-                if (!snap.exists()) {
-                    await setDoc(codeRef, {
-                        code: codeId,
-                        assignedTo: `Judge ${i}`,
-                        active: true,
-                        createdAt: new Date()
-                    });
+            try {
+                for (let i = 1; i <= 20; i++) {
+                    const codeNum = String(i).padStart(3, '0');
+                    const codeId = `JuDg${codeNum}`;
+                    const codeRef = doc(db, "judge_codes", codeId);
+                    const snap = await getDoc(codeRef);
+                    
+                    if (!snap.exists()) {
+                        await setDoc(codeRef, {
+                            code: codeId,
+                            assignedTo: `Judge ${i}`,
+                            active: true,
+                            createdAt: new Date()
+                        });
+                    }
                 }
+            } catch(e) {
+                console.error("Auto-seed status:", e);
             }
         }
         autoSeedJudgeCodes();
 
-        // VERIFY CODE LOGIC
+        // DOM ELEMENTS
         const unlockBtn = document.getElementById('unlock-btn');
         const codeInput = document.getElementById('access-code');
         const authError = document.getElementById('auth-error');
@@ -283,77 +282,80 @@
         const ballotArea = document.getElementById('ballot-area');
         const activeJudgeId = document.getElementById('active-judge-id');
 
-        unlockBtn.addEventListener('click', async () => {
+        // VERIFY CODE FUNCTION
+        async function verifyPasscode() {
+            authError.style.display = 'none';
             const enteredCode = codeInput.value.trim();
-            if(!enteredCode) return;
-
-            const codeRef = doc(db, "judge_codes", enteredCode);
-            const docSnap = await getDoc(codeRef);
-
-            if (docSnap.exists() && docSnap.data().active === true) {
-                gateArea.style.display = 'none';
-                ballotArea.style.display = 'block';
-                activeJudgeId.textContent = enteredCode;
-            } else {
+            
+            if(!enteredCode) {
+                authError.textContent = "Please enter your passcode.";
                 authError.style.display = 'block';
+                return;
             }
+
+            unlockBtn.textContent = "Verifying...";
+            unlockBtn.disabled = true;
+
+            try {
+                const codeRef = doc(db, "judge_codes", enteredCode);
+                const docSnap = await getDoc(codeRef);
+
+                if (docSnap.exists() && docSnap.data().active === true) {
+                    gateArea.style.display = 'none';
+                    ballotArea.style.display = 'block';
+                    activeJudgeId.textContent = enteredCode;
+                } else {
+                    authError.textContent = "Invalid access passcode. Please check your email and try again.";
+                    authError.style.display = 'block';
+                }
+            } catch (err) {
+                console.error("Firestore Verification Error:", err);
+                authError.textContent = "Connection error. Please try again or contact support.";
+                authError.style.display = 'block';
+            } finally {
+                unlockBtn.textContent = "Verify Access";
+                unlockBtn.disabled = false;
+            }
+        }
+
+        // EVENT LISTENERS
+        unlockBtn.addEventListener('click', verifyPasscode);
+        codeInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') verifyPasscode();
         });
 
         // FORM SUBMISSION TO FIRESTORE
         const judgingForm = document.getElementById('judging-form');
         judgingForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const payload = {
-                judgeCode: activeJudgeId.textContent,
-                category: document.getElementById('category-select').value,
-                nominees: [
-                    document.getElementById('nominee-1').value,
-                    document.getElementById('nominee-2').value,
-                    document.getElementById('nominee-3').value
-                ],
-                rationale: document.getElementById('rationale').value,
-                submittedAt: new Date()
-            };
+            const submitBtn = judgingForm.querySelector('button[type="submit"]');
+            submitBtn.textContent = "Submitting...";
+            submitBtn.disabled = true;
 
-            await addDoc(collection(db, "panel_submissions"), payload);
-            alert("Recommendations submitted successfully!");
-            judgingForm.reset();
+            try {
+                const payload = {
+                    judgeCode: activeJudgeId.textContent,
+                    category: document.getElementById('category-select').value,
+                    nominees: [
+                        document.getElementById('nominee-1').value,
+                        document.getElementById('nominee-2').value,
+                        document.getElementById('nominee-3').value
+                    ],
+                    rationale: document.getElementById('rationale').value,
+                    submittedAt: new Date()
+                };
+
+                await addDoc(collection(db, "panel_submissions"), payload);
+                alert("Recommendations submitted successfully!");
+                judgingForm.reset();
+            } catch (err) {
+                alert("Error submitting form. Please try again.");
+                console.error(err);
+            } finally {
+                submitBtn.textContent = "Submit Official Recommendations";
+                submitBtn.disabled = false;
+            }
         });
-
-        // AUTH HEADER HANDLER
-        const authActions = document.getElementById('auth-header-actions');
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            const displayName = user.displayName || "User Account";
-            const photoURL = user.photoURL || "https://i.ibb.co/5G78k5y/default-avatar.png";
-            
-            authActions.innerHTML = `
-              <a href="/account" class="user-profile-badge">
-                  <img src="${photoURL}" alt="${displayName}">
-                  <span class="user-welcome">${displayName}</span>
-              </a>
-              <button class="btn-login" id="logout-btn">Log Out</button>
-            `;
-            document.getElementById('logout-btn').addEventListener('click', () => {
-              signOut(auth).then(() => alert("Logged out!"));
-            });
-          } else {
-            authActions.innerHTML = `
-              <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
-            `;
-          }
-        });
-    </script>
-
-    <!-- MOBILE MENU JS -->
-    <script>
-      const menuToggle = document.getElementById('mobile-menu');
-      const navLinks = document.querySelector('.nav-links');
-      
-      menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        menuToggle.classList.toggle('is-active');
-      });
     </script>
 </body>
 </html>
