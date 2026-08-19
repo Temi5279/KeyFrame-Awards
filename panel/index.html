@@ -189,17 +189,14 @@
         <!-- PROTECTED JUDGING BALLOT -->
         <div id="ballot-area">
             <h2 style="color: var(--neon-cyan, #00f0ff); text-align: center; margin-bottom: 5px;">Panel Nomination Form</h2>
-            <p style="text-align: center; opacity: 0.8; font-size: 0.9rem; margin-bottom: 30px;">Logged in under Passcode: <span id="active-judge-id" style="color: #fff; font-weight: 700;"></span></p>
+            <p style="text-align: center; opacity: 0.8; font-size: 0.9rem; margin-bottom: 20px;">Logged in under Passcode: <span id="active-judge-id" style="color: #fff; font-weight: 700;"></span></p>
+            <p style="text-align: center; color: var(--neon-cyan, #00f0ff); font-weight: 600; font-size: 0.95rem; margin-bottom: 25px;">Assigned Division: <span id="assigned-division-title" style="color: #fff;"></span></p>
 
             <form id="judging-form">
                 <div class="form-group">
-                    <label for="category-select">Assigned Category</label>
+                    <label for="category-select">Sub-Category Selection</label>
                     <select id="category-select" required>
-                        <option value="" disabled selected>Select a category...</option>
-                        <option value="Best Storytelling Creator">Best Storytelling Creator</option>
-                        <option value="Cleanest Video Editor">Cleanest Video Editor</option>
-                        <option value="Meme of the Year">Meme of the Year</option>
-                        <option value="Best Mobile Editor">Best Mobile Editor</option>
+                        <option value="" disabled selected>Select a sub-category...</option>
                     </select>
                 </div>
 
@@ -250,30 +247,66 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // AUTO-GENERATOR FOR JuDg001 TO JuDg020
-        async function autoGenerateCodes() {
-            try {
-                for (let i = 1; i <= 20; i++) {
-                    const codeNum = String(i).padStart(3, '0');
-                    const codeId = `JuDg${codeNum}`;
-                    const codeRef = doc(db, "judge_codes", codeId);
-                    
-                    // Creates code if it doesn't already exist
-                    await setDoc(codeRef, {
-                        code: codeId,
-                        assignedTo: `Judge ${i}`,
-                        active: true,
-                        createdAt: new Date()
-                    }, { merge: true });
-                }
-                console.log("All 20 judge codes generated in Firestore!");
-            } catch(e) {
-                console.error("Auto-generate error:", e);
-            }
-        }
-        
-        // Runs automatically when you open the page
-        autoGenerateCodes();
+        // PASSCODE TO DIVISION MAPPING
+        const codeCategoryMap = {
+            "JuDg001": "Music Category", "JuDg002": "Music Category",
+            "JuDg003": "Meme & Viral Culture", "JuDg004": "Meme & Viral Culture",
+            "JuDg005": "Movies & Film", "JuDg006": "Movies & Film",
+            "JuDg007": "TV Shows & Series", "JuDg008": "TV Shows & Series",
+            "JuDg009": "Football & Sports", "JuDg010": "Football & Sports",
+            "JuDg011": "Gaming", "JuDg012": "Gaming",
+            "JuDg013": "Live Streaming", "JuDg014": "Live Streaming",
+            "JuDg015": "General Creator", "JuDg016": "General Creator",
+            "JuDg017": "Creative Craft", "JuDg018": "Creative Craft",
+            "JuDg019": "The Year Awards", "JuDg020": "The Year Awards"
+        };
+
+        // SUB-CATEGORIES FOR EACH DIVISION
+        const subcategoryData = {
+            "Music Category": [
+                "Best K-pop Group", "Best Music Edit / MV Recreation", "Best Solo Artist",
+                "Most Hyped Music Video Edit", "Best Fandom / Stan Account", 
+                "Best Song Cover / Dance Cover", "Viral Music Trend Creator", "Best Music Reaction / Breakdown"
+            ],
+            "Meme & Viral Culture": [
+                "Funniest Viral Meme", "Best Meme Edit / Sound", "Most Relatable Meme",
+                "Wildest Trend Jumper", "Best Roast Meme", "Meme of the Year"
+            ],
+            "Movies & Film": [
+                "Best Movie Edit / Recap", "Most Hyped Movie Scene Recreation",
+                "Best Movie Trailer Reaction", "Best Movie Meme", "Cinema Guru / Film Reviewer"
+            ],
+            "TV Shows & Series": [
+                "Best TV Show Edit", "Most Addictive Show Moments", "Best Series Theory / Breakdown",
+                "Funniest Show Reaction", "Best Show Recap Creator"
+            ],
+            "Football & Sports": [
+                "Best Football Edit", "Most Hyped Goal Montage", "Football Skills King",
+                "Best Match Highlight Creator", "Viral Football Meme", "Best Player Tribute Edit"
+            ],
+            "Gaming": [
+                "Best Gaming Edit / Montage", "Funniest Gaming Fail", "Best Game Clip / Highlight",
+                "Gaming Meme Master", "Best Gaming Streamer / Creator"
+            ],
+            "Live Streaming": [
+                "Best Streamer of the Year", "Most Chaotic Stream Moment", "Best Streamer Duo / Squad",
+                "Chat Choice Award", "Breakout / Rising Streamer"
+            ],
+            "General Creator": [
+                "Most Viral Content Creator", "Best Storytelling Creator", "Charisma King / Queen",
+                "Most Relatable Daily Vlogger", "Best Duet / Collab", "Community Favorite Creator"
+            ],
+            "Creative Craft": [
+                "Best Mobile Editor", "Best Transition / Effects", "Cleanest Video Editor",
+                "Audio Sync Wizard", "Most Creative Edit Overall"
+            ],
+            "The Year Awards": [
+                "Footballer of the Year", "Gamer of the Year", "Meme Lord/Lady of the Year",
+                "Movie Content Creator of the Year", "TV Show Stan of the Year",
+                "Viral Phenomenon of the Year", "Music Artist / Group of the Year",
+                "Overall Creator of the Year", "Rising Star of the Year"
+            ]
+        };
 
         // DOM ELEMENTS
         const unlockBtn = document.getElementById('unlock-btn');
@@ -282,6 +315,8 @@
         const gateArea = document.getElementById('gate-area');
         const ballotArea = document.getElementById('ballot-area');
         const activeJudgeId = document.getElementById('active-judge-id');
+        const assignedDivisionTitle = document.getElementById('assigned-division-title');
+        const categorySelect = document.getElementById('category-select');
 
         // VERIFY CODE FUNCTION
         async function verifyPasscode() {
@@ -305,6 +340,19 @@
                     gateArea.style.display = 'none';
                     ballotArea.style.display = 'block';
                     activeJudgeId.textContent = enteredCode;
+
+                    const assignedCategory = codeCategoryMap[enteredCode] || "General Creator";
+                    assignedDivisionTitle.textContent = assignedCategory;
+
+                    categorySelect.innerHTML = '<option value="" disabled selected>Select a sub-category...</option>';
+                    if (subcategoryData[assignedCategory]) {
+                        subcategoryData[assignedCategory].forEach(sub => {
+                            const opt = document.createElement('option');
+                            opt.value = sub;
+                            opt.textContent = sub;
+                            categorySelect.appendChild(opt);
+                        });
+                    }
                 } else {
                     authError.textContent = "Invalid access passcode. Please check your email and try again.";
                     authError.style.display = 'block';
@@ -336,7 +384,8 @@
             try {
                 const payload = {
                     judgeCode: activeJudgeId.textContent,
-                    category: document.getElementById('category-select').value,
+                    division: assignedDivisionTitle.textContent,
+                    subCategory: categorySelect.value,
                     nominees: [
                         document.getElementById('nominee-1').value,
                         document.getElementById('nominee-2').value,
