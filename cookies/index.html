@@ -5,12 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cookie Preferences | The Keyframe Awards</title>
 
-<!-- Google Analytics Tag -->
+<!-- Google Analytics Tag with Consent Mode v2 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8HX6L8WEG"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
+
+  // Check user's saved preference (default to 'denied' if not explicitly set)
+  const analyticsConsent = localStorage.getItem('analytics_consent') === 'enabled' ? 'granted' : 'denied';
+
+  // Set default consent state for GA4
+  gtag('consent', 'default', {
+    'analytics_storage': analyticsConsent
+  });
+
   gtag('config', 'G-Z8HX6L8WEG');
 </script>
 
@@ -33,6 +42,11 @@
             border-radius: 50%;
             border: 2px solid var(--neon-cyan);
             object-fit: cover;
+        }
+
+        /* Toggle Button States */
+        .btn-toggle-analytics.active {
+            background: #e74c3c !important; /* Red for Disable */
         }
     </style>
 </head>
@@ -81,7 +95,7 @@
                     <h4 style="margin: 0; color: #fff;">Performance & Analytics</h4>
                     <p style="font-size: 0.85rem; color: #aaa; margin-top: 4px;">Anonymously tracks visitor behavior, load rates, and browser dimensions to help improve site performance.</p>
                 </div>
-                <button onclick="alert('Preference saved!')" style="background: var(--neon-purple); border: none; color: white; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold;">Enable</button>
+                <button id="analytics-btn" class="btn-toggle-analytics" style="background: var(--neon-purple); border: none; color: white; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold;">Enable</button>
             </div>
         </div>
     </section>
@@ -150,7 +164,7 @@
     });
   </script>
 
-  <!-- Local Interface Control Scripts -->
+  <!-- Local Interface & Analytics Toggle Control Scripts -->
   <script>
     const menuToggle = document.getElementById('mobile-menu');
     const navLinks = document.querySelector('.nav-links');
@@ -158,6 +172,40 @@
     menuToggle.addEventListener('click', () => {
       navLinks.classList.toggle('active');
       menuToggle.classList.toggle('is-active');
+    });
+
+    // Handle Analytics Consent Toggle logic
+    const analyticsBtn = document.getElementById('analytics-btn');
+
+    // 1. Check existing preference on load
+    const currentPreference = localStorage.getItem('analytics_consent');
+    if (currentPreference === 'enabled') {
+      analyticsBtn.innerText = 'Disable';
+      analyticsBtn.classList.add('active');
+    } else {
+      analyticsBtn.innerText = 'Enable';
+      analyticsBtn.classList.remove('active');
+    }
+
+    // 2. Handle button clicks
+    analyticsBtn.addEventListener('click', () => {
+      const isEnabled = analyticsBtn.innerText === 'Disable';
+
+      if (isEnabled) {
+        // User wants to disable
+        localStorage.setItem('analytics_consent', 'disabled');
+        gtag('consent', 'update', { 'analytics_storage': 'denied' });
+        analyticsBtn.innerText = 'Enable';
+        analyticsBtn.classList.remove('active');
+        alert('Performance & Analytics disabled.');
+      } else {
+        // User wants to enable
+        localStorage.setItem('analytics_consent', 'enabled');
+        gtag('consent', 'update', { 'analytics_storage': 'granted' });
+        analyticsBtn.innerText = 'Disable';
+        analyticsBtn.classList.add('active');
+        alert('Performance & Analytics enabled.');
+      }
     });
   </script>
 </body>
