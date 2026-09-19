@@ -38,6 +38,10 @@ Domain & DNS: Cloudflare
 Project Purpose
 The goal of Keyframe Awards is to create a fun, community-driven awards experience that highlights both popular and emerging talent across entertainment and internet culture.
 
+Contact
+temi@keyframe-awards.com
+info@keyframe-awards.com
+
 Status
 Currently active and under continuous improvement.
 Author
