@@ -4,61 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vote | Keyframe Awards</title>
-    <link rel="icon" type="image/png" href="../favicon.png">
     <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         .vote-container {
             max-width: 1000px;
             margin: 120px auto 60px;
-            padding: 0 20px;
+            padding: 0 15px;
         }
         .category {
-            background: rgba(26, 0, 51, 0.7);
+            background: rgba(26, 0, 51, 0.75);
             border: 1px solid rgba(157, 0, 255, 0.4);
-            border-radius: 16px;
-            padding: 25px;
-            margin-bottom: 40px;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 30px;
         }
         .category h2 {
             color: #00f0ff;
-            font-size: 1.5rem;
-            margin-bottom: 8px;
+            font-size: 1.3rem;
+            margin-bottom: 6px;
         }
         .votes-left {
             color: #ff007f;
-            font-size: 0.95rem;
-            margin-bottom: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 18px;
         }
         .nominees {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
         }
         .nominee {
             background: rgba(13, 0, 26, 0.9);
-            border: 1px solid rgba(0, 240, 255, 0.25);
+            border: 1px solid rgba(0, 240, 255, 0.3);
             border-radius: 12px;
-            padding: 15px 10px;
+            padding: 15px 8px;
             text-align: center;
             cursor: pointer;
         }
-        .nominee img {
-            width: 80px;
-            height: 80px;
+        .avatar {
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            object-fit: cover;
-            margin-bottom: 10px;
-            border: 2px solid #9d00ff;
+            background: linear-gradient(135deg, #9d00ff, #ff007f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: white;
         }
         .nominee-name {
             color: white;
             font-size: 0.9rem;
             font-weight: 600;
-        }
-        .login-box {
-            text-align: center;
-            padding: 80px 20px;
         }
     </style>
 </head>
@@ -69,153 +68,127 @@
             <a href="/">Home</a>
             <a href="/nominations">Nominations</a>
             <a href="/bote" style="color:#00f2fe;">Vote</a>
-            <a href="/live">Live Stream</a>
             <a href="/about">About</a>
         </nav>
     </header>
 
     <div class="vote-container" id="content">
-        <div style="text-align:center; padding:60px 20px; color:#aaa;">
-            Loading voting system...
-        </div>
+        <div style="text-align:center; padding:50px; color:#aaa;">Loading...</div>
     </div>
 
     <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
-        authDomain: "keyframe-awards.firebaseapp.com",
-        projectId: "keyframe-awards",
-        storageBucket: "keyframe-awards.firebasestorage.app",
-        messagingSenderId: "882083630221",
-        appId: "1:882083630221:web:629df7642fdf822018a6c4"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const categories = [
-        {
-            id: "overall_creator",
-            title: "Overall Creator of the Year",
-            nominees: ["Kai Cenat", "IShowSpeed", "MrBeast", "xQc", "CaseOh", "Ibai"]
-        },
-        {
-            id: "rising_star",
-            title: "Rising Star of the Year",
-            nominees: ["Lamine Yamal", "ILLIT", "Jynxzi", "Ironmouse", "KATSEYE", "Caedrel"]
-        },
-        {
-            id: "viral_phenomenon",
-            title: "Viral Phenomenon of the Year",
-            nominees: ["6-7 Meme", "Saxophone sound", "Labubu", "100 Men vs 1 Gorilla"]
-        },
-        {
-            id: "meme_lord",
-            title: "Meme Lord/Lady of the Year",
-            nominees: ["IShowSpeed", "Kai Cenat", "CaseOh", "xQc"]
-        },
-        {
-            id: "best_kpop",
-            title: "Best K-pop Group",
-            nominees: ["BTS", "BLACKPINK", "Stray Kids", "SEVENTEEN", "aespa", "ILLIT"]
-        },
-        {
-            id: "best_artist",
-            title: "Best Artist",
-            nominees: ["Taylor Swift", "Lisa", "Sabrina Carpenter", "Bruno Mars", "Adela", "Zara Larsson"]
-        }
-    ];
-
-    const content = document.getElementById("content");
-
-    function getToday() {
-        return new Date().toISOString().slice(0, 10);
-    }
-
-    function getAvatar(name) {
-        // More reliable avatar service
-        return `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=9d00ff&textColor=ffffff`;
-    }
-
-    onAuthStateChanged(auth, async (user) => {
-        if (!user) {
-            content.innerHTML = `
-                <div style="text-align:center; padding:80px 20px;">
-                    <h2 style="color:#00f0ff;">Login Required</h2>
-                    <p style="color:#aaa; margin:20px 0 30px;">You need to log in to vote.</p>
-                    <a href="/?action=login" style="background:linear-gradient(45deg,#9d00ff,#ff007f);color:white;padding:14px 30px;border-radius:30px;text-decoration:none;font-weight:bold;">
-                        Login / Sign Up
-                    </a>
-                </div>
-            `;
-            return;
-        }
-
-        let html = `<h1 style="text-align:center; color:#00f0ff; margin-bottom:40px;">Voting Booth</h1>`;
-
-        for (const cat of categories) {
-            html += `
-                <div class="category">
-                    <h2>${cat.title}</h2>
-                    <div class="votes-left" id="left-${cat.id}">Loading...</div>
-                    <div class="nominees">
-            `;
-
-            cat.nominees.forEach(name => {
-                html += `
-                    <div class="nominee" onclick="window.castVote('\( {cat.id}', ' \){name}')">
-                        <img src="\( {getAvatar(name)}" alt=" \){name}">
-                        <div class="nominee-name">${name}</div>
-                    </div>
-                `;
-            });
-
-            html += `</div></div>`;
-        }
-
-        content.innerHTML = html;
-
-        // Load remaining votes
-        for (const cat of categories) {
-            const left = await getVotesLeft(user.uid, cat.id);
-            const el = document.getElementById(`left-${cat.id}`);
-            if (el) el.innerText = `${left} votes left today`;
-        }
-
-        // Voting function
-        window.castVote = async function(categoryId, nomineeName) {
-            const today = getToday();
-            const dailyRef = doc(db, "dailyVotes", `\( {user.uid}_ \){categoryId}_${today}`);
-            const voteRef = doc(db, "votes", `\( {categoryId}_ \){nomineeName}`);
-
-            try {
-                const snap = await getDoc(dailyRef);
-                let count = snap.exists() ? (snap.data().count || 0) : 0;
-
-                if (count >= 10) {
-                    alert("No votes left in this category today");
-                    return;
-                }
-
-                await setDoc(dailyRef, { count: count + 1 }, { merge: true });
-                await setDoc(voteRef, { votes: increment(1) }, { merge: true });
-
-                const left = 10 - (count + 1);
-                const el = document.getElementById(`left-${categoryId}`);
-                if (el) el.innerText = `${left} votes left today`;
-
-                alert("Voted for " + nomineeName);
-            } catch (error) {
-                console.error(error);
-                alert("Voting failed. Error: " + error.message);
-            }
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+            authDomain: "keyframe-awards.firebaseapp.com",
+            projectId: "keyframe-awards",
+            storageBucket: "keyframe-awards.firebasestorage.app",
+            messagingSenderId: "882083630221",
+            appId: "1:882083630221:web:629df7642fdf822018a6c4"
         };
-    });
-</script>
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const categories = [
+            { id: "overall_creator", title: "Overall Creator of the Year", nominees: ["Kai Cenat", "IShowSpeed", "MrBeast", "xQc", "CaseOh", "Ibai"] },
+            { id: "rising_star", title: "Rising Star of the Year", nominees: ["Lamine Yamal", "ILLIT", "Jynxzi", "Ironmouse", "KATSEYE", "Caedrel"] },
+            { id: "viral_phenomenon", title: "Viral Phenomenon of the Year", nominees: ["6-7 Meme", "Saxophone sound", "Labubu", "100 Men vs 1 Gorilla"] },
+            { id: "meme_lord", title: "Meme Lord/Lady of the Year", nominees: ["IShowSpeed", "Kai Cenat", "CaseOh", "xQc"] },
+            { id: "best_kpop", title: "Best K-pop Group", nominees: ["BTS", "BLACKPINK", "Stray Kids", "SEVENTEEN", "aespa", "ILLIT"] },
+            { id: "best_artist", title: "Best Artist", nominees: ["Taylor Swift", "Lisa", "Sabrina Carpenter", "Bruno Mars", "Adela", "Zara Larsson"] }
+        ];
+
+        const content = document.getElementById("content");
+
+        function getToday() {
+            return new Date().toISOString().slice(0, 10);
+        }
+
+        function getInitials(name) {
+            return name.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase();
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                content.innerHTML = `
+                    <div style="text-align:center; padding:80px 20px;">
+                        <h2 style="color:#00f0ff;">Login Required</h2>
+                        <p style="color:#aaa; margin:20px 0;">You need to log in to vote.</p>
+                        <a href="/?action=login" style="background:linear-gradient(45deg,#9d00ff,#ff007f);color:white;padding:12px 28px;border-radius:30px;text-decoration:none;">
+                            Login / Sign Up
+                        </a>
+                    </div>`;
+                return;
+            }
+
+            let html = `<h1 style="text-align:center; color:#00f0ff; margin-bottom:30px;">Voting Booth</h1>`;
+
+            for (const cat of categories) {
+                html += `
+                    <div class="category">
+                        <h2>${cat.title}</h2>
+                        <div class="votes-left" id="left-${cat.id}">...</div>
+                        <div class="nominees">
+                `;
+
+                cat.nominees.forEach(name => {
+                    html += `
+                        <div class="nominee" onclick="window.castVote('\( {cat.id}', ' \){name}')">
+                            <div class="avatar">${getInitials(name)}</div>
+                            <div class="nominee-name">${name}</div>
+                        </div>
+                    `;
+                });
+
+                html += `</div></div>`;
+            }
+
+            content.innerHTML = html;
+
+            // Load votes left
+            for (const cat of categories) {
+                const left = await getVotesLeft(user.uid, cat.id);
+                document.getElementById(`left-${cat.id}`).innerText = left + " votes left today";
+            }
+
+            window.castVote = async function(categoryId, nomineeName) {
+                try {
+                    const today = getToday();
+                    const dailyRef = doc(db, "dailyVotes", user.uid + "_" + categoryId + "_" + today);
+                    const voteRef = doc(db, "votes", categoryId + "_" + nomineeName);
+
+                    const snap = await getDoc(dailyRef);
+                    let count = snap.exists() ? (snap.data().count || 0) : 0;
+
+                    if (count >= 10) {
+                        alert("No more votes left in this category today");
+                        return;
+                    }
+
+                    await setDoc(dailyRef, { count: count + 1 }, { merge: true });
+                    await setDoc(voteRef, { votes: increment(1) }, { merge: true });
+
+                    document.getElementById("left-" + categoryId).innerText = (10 - count - 1) + " votes left today";
+                    alert("Successfully voted for " + nomineeName);
+
+                } catch (err) {
+                    alert("Error: " + err.message);
+                }
+            };
+        });
+
+        async function getVotesLeft(uid, categoryId) {
+            const today = getToday();
+            const ref = doc(db, "dailyVotes", uid + "_" + categoryId + "_" + today);
+            const snap = await getDoc(ref);
+            if (!snap.exists()) return 10;
+            return Math.max(0, 10 - (snap.data().count || 0));
+        }
+    </script>
 </body>
 </html>
