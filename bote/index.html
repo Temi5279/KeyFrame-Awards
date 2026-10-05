@@ -11,76 +11,121 @@
     <style>
         .vote-page {
             max-width: 1100px;
-            margin: 100px auto 60px;
+            margin: 110px auto 80px;
             padding: 0 20px;
         }
+        .page-title {
+            text-align: center;
+            font-size: 2.6rem;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 15px var(--neon-cyan);
+            margin-bottom: 10px;
+        }
+        .page-subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 50px;
+        }
         .category-block {
-            background: rgba(26, 0, 51, 0.6);
-            border: 1px solid rgba(157, 0, 255, 0.3);
+            background: rgba(26, 0, 51, 0.65);
+            border: 1px solid rgba(157, 0, 255, 0.35);
             border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 40px;
+            padding: 28px;
+            margin-bottom: 45px;
+        }
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
         }
         .category-title {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             color: var(--neon-cyan);
-            margin-bottom: 8px;
-            text-shadow: 0 0 10px var(--neon-cyan);
+            text-shadow: 0 0 8px var(--neon-cyan);
         }
         .votes-left {
-            color: #aaa;
-            margin-bottom: 25px;
-            font-size: 0.95rem;
-        }
-        .votes-left span {
+            background: rgba(255, 0, 127, 0.15);
+            border: 1px solid var(--neon-pink);
             color: var(--neon-pink);
-            font-weight: bold;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
         }
         .nominees-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 18px;
         }
         .nominee-card {
-            background: rgba(13, 0, 26, 0.8);
-            border: 1px solid rgba(0, 240, 255, 0.2);
-            border-radius: 12px;
-            padding: 15px 10px;
+            background: rgba(13, 0, 26, 0.85);
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            border-radius: 14px;
+            padding: 18px 12px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
         }
         .nominee-card:hover {
             border-color: var(--neon-pink);
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
+            transform: translateY(-6px);
+            box-shadow: 0 8px 25px rgba(255, 0, 127, 0.25);
         }
         .nominee-card img {
-            width: 90px;
-            height: 90px;
+            width: 85px;
+            height: 85px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--neon-purple);
             margin-bottom: 12px;
+            background: #1a0033;
         }
         .nominee-name {
             font-size: 0.95rem;
             color: #fff;
             font-weight: 600;
+            line-height: 1.3;
         }
         .login-prompt {
             text-align: center;
-            padding: 80px 20px;
+            padding: 100px 20px;
         }
         .login-prompt h2 {
             color: var(--neon-cyan);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 2rem;
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(26, 0, 51, 0.95);
+            border: 2px solid var(--neon-pink);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 30px;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .toast.show {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
     <header class="navbar">
-        <div class="logo" onclick="window.location.href='/'" style="cursor:pointer;">Keyframe Awards</div>
+        <div class="logo" onclick="window.location.href='/'" style="cursor:pointer">Keyframe Awards</div>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
         <nav class="nav-links">
             <a href="/">Home</a>
             <a href="/nominations">Nominations</a>
@@ -92,8 +137,10 @@
     </header>
 
     <main class="vote-page" id="vote-content">
-        <!-- Content will be injected by JavaScript -->
+        <!-- JS will inject content here -->
     </main>
+
+    <div class="toast" id="toast"></div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -113,49 +160,195 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // ====== NOMINEES DATA ======
+        // ====================== NOMINEES DATA ======================
         const categories = [
             {
                 id: "overall_creator",
                 title: "Overall Creator of the Year",
                 nominees: [
-                    { name: "Kai Cenat", img: "https://i.imgur.com/placeholder1.jpg" },
-                    { name: "IShowSpeed", img: "https://i.imgur.com/placeholder2.jpg" },
-                    { name: "MrBeast", img: "https://i.imgur.com/placeholder3.jpg" },
-                    { name: "xQc", img: "https://i.imgur.com/placeholder4.jpg" },
-                    { name: "CaseOh", img: "https://i.imgur.com/placeholder5.jpg" },
-                    { name: "Ibai", img: "https://i.imgur.com/placeholder6.jpg" }
+                    { name: "Kai Cenat", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Kai_Cenat_2023.jpg/440px-Kai_Cenat_2023.jpg" },
+                    { name: "IShowSpeed", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/IShowSpeed_2023.jpg/440px-IShowSpeed_2023.jpg" },
+                    { name: "MrBeast", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/MrBeast_2023.jpg/440px-MrBeast_2023.jpg" },
+                    { name: "xQc", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/XQc_2021.jpg/440px-XQc_2021.jpg" },
+                    { name: "CaseOh", img: "https://i.imgur.com/8QZQZQZ.jpg" },
+                    { name: "Ibai", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Ibai_Llanos_2021.jpg/440px-Ibai_Llanos_2021.jpg" }
                 ]
             },
-            // Add the rest of the categories here the same way
+            {
+                id: "rising_star",
+                title: "Rising Star of the Year",
+                nominees: [
+                    { name: "Lamine Yamal", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Lamine_Yamal_2024.jpg/440px-Lamine_Yamal_2024.jpg" },
+                    { name: "ILLIT", img: "https://i.imgur.com/placeholder-illit.jpg" },
+                    { name: "Jynxzi", img: "https://i.imgur.com/placeholder-jynxzi.jpg" },
+                    { name: "Ironmouse", img: "https://i.imgur.com/placeholder-ironmouse.jpg" },
+                    { name: "KATSEYE", img: "https://i.imgur.com/placeholder-katseye.jpg" },
+                    { name: "Caedrel", img: "https://i.imgur.com/placeholder-caedrel.jpg" }
+                ]
+            },
+            {
+                id: "viral_phenomenon",
+                title: "Viral Phenomenon of the Year",
+                nominees: [
+                    { name: "6-7 Meme", img: "https://i.imgur.com/placeholder-67.jpg" },
+                    { name: "Saxophone sound", img: "https://i.imgur.com/placeholder-sax.jpg" },
+                    { name: "Labubu", img: "https://i.imgur.com/placeholder-labubu.jpg" },
+                    { name: "100 Men vs 1 Gorilla", img: "https://i.imgur.com/placeholder-gorilla.jpg" }
+                ]
+            },
+            {
+                id: "meme_lord",
+                title: "Meme Lord/Lady of the Year",
+                nominees: [
+                    { name: "IShowSpeed", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/IShowSpeed_2023.jpg/440px-IShowSpeed_2023.jpg" },
+                    { name: "Kai Cenat", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Kai_Cenat_2023.jpg/440px-Kai_Cenat_2023.jpg" },
+                    { name: "CaseOh", img: "https://i.imgur.com/placeholder-caseoh.jpg" },
+                    { name: "xQc", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/XQc_2021.jpg/440px-XQc_2021.jpg" }
+                ]
+            },
+            {
+                id: "best_kpop_group",
+                title: "Best K-pop Group",
+                nominees: [
+                    { name: "BTS", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/BTS_Logo.svg/200px-BTS_Logo.svg.png" },
+                    { name: "BLACKPINK", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Blackpink_logo.svg/200px-Blackpink_logo.svg.png" },
+                    { name: "Stray Kids", img: "https://i.imgur.com/placeholder-skz.jpg" },
+                    { name: "SEVENTEEN", img: "https://i.imgur.com/placeholder-svt.jpg" },
+                    { name: "aespa", img: "https://i.imgur.com/placeholder-aespa.jpg" },
+                    { name: "ILLIT", img: "https://i.imgur.com/placeholder-illit.jpg" }
+                ]
+            },
+            {
+                id: "best_artist",
+                title: "Best Artist",
+                nominees: [
+                    { name: "Taylor Swift", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Taylor_Swift_2_-_2019_by_Glenn_Francis_%28cropped%29.jpg/440px-Taylor_Swift.jpg" },
+                    { name: "Lisa", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Lisa_Blackpink.jpg/440px-Lisa.jpg" },
+                    { name: "Sabrina Carpenter", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Sabrina_Carpenter.jpg/440px-Sabrina.jpg" },
+                    { name: "Bruno Mars", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Bruno_Mars.jpg/440px-Bruno.jpg" },
+                    { name: "Adela", img: "https://i.imgur.com/placeholder-adela.jpg" },
+                    { name: "Zara Larsson", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Zara_Larsson.jpg/440px-Zara.jpg" }
+                ]
+            }
+            // You can continue adding the remaining categories the same way
         ];
 
-        // Temporary simple version for now
+        // ====================== HELPER FUNCTIONS ======================
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        function getToday() {
+            return new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        }
+
+        // ====================== MAIN LOGIC ======================
         const voteContent = document.getElementById('vote-content');
 
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
                 voteContent.innerHTML = `
                     <div class="login-prompt">
-                        <h2>You need to log in to vote</h2>
-                        <p style="color:#aaa; margin-bottom:30px;">Create an account or log in to cast your votes.</p>
-                        <a href="/?action=login" class="btn-reminder">Login / Sign Up</a>
+                        <h2>Login Required</h2>
+                        <p style="color:#aaa; margin-bottom:30px;">You need an account to vote in the Keyframe Awards.</p>
+                        <a href="/?action=login" style="display:inline-block; background:linear-gradient(45deg,var(--neon-purple),var(--neon-pink)); color:white; padding:14px 32px; border-radius:30px; text-decoration:none; font-weight:bold;">
+                            Login / Sign Up
+                        </a>
                     </div>
                 `;
                 return;
             }
 
-            // User is logged in → show voting interface
-            voteContent.innerHTML = `<h1 style="text-align:center; margin-bottom:40px; color:var(--neon-cyan);">Voting Booth</h1>`;
-            
-            // For now we show a message while we finish the full system
-            voteContent.innerHTML += `
-                <div style="text-align:center; padding:40px; background:rgba(26,0,51,0.5); border-radius:12px;">
-                    <h2 style="color:var(--neon-pink);">System is being prepared</h2>
-                    <p style="color:#ccc;">Full voting system with 10 votes per category is almost ready.</p>
-                </div>
-            `;
+            // User is logged in
+            renderVotingPage(user);
         });
+
+        async function renderVotingPage(user) {
+            let html = `
+                <h1 class="page-title">Voting Booth</h1>
+                <p class="page-subtitle">You have <strong>10 votes</strong> per category every day</p>
+            `;
+
+            for (const cat of categories) {
+                const votesLeft = await getVotesLeft(user.uid, cat.id);
+
+                html += `
+                    <div class="category-block" id="cat-${cat.id}">
+                        <div class="category-header">
+                            <div class="category-title">${cat.title}</div>
+                            <div class="votes-left">${votesLeft} votes left today</div>
+                        </div>
+                        <div class="nominees-grid">
+                `;
+
+                cat.nominees.forEach(nom => {
+                    html += `
+                        <div class="nominee-card" onclick="castVote('\( {cat.id}', ' \){nom.name}', '${user.uid}')">
+                            <img src="\( {nom.img}" alt=" \){nom.name}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(nom.name)}&background=9d00ff&color=fff&size=128'">
+                            <div class="nominee-name">${nom.name}</div>
+                        </div>
+                    `;
+                });
+
+                html += `</div></div>`;
+            }
+
+            voteContent.innerHTML = html;
+        }
+
+        async function getVotesLeft(uid, categoryId) {
+            const today = getToday();
+            const ref = doc(db, "dailyVotes", `\( {uid}_ \){categoryId}_${today}`);
+            const snap = await getDoc(ref);
+            if (!snap.exists()) return 10;
+            return Math.max(0, 10 - (snap.data().count || 0));
+        }
+
+        window.castVote = async function(categoryId, nomineeName, uid) {
+            const today = getToday();
+            const dailyRef = doc(db, "dailyVotes", `\( {uid}_ \){categoryId}_${today}`);
+            const voteRef = doc(db, "votes", `\( {categoryId}_ \){nomineeName}`);
+
+            try {
+                const dailySnap = await getDoc(dailyRef);
+                let currentCount = dailySnap.exists() ? dailySnap.data().count : 0;
+
+                if (currentCount >= 10) {
+                    showToast("No votes left in this category today");
+                    return;
+                }
+
+                // Update daily limit
+                await setDoc(dailyRef, { count: currentCount + 1, lastVote: new Date().toISOString() }, { merge: true });
+
+                // Update total votes for the nominee
+                await setDoc(voteRef, { votes: increment(1) }, { merge: true });
+
+                showToast(`Voted for ${nomineeName}!`);
+                
+                // Refresh the votes left number
+                const left = 10 - (currentCount + 1);
+                const badge = document.querySelector(`#cat-${categoryId} .votes-left`);
+                if (badge) badge.textContent = `${left} votes left today`;
+
+            } catch (err) {
+                console.error(err);
+                showToast("Error voting. Please try again.");
+            }
+        };
+
+        // Mobile menu
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                menuToggle.classList.toggle('is-active');
+            });
+        }
     </script>
 </body>
 </html>
