@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote | The Keyframe Awards</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        .vote-page {
+            max-width: 1100px;
+            margin: 100px auto 60px;
+            padding: 0 20px;
+        }
+        .category-block {
+            background: rgba(26, 0, 51, 0.6);
+            border: 1px solid rgba(157, 0, 255, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        .category-title {
+            font-size: 1.8rem;
+            color: var(--neon-cyan);
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+        .votes-left {
+            color: #aaa;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+        .votes-left span {
+            color: var(--neon-pink);
+            font-weight: bold;
+        }
+        .nominees-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+        }
+        .nominee-card {
+            background: rgba(13, 0, 26, 0.8);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .nominee-card:hover {
+            border-color: var(--neon-pink);
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
+        }
+        .nominee-card img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--neon-purple);
+            margin-bottom: 12px;
+        }
+        .nominee-name {
+            font-size: 0.95rem;
+            color: #fff;
+            font-weight: 600;
+        }
+        .login-prompt {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        .login-prompt h2 {
+            color: var(--neon-cyan);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo" onclick="window.location.href='/'" style="cursor:pointer;">Keyframe Awards</div>
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/nominations">Nominations</a>
+            <a href="/bote" style="color:#00f2fe; font-weight:bold;">Vote</a>
+            <a href="/live">Live Stream</a>
+            <a href="/about">About</a>
+            <div class="auth-buttons" id="auth-header-actions"></div>
+        </nav>
+    </header>
+
+    <main class="vote-page" id="vote-content">
+        <!-- Content will be injected by JavaScript -->
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+            authDomain: "keyframe-awards.firebaseapp.com",
+            projectId: "keyframe-awards",
+            storageBucket: "keyframe-awards.firebasestorage.app",
+            messagingSenderId: "882083630221",
+            appId: "1:882083630221:web:629df7642fdf822018a6c4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // ====== NOMINEES DATA ======
+        const categories = [
+            {
+                id: "overall_creator",
+                title: "Overall Creator of the Year",
+                nominees: [
+                    { name: "Kai Cenat", img: "https://i.imgur.com/placeholder1.jpg" },
+                    { name: "IShowSpeed", img: "https://i.imgur.com/placeholder2.jpg" },
+                    { name: "MrBeast", img: "https://i.imgur.com/placeholder3.jpg" },
+                    { name: "xQc", img: "https://i.imgur.com/placeholder4.jpg" },
+                    { name: "CaseOh", img: "https://i.imgur.com/placeholder5.jpg" },
+                    { name: "Ibai", img: "https://i.imgur.com/placeholder6.jpg" }
+                ]
+            },
+            // Add the rest of the categories here the same way
+        ];
+
+        // Temporary simple version for now
+        const voteContent = document.getElementById('vote-content');
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                voteContent.innerHTML = `
+                    <div class="login-prompt">
+                        <h2>You need to log in to vote</h2>
+                        <p style="color:#aaa; margin-bottom:30px;">Create an account or log in to cast your votes.</p>
+                        <a href="/?action=login" class="btn-reminder">Login / Sign Up</a>
+                    </div>
+                `;
+                return;
+            }
+
+            // User is logged in → show voting interface
+            voteContent.innerHTML = `<h1 style="text-align:center; margin-bottom:40px; color:var(--neon-cyan);">Voting Booth</h1>`;
+            
+            // For now we show a message while we finish the full system
+            voteContent.innerHTML += `
+                <div style="text-align:center; padding:40px; background:rgba(26,0,51,0.5); border-radius:12px;">
+                    <h2 style="color:var(--neon-pink);">System is being prepared</h2>
+                    <p style="color:#ccc;">Full voting system with 10 votes per category is almost ready.</p>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
