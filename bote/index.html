@@ -81,135 +81,141 @@
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, increment } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
-            authDomain: "keyframe-awards.firebaseapp.com",
-            projectId: "keyframe-awards",
-            storageBucket: "keyframe-awards.firebasestorage.app",
-            messagingSenderId: "882083630221",
-            appId: "1:882083630221:web:629df7642fdf822018a6c4"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+        authDomain: "keyframe-awards.firebaseapp.com",
+        projectId: "keyframe-awards",
+        storageBucket: "keyframe-awards.firebasestorage.app",
+        messagingSenderId: "882083630221",
+        appId: "1:882083630221:web:629df7642fdf822018a6c4"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-        const categories = [
-            {
-                id: "overall_creator",
-                title: "Overall Creator of the Year",
-                nominees: ["Kai Cenat", "IShowSpeed", "MrBeast", "xQc", "CaseOh", "Ibai"]
-            },
-            {
-                id: "rising_star",
-                title: "Rising Star of the Year",
-                nominees: ["Lamine Yamal", "ILLIT", "Jynxzi", "Ironmouse", "KATSEYE", "Caedrel"]
-            },
-            {
-                id: "viral_phenomenon",
-                title: "Viral Phenomenon of the Year",
-                nominees: ["6-7 Meme", "Saxophone sound", "Labubu", "100 Men vs 1 Gorilla"]
-            },
-            {
-                id: "meme_lord",
-                title: "Meme Lord/Lady of the Year",
-                nominees: ["IShowSpeed", "Kai Cenat", "CaseOh", "xQc"]
-            },
-            {
-                id: "best_kpop",
-                title: "Best K-pop Group",
-                nominees: ["BTS", "BLACKPINK", "Stray Kids", "SEVENTEEN", "aespa", "ILLIT"]
-            },
-            {
-                id: "best_artist",
-                title: "Best Artist",
-                nominees: ["Taylor Swift", "Lisa", "Sabrina Carpenter", "Bruno Mars", "Adela", "Zara Larsson"]
-            }
-        ];
+    const categories = [
+        {
+            id: "overall_creator",
+            title: "Overall Creator of the Year",
+            nominees: ["Kai Cenat", "IShowSpeed", "MrBeast", "xQc", "CaseOh", "Ibai"]
+        },
+        {
+            id: "rising_star",
+            title: "Rising Star of the Year",
+            nominees: ["Lamine Yamal", "ILLIT", "Jynxzi", "Ironmouse", "KATSEYE", "Caedrel"]
+        },
+        {
+            id: "viral_phenomenon",
+            title: "Viral Phenomenon of the Year",
+            nominees: ["6-7 Meme", "Saxophone sound", "Labubu", "100 Men vs 1 Gorilla"]
+        },
+        {
+            id: "meme_lord",
+            title: "Meme Lord/Lady of the Year",
+            nominees: ["IShowSpeed", "Kai Cenat", "CaseOh", "xQc"]
+        },
+        {
+            id: "best_kpop",
+            title: "Best K-pop Group",
+            nominees: ["BTS", "BLACKPINK", "Stray Kids", "SEVENTEEN", "aespa", "ILLIT"]
+        },
+        {
+            id: "best_artist",
+            title: "Best Artist",
+            nominees: ["Taylor Swift", "Lisa", "Sabrina Carpenter", "Bruno Mars", "Adela", "Zara Larsson"]
+        }
+    ];
 
-        const content = document.getElementById("content");
+    const content = document.getElementById("content");
 
-        function getToday() {
-            return new Date().toISOString().slice(0, 10);
+    function getToday() {
+        return new Date().toISOString().slice(0, 10);
+    }
+
+    function getAvatar(name) {
+        // More reliable avatar service
+        return `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=9d00ff&textColor=ffffff`;
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+            content.innerHTML = `
+                <div style="text-align:center; padding:80px 20px;">
+                    <h2 style="color:#00f0ff;">Login Required</h2>
+                    <p style="color:#aaa; margin:20px 0 30px;">You need to log in to vote.</p>
+                    <a href="/?action=login" style="background:linear-gradient(45deg,#9d00ff,#ff007f);color:white;padding:14px 30px;border-radius:30px;text-decoration:none;font-weight:bold;">
+                        Login / Sign Up
+                    </a>
+                </div>
+            `;
+            return;
         }
 
-        onAuthStateChanged(auth, async (user) => {
-            if (!user) {
-                content.innerHTML = `
-                    <div class="login-box">
-                        <h2 style="color:#00f0ff; margin-bottom:15px;">Login Required</h2>
-                        <p style="color:#aaa; margin-bottom:30px;">You need to log in before you can vote.</p>
-                        <a href="/?action=login" style="background:linear-gradient(45deg,#9d00ff,#ff007f); color:white; padding:14px 30px; border-radius:30px; text-decoration:none; font-weight:bold;">
-                            Login / Sign Up
-                        </a>
+        let html = `<h1 style="text-align:center; color:#00f0ff; margin-bottom:40px;">Voting Booth</h1>`;
+
+        for (const cat of categories) {
+            html += `
+                <div class="category">
+                    <h2>${cat.title}</h2>
+                    <div class="votes-left" id="left-${cat.id}">Loading...</div>
+                    <div class="nominees">
+            `;
+
+            cat.nominees.forEach(name => {
+                html += `
+                    <div class="nominee" onclick="window.castVote('\( {cat.id}', ' \){name}')">
+                        <img src="\( {getAvatar(name)}" alt=" \){name}">
+                        <div class="nominee-name">${name}</div>
                     </div>
                 `;
-                return;
-            }
+            });
 
-            // User is logged in → show categories
-            let html = `<h1 style="text-align:center; color:#00f0ff; margin-bottom:40px;">Voting Booth</h1>`;
+            html += `</div></div>`;
+        }
 
-            for (const cat of categories) {
-                html += `
-                    <div class="category">
-                        <h2>${cat.title}</h2>
-                        <div class="votes-left" id="left-${cat.id}">Checking votes...</div>
-                        <div class="nominees">
-                `;
+        content.innerHTML = html;
 
-                cat.nominees.forEach(name => {
-                    const img = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=9d00ff&color=fff&size=128`;
-                    html += `
-                        <div class="nominee" onclick="vote('\( {cat.id}', ' \){name}')">
-                            <img src="\( {img}" alt=" \){name}">
-                            <div class="nominee-name">${name}</div>
-                        </div>
-                    `;
-                });
+        // Load remaining votes
+        for (const cat of categories) {
+            const left = await getVotesLeft(user.uid, cat.id);
+            const el = document.getElementById(`left-${cat.id}`);
+            if (el) el.innerText = `${left} votes left today`;
+        }
 
-                html += `</div></div>`;
-            }
+        // Voting function
+        window.castVote = async function(categoryId, nomineeName) {
+            const today = getToday();
+            const dailyRef = doc(db, "dailyVotes", `\( {user.uid}_ \){categoryId}_${today}`);
+            const voteRef = doc(db, "votes", `\( {categoryId}_ \){nomineeName}`);
 
-            content.innerHTML = html;
+            try {
+                const snap = await getDoc(dailyRef);
+                let count = snap.exists() ? (snap.data().count || 0) : 0;
 
-            // Load remaining votes
-            for (const cat of categories) {
-                const left = await getVotesLeft(user.uid, cat.id);
-                document.getElementById(`left-\( {cat.id}`).innerText = ` \){left} votes left today`;
-            }
-
-            // Make vote function available
-            window.vote = async function(categoryId, nomineeName) {
-                const today = getToday();
-                const dailyRef = doc(db, "dailyVotes", `\( {user.uid}_ \){categoryId}_${today}`);
-                const voteRef = doc(db, "votes", `\( {categoryId}_ \){nomineeName}`);
-
-                try {
-                    const snap = await getDoc(dailyRef);
-                    let count = snap.exists() ? snap.data().count || 0 : 0;
-
-                    if (count >= 10) {
-                        alert("No votes left in this category today");
-                        return;
-                    }
-
-                    await setDoc(dailyRef, { count: count + 1 }, { merge: true });
-                    await setDoc(voteRef, { votes: increment(1) }, { merge: true });
-
-                    const left = 10 - (count + 1);
-                    document.getElementById(`left-\( {categoryId}`).innerText = ` \){left} votes left today`;
-                    alert(`Voted for ${nomineeName}`);
-                } catch (e) {
-                    console.error(e);
-                    alert("Error while voting. Please try again.");
+                if (count >= 10) {
+                    alert("No votes left in this category today");
+                    return;
                 }
-            };
-        });
-    </script>
+
+                await setDoc(dailyRef, { count: count + 1 }, { merge: true });
+                await setDoc(voteRef, { votes: increment(1) }, { merge: true });
+
+                const left = 10 - (count + 1);
+                const el = document.getElementById(`left-${categoryId}`);
+                if (el) el.innerText = `${left} votes left today`;
+
+                alert("Voted for " + nomineeName);
+            } catch (error) {
+                console.error(error);
+                alert("Voting failed. Error: " + error.message);
+            }
+        };
+    });
+</script>
 </body>
 </html>
