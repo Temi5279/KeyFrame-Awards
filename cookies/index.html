@@ -6,28 +6,25 @@
     <title>Cookie Preferences | The Keyframe Awards</title>
     <link rel="icon" type="image/png" href="../favicon.png">
 
-<!-- Google Analytics Tag with Consent Mode v2 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8HX6L8WEG"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <!-- Google Analytics Tag with Consent Mode -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8HX6L8WEG"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  // Check user's saved preference (default to 'denied' if not explicitly set)
-  const analyticsConsent = localStorage.getItem('analytics_consent') === 'enabled' ? 'granted' : 'denied';
+      const analyticsConsent = localStorage.getItem('analytics_consent') === 'enabled' ? 'granted' : 'denied';
 
-  // Set default consent state for GA4
-  gtag('consent', 'default', {
-    'analytics_storage': analyticsConsent
-  });
+      gtag('consent', 'default', {
+        'analytics_storage': analyticsConsent
+      });
 
-  gtag('config', 'G-Z8HX6L8WEG');
-</script>
+      gtag('config', 'G-Z8HX6L8WEG');
+    </script>
 
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
-        /* Custom User Profile Badge styling */
         .user-profile-badge {
             display: flex;
             align-items: center;
@@ -44,10 +41,8 @@
             border: 2px solid var(--neon-cyan);
             object-fit: cover;
         }
-
-        /* Toggle Button States */
         .btn-toggle-analytics.active {
-            background: #e74c3c !important; /* Red for Disable */
+            background: #e74c3c !important;
         }
     </style>
 </head>
@@ -60,154 +55,165 @@
             <span class="bar"></span>
         </div>
         <nav class="nav-links">
-          <a href="/">Home</a>
-          <a href="/nominations">Nominations</a>
-          <a href="/vote">Vote</a>
-          <a href="/live">Live Stream</a>
-          <a href="/about">About</a>
-
-          <!-- Container for dynamic login/logout actions -->
-          <div class="auth-buttons" id="auth-header-actions">
-            <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
-          </div>
+            <a href="/">Home</a>
+            <a href="/nominations">Nominations</a>
+            <a href="/vote">Vote</a>
+            <a href="/live">Live Stream</a>
+            <a href="/about">About</a>
+            <div class="auth-buttons" id="auth-header-actions">
+                <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
+            </div>
         </nav>
     </header>
 
     <section class="info-section" style="margin-top: 100px; min-height: 70vh; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto; padding-top: 50px;">
-        <h2 style="text-align: center; margin-bottom: 30px; color: var(--neon-cyan);">Cookie Settings</h2>
+        <h2 style="text-align: center; margin-bottom: 10px; color: var(--neon-cyan);">Cookie Preferences</h2>
+        <p style="text-align: center; color: #aaa; margin-bottom: 40px; font-size: 0.9rem;">Last Updated: October 15, 2026</p>
         
-        <h3 style="color: var(--neon-cyan); margin-top: 30px; margin-bottom: 10px;">1. Operational Data Framework</h3>
-        <p style="margin-bottom: 20px; line-height: 1.8;">We utilize system tracking mechanisms, localized platform components, and session markers to secure web traffic operations. These functional objects enable the site to accurately manage user logins and ensure form data persists accurately as you browse across pages. Third-party trackers or ad targeting scripts remain entirely inactive unless you select options to enable additional metrics.</p>
+        <h3 style="color: var(--neon-cyan); margin-top: 30px; margin-bottom: 10px;">1. What Are Cookies?</h3>
+        <p style="margin-bottom: 20px; line-height: 1.8;">Cookies are small text files stored on your device when you visit a website. They help the site remember your preferences, keep you logged in, and understand how the platform is used.</p>
         
-        <h3 style="color: var(--neon-cyan); margin-top: 30px; margin-bottom: 10px;">2. Storage Expirations and Preferences</h3>
-        <p style="margin-bottom: 20px; line-height: 1.8;">Any preferences stored locally on your machine are structured to terminate naturally when security tokens expire or when you select the log-out configurations within our interface menu. Users can wipe these files manually through browser cache settings at any point.</p>
+        <h3 style="color: var(--neon-cyan); margin-top: 30px; margin-bottom: 10px;">2. How We Use Cookies</h3>
+        <p style="margin-bottom: 20px; line-height: 1.8;">The Keyframe Awards uses cookies for the following purposes:</p>
+        <ul style="margin-bottom: 20px; padding-left: 20px; line-height: 1.8; color: #ccc;">
+            <li>Essential website functionality (login, security, form submissions)</li>
+            <li>Remembering your preferences</li>
+            <li>Understanding how visitors use the site (analytics)</li>
+            <li>Improving performance and user experience</li>
+        </ul>
         
-        <div style="background: rgba(26, 0, 51, 0.6); border: 1px solid rgba(157, 0, 255, 0.3); padding: 25px; border-radius: 10px; margin-top: 30px;">
+        <h3 style="color: var(--neon-cyan); margin-top: 30px; margin-bottom: 10px;">3. Types of Cookies We Use</h3>
+        
+        <div style="background: rgba(26, 0, 51, 0.6); border: 1px solid rgba(157, 0, 255, 0.3); padding: 25px; border-radius: 10px; margin-top: 20px; margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                 <div>
                     <h4 style="margin: 0; color: #fff;">Strictly Necessary Cookies</h4>
-                    <p style="font-size: 0.85rem; color: #aaa; margin-top: 4px;">Required for authorization, login safety, Firebase structural integrity, and standard form features.</p>
+                    <p style="font-size: 0.85rem; color: #aaa; margin-top: 4px;">Required for the website to function properly. These include authentication, security, and basic form features. They cannot be disabled.</p>
                 </div>
                 <span style="color: var(--neon-cyan); font-weight: bold; font-size: 0.9rem;">ALWAYS ACTIVE</span>
             </div>
+            
             <hr style="border: 0; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 20px 0;">
+            
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
-                    <h4 style="margin: 0; color: #fff;">Performance & Analytics</h4>
-                    <p style="font-size: 0.85rem; color: #aaa; margin-top: 4px;">Anonymously tracks visitor behavior, load rates, and browser dimensions to help improve site performance.</p>
+                    <h4 style="margin: 0; color: #fff;">Performance & Analytics Cookies</h4>
+                    <p style="font-size: 0.85rem; color: #aaa; margin-top: 4px;">These help us understand how visitors interact with the website (pages visited, time spent, device type). We use Google Analytics for this purpose. Data is anonymized.</p>
                 </div>
                 <button id="analytics-btn" class="btn-toggle-analytics" style="background: var(--neon-purple); border: none; color: white; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold;">Enable</button>
             </div>
         </div>
+        
+        <h3 style="color: var(--neon-cyan); margin-top: 30px; margin-bottom: 10px;">4. Managing Your Preferences</h3>
+        <p style="margin-bottom: 20px; line-height: 1.8;">You can enable or disable analytics cookies using the button above. Your choice will be saved in your browser. You can also clear cookies through your browser settings at any time.</p>
+        
+        <h3 style="color: var(--neon-cyan); margin-top: 30px; margin-bottom: 10px;">5. Third-Party Cookies</h3>
+        <p style="margin-bottom: 20px; line-height: 1.8;">We currently use Google Analytics. If we add advertising networks (such as Adsterra) in the future, additional cookies may be used. You will be able to manage those preferences on this page.</p>
+        
+        <h3 style="color: var(--neon-cyan); margin-top: 30px; margin-bottom: 10px;">6. Changes to This Policy</h3>
+        <p style="margin-bottom: 20px; line-height: 1.8;">We may update this Cookie Preferences page from time to time. The “Last Updated” date at the top will always show the latest version.</p>
+        
+        <h3 style="color: var(--neon-cyan); margin-top: 30px; margin-bottom: 10px;">7. Contact Us</h3>
+        <p style="margin-bottom: 20px; line-height: 1.8;">If you have any questions about our use of cookies, please contact us through the Contact Support page.</p>
     </section>
 
-    <!-- FOOTER -->
-  <footer>
-    <div class="footer-links">
-      <a href="/privacy">Privacy Policy</a>
-      <a href="/terms">Terms of Service</a>
-      <a href="/support">Support Us</a>
-      <a href="/cookies">Cookie Preferences</a>
-      <a href="/contact">Contact Support</a>
-    </div>
-    <div class="social-icons">
-      <a href="https://www.facebook.com/keyframeawards" target="_blank"><i class="fab fa-facebook"></i></a>
-      <a href="https://www.instagram.com/keyframeawards" target="_blank"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.threads.net/@keyframeawards" target="_blank"><i class="fab fa-threads"></i></a>
-      <a href="https://x.com/keyframeawards" target="_blank"><i class="fab fa-x-twitter"></i></a>
-      <a href="https://www.tiktok.com/@keyframeawards" target="_blank"><i class="fab fa-tiktok"></i></a>
-      <a href="https://www.youtube.com/@KeyframeAwards" target="_blank"><i class="fab fa-youtube"></i></a>
-    </div>
-    <div class="copyright">
-      <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
-    </div>
-  </footer>
+    <footer>
+        <div class="footer-links">
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+            <a href="/support">Support Us</a>
+            <a href="/cookies">Cookie Preferences</a>
+            <a href="/contact">Contact Support</a>
+        </div>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/keyframeawards" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/keyframeawards" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.threads.net/@keyframeawards" target="_blank"><i class="fab fa-threads"></i></a>
+            <a href="https://x.com/keyframeawards" target="_blank"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://www.tiktok.com/@keyframeawards" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@KeyframeAwards" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
+        </div>
+    </footer>
 
-  <!-- Firebase System Module Script -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
-      authDomain: "keyframe-awards.firebaseapp.com",
-      projectId: "keyframe-awards",
-      storageBucket: "keyframe-awards.firebasestorage.app",
-      messagingSenderId: "882083630221",
-      appId: "1:882083630221:web:629df7642fdf822018a6c4"
-    };
+        const firebaseConfig = {
+            apiKey: "AIzaSyB6PoUXyNIyWUfLcaoGQnUONz_21Tc_Gwg",
+            authDomain: "keyframe-awards.firebaseapp.com",
+            projectId: "keyframe-awards",
+            storageBucket: "keyframe-awards.firebasestorage.app",
+            messagingSenderId: "882083630221",
+            appId: "1:882083630221:web:629df7642fdf822018a6c4"
+        };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    const authActions = document.getElementById('auth-header-actions');
-    
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const displayName = user.displayName || "User Account";
-        const photoURL = user.photoURL || "https://i.ibb.co/5G78k5y/default-avatar.png";
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const authActions = document.getElementById('auth-header-actions');
         
-        authActions.innerHTML = `
-          <a href="/account" class="user-profile-badge">
-              <img src="${photoURL}" alt="${displayName}">
-              <span class="user-welcome">${displayName}</span>
-          </a>
-          <button class="btn-login" id="logout-btn">Log Out</button>
-        `;
-        document.getElementById('logout-btn').addEventListener('click', () => {
-          signOut(auth).then(() => alert("Logged out!"));
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const displayName = user.displayName || "User Account";
+                const photoURL = user.photoURL || "https://i.ibb.co/5G78k5y/default-avatar.png";
+                authActions.innerHTML = `
+                    <a href="/account" class="user-profile-badge">
+                        <img src="\( {photoURL}" alt=" \){displayName}">
+                        <span class="user-welcome">${displayName}</span>
+                    </a>
+                    <button class="btn-login" id="logout-btn">Log Out</button>
+                `;
+                document.getElementById('logout-btn').addEventListener('click', () => {
+                    signOut(auth).then(() => alert("Logged out!"));
+                });
+            } else {
+                authActions.innerHTML = `
+                    <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
+                `;
+            }
         });
-      } else {
-        authActions.innerHTML = `
-          <button class="btn-login" onclick="window.location.href='/?action=login'">Login</button>
-        `;
-      }
-    });
-  </script>
+    </script>
 
-  <!-- Local Interface & Analytics Toggle Control Scripts -->
-  <script>
-    const menuToggle = document.getElementById('mobile-menu');
-    const navLinks = document.querySelector('.nav-links');
-    
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-      menuToggle.classList.toggle('is-active');
-    });
+    <script>
+        const menuToggle = document.getElementById('mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('is-active');
+        });
 
-    // Handle Analytics Consent Toggle logic
-    const analyticsBtn = document.getElementById('analytics-btn');
+        // Analytics Toggle
+        const analyticsBtn = document.getElementById('analytics-btn');
+        const currentPreference = localStorage.getItem('analytics_consent');
 
-    // 1. Check existing preference on load
-    const currentPreference = localStorage.getItem('analytics_consent');
-    if (currentPreference === 'enabled') {
-      analyticsBtn.innerText = 'Disable';
-      analyticsBtn.classList.add('active');
-    } else {
-      analyticsBtn.innerText = 'Enable';
-      analyticsBtn.classList.remove('active');
-    }
+        if (currentPreference === 'enabled') {
+            analyticsBtn.innerText = 'Disable';
+            analyticsBtn.classList.add('active');
+        } else {
+            analyticsBtn.innerText = 'Enable';
+            analyticsBtn.classList.remove('active');
+        }
 
-    // 2. Handle button clicks
-    analyticsBtn.addEventListener('click', () => {
-      const isEnabled = analyticsBtn.innerText === 'Disable';
+        analyticsBtn.addEventListener('click', () => {
+            const isEnabled = analyticsBtn.innerText === 'Disable';
 
-      if (isEnabled) {
-        // User wants to disable
-        localStorage.setItem('analytics_consent', 'disabled');
-        gtag('consent', 'update', { 'analytics_storage': 'denied' });
-        analyticsBtn.innerText = 'Enable';
-        analyticsBtn.classList.remove('active');
-        alert('Performance & Analytics disabled.');
-      } else {
-        // User wants to enable
-        localStorage.setItem('analytics_consent', 'enabled');
-        gtag('consent', 'update', { 'analytics_storage': 'granted' });
-        analyticsBtn.innerText = 'Disable';
-        analyticsBtn.classList.add('active');
-        alert('Performance & Analytics enabled.');
-      }
-    });
-  </script>
+            if (isEnabled) {
+                localStorage.setItem('analytics_consent', 'disabled');
+                gtag('consent', 'update', { 'analytics_storage': 'denied' });
+                analyticsBtn.innerText = 'Enable';
+                analyticsBtn.classList.remove('active');
+                alert('Performance & Analytics disabled.');
+            } else {
+                localStorage.setItem('analytics_consent', 'enabled');
+                gtag('consent', 'update', { 'analytics_storage': 'granted' });
+                analyticsBtn.innerText = 'Disable';
+                analyticsBtn.classList.add('active');
+                alert('Performance & Analytics enabled.');
+            }
+        });
+    </script>
 </body>
 </html>
