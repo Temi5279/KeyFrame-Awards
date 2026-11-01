@@ -116,6 +116,16 @@
             </div>
         </div>
 
+       <!-- Quick Actions -->
+<div style="display: flex; gap: 12px; margin-bottom: 25px; flex-wrap: wrap;">
+    <a href="/vote" style="flex: 1; min-width: 140px; text-align: center; background: linear-gradient(135deg, #ff007f, #9d00ff); color: white; padding: 12px 18px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+        <i class="fa-solid fa-check-to-slot"></i> Go to Voting
+    </a>
+    <a href="/nominations" style="flex: 1; min-width: 140px; text-align: center; background: rgba(0,242,254,0.15); border: 1px solid #00f2fe; color: #00f2fe; padding: 12px 18px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+        View Categories
+    </a>
+</div>
+
         <!-- UPDATE NAME FORM -->
         <div class="form-group">
             <label for="display-name-input">Edit Account Display Name</label>
@@ -165,24 +175,25 @@
     </div>
 
     <footer>
-        <div class="footer-links">
-            <a href="/privacy">Privacy Policy</a>
-            <a href="/terms">Terms of Service</a>
-            <a href="/support">Support Us</a>
-            <a href="/cookies">Cookie Preferences</a>
-            <a href="/contact">Contact Support</a>
-        </div>
-        <!-- Social Media Links Added Here -->
-        <div class="social-icons" style="margin: 15px 0;">
-            <a href="https://www.facebook.com/keyframeawards" target="_blank" style="color: #fff; margin: 0 10px; font-size: 1.1rem;"><i class="fab fa-facebook"></i></a>
-            <a href="https://www.instagram.com/keyframeawards" target="_blank" style="color: #fff; margin: 0 10px; font-size: 1.1rem;"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.threads.net/@keyframeawards" target="_blank" style="color: #fff; margin: 0 10px; font-size: 1.1rem;"><i class="fab fa-threads"></i></a>
-            <a href="https://x.com/keyframeawards" target="_blank" style="color: #fff; margin: 0 10px; font-size: 1.1rem;"><i class="fab fa-x-twitter"></i></a>
-            <a href="https://www.tiktok.com/@keyframeawards" target="_blank" style="color: #fff; margin: 0 10px; font-size: 1.1rem;"><i class="fab fa-tiktok"></i></a>
-            <a href="https://www.youtube.com/@KeyframeAwards" target="_blank" style="color: #fff; margin: 0 10px; font-size: 1.1rem;"><i class="fab fa-youtube"></i></a>
-        </div>
-        <div class="copyright"><p>&copy; 2026 The Keyframe Awards. All rights reserved.</p></div>
-    </footer>
+    <div class="footer-links">
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="/support">Support Us</a>
+        <a href="/cookies">Cookie Preferences</a>
+        <a href="/contact">Contact Support</a>
+    </div>
+    <div class="social-icons">
+        <a href="https://www.facebook.com/keyframeawards" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://www.instagram.com/keyframeawards" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.threads.net/@keyframeawards" target="_blank"><i class="fab fa-threads"></i></a>
+        <a href="https://x.com/keyframeawards" target="_blank"><i class="fab fa-x-twitter"></i></a>
+        <a href="https://www.tiktok.com/@keyframeawards" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.youtube.com/@KeyframeAwards" target="_blank"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="copyright">
+        <p>&copy; 2026 The Keyframe Awards. All rights reserved.</p>
+    </div>
+</footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
