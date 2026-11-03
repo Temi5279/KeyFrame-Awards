@@ -20,7 +20,7 @@
     <style>
         .nominations-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 25px;
             max-width: 1200px;
             margin: 40px auto;
@@ -39,7 +39,7 @@
             box-shadow: 0 0 25px rgba(157, 0, 255, 0.3);
         }
         .category-title {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: var(--neon-cyan, #00f2fe);
             margin-bottom: 15px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -54,23 +54,26 @@
         }
         .subcategory-list li {
             color: #ccc;
-            padding: 6px 0;
-            font-size: 0.95rem;
+            padding: 5px 0;
+            font-size: 0.92rem;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            line-height: 1.4;
         }
         .subcategory-list li i {
             color: var(--neon-pink, #ff007f);
             margin-right: 10px;
-            font-size: 0.8rem;
+            margin-top: 4px;
+            font-size: 0.75rem;
+            flex-shrink: 0;
         }
-        .closed-section {
+        .vote-section {
             padding: 60px 5%;
             background: rgba(13, 0, 26, 0.7);
             border-top: 1px solid rgba(157, 0, 255, 0.3);
             text-align: center;
         }
-        .closed-box {
+        .vote-box {
             max-width: 600px;
             margin: 0 auto;
             background: var(--royal-purple, #1a0033);
@@ -110,7 +113,7 @@
         <nav class="nav-links">
             <a href="/">Home</a>
             <a href="/nominations" style="color: #00f2fe; font-weight: bold; text-shadow: 0 0 10px #00f2fe;">Nominations</a>
-            <a href="/vote">Vote</a>
+            <a href="https://vote.keyframe-awards.com">Vote</a>
             <a href="/live">Live Stream</a>
             <a href="/about">About</a>
             <div class="auth-buttons" id="auth-header-actions">
@@ -121,8 +124,8 @@
 
     <!-- BANNER -->
     <section class="info-section" style="margin-top: 100px; padding-bottom: 10px;">
-        <h1 style="font-size: 3rem; text-shadow: 0 0 15px var(--neon-purple); margin-bottom: 15px;">Categories & Brackets</h1>
-        <p style="max-width: 800px; margin: 0 auto; color: #aaa;">All official categories for this year’s Keyframe Awards.</p>
+        <h1 style="font-size: 2.8rem; text-shadow: 0 0 15px var(--neon-purple); margin-bottom: 15px;">Official Nominees</h1>
+        <p style="max-width: 800px; margin: 0 auto; color: #aaa;">The official list of nominees for The Keyframe Awards 2026.</p>
     </section>
 
     <!-- VIDEO -->
@@ -134,76 +137,81 @@
 
     <!-- CATEGORIES GRID -->
     <div class="nominations-grid">
+
+        <!-- The Year Awards -->
         <div class="category-card">
             <div class="category-title"><i class="fa-solid fa-crown"></i> The Year Awards</div>
             <ul class="subcategory-list">
-                <li><i class="fa-solid fa-star"></i> Overall Creator of the Year</li>
-                <li><i class="fa-solid fa-star"></i> Rising Star of the Year</li>
-                <li><i class="fa-solid fa-star"></i> Viral Phenomenon of the Year</li>
-                <li><i class="fa-solid fa-star"></i> Meme Lord/Lady of the Year</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Overall Creator of the Year</strong><br>Kai Cenat • IShowSpeed • MrBeast • xQc • CaseOh • Ibai</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Rising Star of the Year</strong><br>Lamine Yamal • ILLIT • Jynxzi • Ironmouse • KATSEYE • Caedrel</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Viral Phenomenon of the Year</strong><br>6-7 Meme • Saxophone sound • Labubu • 100 Men vs 1 Gorilla</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Meme Lord/Lady of the Year</strong><br>IShowSpeed • Kai Cenat • CaseOh • xQc</li>
             </ul>
         </div>
 
+        <!-- Music -->
         <div class="category-card">
             <div class="category-title"><i class="fa-solid fa-music"></i> Music</div>
             <ul class="subcategory-list">
-                <li><i class="fa-solid fa-star"></i> Best K-pop Group</li>
-                <li><i class="fa-solid fa-star"></i> Best Music Edit / MV Recreation</li>
-                <li><i class="fa-solid fa-star"></i> Best Solo Artist</li>
-                <li><i class="fa-solid fa-star"></i> Most Hyped Music Video Edit</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Best K-pop Group</strong><br>BTS • BLACKPINK • Stray Kids • SEVENTEEN • aespa • ILLIT</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Best Solo Artist</strong><br>Taylor Swift • Lisa • Sabrina Carpenter • Bruno Mars • Adela • Zara Larsson</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Best Music Edit / MV Recreation</strong><br>AnimeVibe • StarLab • Trash • Vexed • Kuro • Zero</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Most Hyped Music Video Edit</strong><br>Cyberpunk Edgerunners AMV • Travis Scott UTOPIA remixes • TikTok cinematic synchs</li>
             </ul>
         </div>
 
+        <!-- Meme & Viral -->
         <div class="category-card">
             <div class="category-title"><i class="fa-solid fa-face-laugh-squint"></i> Meme & Viral</div>
             <ul class="subcategory-list">
-                <li><i class="fa-solid fa-star"></i> Meme of the Year</li>
-                <li><i class="fa-solid fa-star"></i> Best Meme Edit / Sound</li>
-                <li><i class="fa-solid fa-star"></i> Best Roast Meme</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Meme of the Year</strong><br>6-7 • Labubu • 100 Men vs 1 Gorilla • Jet2 Holiday</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Best Meme Edit / Sound</strong><br>McFly • Brainrot phonk remixes • Sound effect overlays</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Best Roast Meme</strong><br>Speed roasts • Kai Cenat moments • xQc moments • CaseOh moments</li>
             </ul>
         </div>
 
+        <!-- Movies & TV -->
         <div class="category-card">
             <div class="category-title"><i class="fa-solid fa-clapperboard"></i> Movies & TV</div>
             <ul class="subcategory-list">
-                <li><i class="fa-solid fa-star"></i> Best Movie Edit / Recap</li>
-                <li><i class="fa-solid fa-star"></i> Best TV Show Edit</li>
-                <li><i class="fa-solid fa-star"></i> Best Series Theory / Breakdown</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Best Movie Edit / Recap</strong><br>ManOfRecaps • ScreenCrush • FilmJunkee • Heavy Spoilers • Valyan • Reel Insight</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Best TV Show Edit</strong><br>Succession character edits • The Boys Homelander edits • Arcane visual cuts • House of the Dragon tributes</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Best Series Theory / Breakdown</strong><br>Alt Shift X • Inside A Mind • New Rockstars • The Canadian Lad</li>
             </ul>
         </div>
 
+        <!-- Football & Sports -->
         <div class="category-card">
             <div class="category-title"><i class="fa-solid fa-soccer-ball"></i> Football & Sports</div>
             <ul class="subcategory-list">
-                <li><i class="fa-solid fa-star"></i> Best Football Edit</li>
-                <li><i class="fa-solid fa-star"></i> Most Hyped Goal Montage</li>
-                <li><i class="fa-solid fa-star"></i> Best Match Highlight Creator</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Best Football Edit</strong><br>433 community editors • Commps • Zvck • CompsHD • RMCF edits • NXGN creators</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Most Hyped Goal Montage</strong><br>Champions League comebacks • Puskas Award finalists • World Cup iconic strikes</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Best Match Highlight Creator</strong><br>Analyst reels • Dexerto sports clips • CBS Sports Golazo • Fabrizio Romano cuts</li>
             </ul>
         </div>
 
+        <!-- Gaming & Streaming -->
         <div class="category-card">
             <div class="category-title"><i class="fa-solid fa-gamepad"></i> Gaming & Streaming</div>
             <ul class="subcategory-list">
-                <li><i class="fa-solid fa-star"></i> Best Gaming Edit / Montage</li>
-                <li><i class="fa-solid fa-star"></i> Best Streamer / Creator</li>
-                <li><i class="fa-solid fa-star"></i> Most Chaotic Stream Moment</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Best Gaming Edit / Montage</strong><br>Anomaly • Mictia • TheRussianBadger • Jynxzi clips</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Best Streamer / Creator</strong><br>Kai Cenat • xQc • CaseOh • Jynxzi • Ironmouse • IShowSpeed</li>
+                <li><i class="fa-solid fa-star"></i> <strong>Most Chaotic Stream Moment</strong><br>CaseOh food chat meltdowns • Kai Cenat celebrity lock-ins • Jynxzi rage • Streamer setup destructions</li>
             </ul>
         </div>
+
     </div>
 
-    <!-- SUBMISSIONS CLOSED -->
-    <section class="closed-section">
-        <div class="closed-box">
-            <h2 style="font-size: 2rem; color: #fff; margin-bottom: 15px; text-shadow: 0 0 10px var(--neon-pink);">Submissions Closed</h2>
-            <p style="color: #aaa; margin-bottom: 20px; font-size: 1.05rem; line-height: 1.6;">
-                Thank you to everyone who submitted. <br>
-                Nominations are now closed.
+    <!-- VOTING IS LIVE -->
+    <section class="vote-section">
+        <div class="vote-box">
+            <h2 style="font-size: 2rem; color: #fff; margin-bottom: 15px; text-shadow: 0 0 10px var(--neon-pink);">Voting is Now Live</h2>
+            <p style="color: #aaa; margin-bottom: 25px; font-size: 1.05rem; line-height: 1.6;">
+                The official nominees are out. <br>
+                Cast your votes now and support your favourites.
             </p>
-            <p style="color: #00f2fe; font-size: 1.1rem; font-weight: bold; margin-bottom: 25px;">
-                Official Nominees will be revealed on <br> November 4, 2026
-            </p>
-            <a href="/vote" style="display: inline-block; background: linear-gradient(135deg, #ff007f, #9d00ff); color: white; padding: 12px 28px; border-radius: 30px; text-decoration: none; font-weight: bold; letter-spacing: 1px;">
-                Go to Voting Page →
+            <a href="https://vote.keyframe-awards.com" style="display: inline-block; background: linear-gradient(135deg, #ff007f, #9d00ff); color: white; padding: 14px 32px; border-radius: 30px; text-decoration: none; font-weight: bold; letter-spacing: 1px; font-size: 1.05rem;">
+                Go Vote Now →
             </a>
         </div>
     </section>
